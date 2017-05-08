@@ -1,2 +1,13 @@
+@echo off
+REM
 REM versions.cmd
+REM
+set VTK-VER=6.1.0
+set HDF5-VER=1.8.14
+set CGNSLIB-VER=3.2.1
+set SHAPELIB-VER=1.3.0
+set QWT-VER=6.1.3
+set GDAL-VER=1.11.2
+set PROJ-VER=4.8.0
 set NETCDF-VER=4.3.3
+set GEOS-VER=3.4.2
