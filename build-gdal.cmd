@@ -12,7 +12,7 @@ set VER=%GDAL-VER%
 if exist lib\src\gdal-%VER%     rd /s /q lib\src\gdal-%VER%
 if exist lib\build\gdal-%VER%   rd /s /q lib\build\gdal-%VER%
 if exist lib\install\gdal-%VER% rd /s /q lib\install\gdal-%VER%
-if exist c:\warmerda             rd /s /q c:\warmerda
+if exist c:\warmerda            rd /s /q c:\warmerda
 
 7z x gdal-%VER%.tar.gz -so | 7z x -si -ttar -o"lib\src"
 
