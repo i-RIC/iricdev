@@ -8,10 +8,12 @@ REM wget http://download.qt.io/official_releases/online_installers/qt-unified-wi
 REM wget https://my.visualstudio.com/Downloads?pid=1901
 REM wget https://cmake.org/files/v3.8/cmake-3.8.0-win64-x64.msi
 REM
-setlocal enableextensions
+setlocal enableextensions enabledelayedexpansion
 call versions.cmd
 IF NOT EXIST "VTK-%VTK-VER%.zip" (
-  wget --no-check-certificate http://www.vtk.org/files/release/6.1/VTK-%VTK-VER%.zip
+  REM pull off major and minor version (must use enabledelayedexpansion with exclamation points to work)
+  for /f "tokens=1,2 delims=." %%a in ("%VTK-VER%") do set MAJOR.MINOR=%%a.%%b
+  wget --no-check-certificate http://www.vtk.org/files/release/!MAJOR.MINOR!/VTK-%VTK-VER%.zip
 )
 IF NOT EXIST "hdf5-%HDF5-VER%.zip" (
   wget --no-check-certificate https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%HDF5-VER%/cmake/SZip.tar.gz
