@@ -3,17 +3,17 @@ set(CTEST_BUILD_NAME "$ENV{SGEN}-cgns")
 set(CTEST_SITE "$ENV{COMPUTERNAME}")
 
 set(VER "$ENV{CGNSLIB-VER}")
-set(HDF5_VER "${HDF5-VER}")
+set(HDF5_VER "$ENV{HDF5-VER}")
 set(CTEST_SOURCE_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}")
 set(CTEST_BINARY_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-${VER}")
 
 message(STATUS "CONF_DIR=${CONF_DIR}")
 
-set(HDF_INC "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5-VER}/hdf5-${HDF5-VER}/${CONF_DIR}/include")
+set(HDF_INC "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/hdf5-${HDF5_VER}/${CONF_DIR}/include")
 if("${CONF_DIR}" STREQUAL "debug")
-  set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5-VER}/hdf5-${HDF5-VER}/${CONF_DIR}/lib/hdf5_D.lib")
+  set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/hdf5-${HDF5_VER}/${CONF_DIR}/lib/hdf5_D.lib")
 else()
-  set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5-VER}/hdf5-${HDF5-VER}/${CONF_DIR}/lib/hdf5.lib")
+  set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/hdf5-${HDF5_VER}/${CONF_DIR}/lib/hdf5.lib")
 endif()
 
 set(BUILD_OPTIONS 
