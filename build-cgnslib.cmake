@@ -2,20 +2,22 @@ set(CTEST_PROJECT_NAME "cgns")
 set(CTEST_BUILD_NAME "$ENV{SGEN}-cgns")
 set(CTEST_SITE "$ENV{COMPUTERNAME}")
 
-set(CTEST_SOURCE_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-3.2.1")
-set(CTEST_BINARY_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-3.2.1")
+set(VER "$ENV{CGNSLIB-VER}")
+set(HDF5_VER "${HDF5-VER}")
+set(CTEST_SOURCE_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}")
+set(CTEST_BINARY_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-${VER}")
 
 message(STATUS "CONF_DIR=${CONF_DIR}")
 
-set(HDF_INC "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-1.8.14/hdf5-1.8.14/${CONF_DIR}/include")
+set(HDF_INC "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5-VER}/hdf5-${HDF5-VER}/${CONF_DIR}/include")
 if("${CONF_DIR}" STREQUAL "debug")
-  set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-1.8.14/hdf5-1.8.14/${CONF_DIR}/lib/hdf5_D.lib")
+  set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5-VER}/hdf5-${HDF5-VER}/${CONF_DIR}/lib/hdf5_D.lib")
 else()
-  set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-1.8.14/hdf5-1.8.14/${CONF_DIR}/lib/hdf5.lib")
+  set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5-VER}/hdf5-${HDF5-VER}/${CONF_DIR}/lib/hdf5.lib")
 endif()
 
 set(BUILD_OPTIONS 
--DCMAKE_INSTALL_PREFIX:PATH=${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-3.2.1/${CONF_DIR}
+-DCMAKE_INSTALL_PREFIX:PATH=${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}
 -DCGNS_ENABLE_FORTRAN:BOOL=ON
 -DCGNS_ENABLE_HDF5:BOOL=ON
 -DCGNS_ENABLE_LFS:BOOL=ON
@@ -25,14 +27,9 @@ set(BUILD_OPTIONS
 -DHDF5_NEED_ZLIB:BOOL=ON
 )
 
-###get_cmake_property(_variableNames VARIABLES)
-###foreach (_variableName ${_variableNames})
-###    message(STATUS "${_variableName}=${${_variableName}}")
-###endforeach()
-
 CTEST_START("Experimental")
 CTEST_CONFIGURE(BUILD "${CTEST_BINARY_DIRECTORY}"
                 OPTIONS "${BUILD_OPTIONS}")
 CTEST_BUILD(BUILD "${CTEST_BINARY_DIRECTORY}")
-file(COPY "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-3.2.1/src/${CONF_DIR}/cgnsdll.dll" DESTINATION "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-3.2.1/src")
+file(COPY "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-${VER}/src/${CONF_DIR}/cgnsdll.dll" DESTINATION "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-${VER}/src")
 CTEST_BUILD(BUILD "${CTEST_BINARY_DIRECTORY}" TARGET INSTALL)
