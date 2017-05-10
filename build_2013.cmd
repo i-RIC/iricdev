@@ -17,5 +17,8 @@ call build-qwt.cmd
 call build-gdal.cmd
 call build-proj.cmd
 call build-netcdf.cmd
+call build-geos.cmd
+call build-boost.cmd
+call build-yaml-cpp.cmd
 
 endlocal

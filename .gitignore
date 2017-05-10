@@ -1,5 +1,6 @@
 lib
 *.log
+boost_*.7z
 cgnslib*.tar.gz
 gdal-*.tar.gz
 geos-*.tar.bz2
@@ -10,4 +11,5 @@ qwt-*.zip
 shapelib-*.zip
 SZip.tar.gz
 VTK-*.zip
+yaml-cpp-*.zip
 ZLib.tar.gz

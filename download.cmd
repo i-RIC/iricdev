@@ -41,8 +41,11 @@ IF NOT EXIST "netcdf-%NETCDF-VER%.zip" (
 IF NOT EXIST "geos-%GEOS-VER%.tar.bz2" (
   wget --no-check-certificate http://download.osgeo.org/geos/geos-%GEOS-VER%.tar.bz2
 )
-IF NOT EXIST "yaml-cpp-release-%YAML-VER%.zip" (
-  wget --no-check-certificate https://github.com/jbeder/yaml-cpp/archive/release-%YAML-VER%.zip --output-document=yaml-cpp-release-%YAML-VER%.zip
+IF NOT EXIST "boost_%BOOST_UVER%.7z" (
+  wget --no-check-certificate https://sourceforge.net/projects/boost/files/boost/%BOOST-VER%/boost_%BOOST_UVER%.7z/download
+)
+IF NOT EXIST "yaml-cpp-release-%YAML-CPP-VER%.zip" (
+  wget --no-check-certificate https://github.com/jbeder/yaml-cpp/archive/release-%YAML-CPP-VER%.zip --output-document=yaml-cpp-release-%YAML-CPP-VER%.zip
 )
 
 
