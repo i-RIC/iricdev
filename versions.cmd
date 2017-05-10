@@ -10,4 +10,6 @@ set QWT-VER=6.1.3
 set GDAL-VER=1.11.2
 set PROJ-VER=4.8.0
 set NETCDF-VER=4.3.3
-set GEOS-VER=3.4.2
+REM set GEOS-VER=3.4.2
+set GEOS-VER=3.4.3
+set YAML-VER=0.5.3

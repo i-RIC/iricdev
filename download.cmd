@@ -41,4 +41,9 @@ IF NOT EXIST "netcdf-%NETCDF-VER%.zip" (
 IF NOT EXIST "geos-%GEOS-VER%.tar.bz2" (
   wget --no-check-certificate http://download.osgeo.org/geos/geos-%GEOS-VER%.tar.bz2
 )
+IF NOT EXIST "yaml-cpp-release-%YAML-VER%.zip" (
+  wget --no-check-certificate https://github.com/jbeder/yaml-cpp/archive/release-%YAML-VER%.zip --output-document=yaml-cpp-release-%YAML-VER%.zip
+)
+
+
 endlocal
