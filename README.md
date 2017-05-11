@@ -8,6 +8,7 @@ Build libraries needed to build iRIC on Windows
 * wget available from http://gnuwin32.sourceforge.net/packages/wget.htm
 * cmake available from https://cmake.org/download/
 * Qt 5.5 available from https://www.qt.io/download/
+* 7-zip available from http://www.7-zip.org/
 
 ## Build
 
