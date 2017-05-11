@@ -1,6 +1,6 @@
 ## iricdev
 
-Build libraries needed to build iRIC
+Build libraries needed to build iRIC on Windows
 
 ## Prerequisites:
 
@@ -10,6 +10,7 @@ Build libraries needed to build iRIC
 * Qt 5.5 available from https://www.qt.io/download/
 
 ## Build
+
     git clone https://github.com/scharlton2/iricdev.git iricdev_2013
     cd iricdev_2013
     download.cmd
