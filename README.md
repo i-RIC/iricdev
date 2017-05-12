@@ -16,3 +16,5 @@ Build libraries needed to build iRIC on Windows
     cd iricdev_2013
     download.cmd
     build_2013.cmd
+    copy paths.pri [prepost-gui-root]\.
+    copy dirExt.prop [prepost-gui-root]\tools\data\.
