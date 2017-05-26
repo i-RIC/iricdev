@@ -9,6 +9,7 @@ Build libraries needed to build iRIC on Windows
 * cmake available from https://cmake.org/download/
 * Qt 5.5 available from https://www.qt.io/download/
 * 7-zip available from http://www.7-zip.org/
+* NSIS available from http://nsis.sourceforge.net/Download/ (for HDF5 packaging)
 
 ## Build
 
