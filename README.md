@@ -10,6 +10,7 @@ Build libraries needed to build iRIC on Windows
 * Qt 5.5 available from https://www.qt.io/download/
 * 7-zip available from http://www.7-zip.org/
 * NSIS available from http://nsis.sourceforge.net/Download/ (for HDF5 packaging)
+* Add wget and 7-zip installation path to "Path" environment variable.
 
 ## Build
 
@@ -19,3 +20,5 @@ Build libraries needed to build iRIC on Windows
     build_2013.cmd
     copy paths.pri [prepost-gui-root]\.
     copy dirExt.prop [prepost-gui-root]\tools\data\.
+    create folder [prepost-gui-root]\libdlls\Debug.
+    create folder [prepost-gui-root]\libdlls\Release.
