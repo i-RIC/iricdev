@@ -5,6 +5,7 @@ cgnslib*.tar.gz
 dirExt.prop
 gdal-*.tar.gz
 geos-*.tar.bz2
+hdf5-*.tar.gz
 hdf5-*.zip
 netcdf-*.zip
 paths.pri

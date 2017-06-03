@@ -2,7 +2,7 @@
 setlocal enableextensions
 
 call versions.cmd
-set VER=%PROJ-VER%
+set VER=%PROJ_VER%
 
 if exist lib\src\proj-%VER%     rd /s /q lib\src\proj-%VER%
 if exist lib\build\proj-%VER%   rd /s /q lib\build\proj-%VER%

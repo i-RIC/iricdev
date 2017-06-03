@@ -2,7 +2,7 @@
 setlocal enableextensions
 
 call versions.cmd
-set VER=%GDAL-VER%
+set VER=%GDAL_VER%
 
 if exist lib\src\gdal-%VER%     rd /s /q lib\src\gdal-%VER%
 if exist lib\build\gdal-%VER%   rd /s /q lib\build\gdal-%VER%

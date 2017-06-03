@@ -2,7 +2,7 @@
 setlocal enableextensions
 
 call versions.cmd
-set VER=%QWT-VER%
+set VER=%QWT_VER%
 
 if exist lib\src\qwt-%VER%     rd /s /q lib\src\qwt-%VER%
 if exist lib\build\qwt-%VER%   rd /s /q lib\build\qwt-%VER%
