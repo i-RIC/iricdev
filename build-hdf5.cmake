@@ -43,7 +43,7 @@ if (WIN32)
     DESTINATION "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${VER}/${CONF_DIR}")
 endif()
 
-if (UNIX)
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   file(COPY "${CTEST_BINARY_DIRECTORY}/_CPack_Packages/Linux/TGZ/HDF5-${VER}-Linux/HDF_Group/HDF5/${VER}/"
     DESTINATION "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${VER}/${CONF_DIR}")
 endif()

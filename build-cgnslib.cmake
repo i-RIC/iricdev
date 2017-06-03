@@ -17,7 +17,7 @@ if (WIN32)
   endif()
 endif()
 
-if (UNIX)
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   if("${CONF_DIR}" STREQUAL "debug")
     set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/lib/libhdf5_debug.so")
     set(SZIP_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/lib/libszip_debug.so")
@@ -41,7 +41,7 @@ set(BUILD_OPTIONS
 -DHDF5_NEED_ZLIB:BOOL=ON
 )
 
-if (UNIX)
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
   list(APPEND BUILD_OPTIONS "-DCMAKE_C_FLAGS:STRING=-D_LARGEFILE64_SOURCE")
   list(APPEND BUILD_OPTIONS "-DSZIP_LIBRARY:STRING=${SZIP_LIB}")
   list(APPEND BUILD_OPTIONS "-DZLIB_LIBRARY:STRING=${ZLIB_LIB}")
