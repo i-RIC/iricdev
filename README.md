@@ -1,8 +1,8 @@
 ## iricdev
 
-Build libraries needed to build iRIC on Windows
+Build libraries needed to build iRIC on Linux and Windows
 
-## Prerequisites:
+## Windows Prerequisites:
 
 * Visual Studio 2013 available from https://my.visualstudio.com/Downloads?pid=1901
 * wget available from http://gnuwin32.sourceforge.net/packages/wget.htm
@@ -12,7 +12,7 @@ Build libraries needed to build iRIC on Windows
 * NSIS available from http://nsis.sourceforge.net/Download/ (for HDF5 packaging)
 * Add wget and 7-zip installation path to "Path" environment variable.
 
-## Build
+## Windows Build
 
     git clone https://github.com/scharlton2/iricdev.git iricdev_2013
     cd iricdev_2013
@@ -20,5 +20,26 @@ Build libraries needed to build iRIC on Windows
     build_2013.cmd
     copy paths.pri [prepost-gui-root]\.
     copy dirExt.prop [prepost-gui-root]\tools\data\.
-    create folder [prepost-gui-root]\libdlls\Debug.
-    create folder [prepost-gui-root]\libdlls\Release.
+    mkdir [prepost-gui-root]\libdlls\debug.
+    mkdir [prepost-gui-root]\libdlls\release.
+
+## Linux Prerequisites:
+
+* C compiler
+* C++ compiler
+* cmake (tested using cmake version 2.8.12.1)
+* wget
+
+## Linux GCC Build (tested using gcc (GCC) 4.4.7 20120313)
+
+    git clone https://github.com/scharlton2/iricdev.git iricdev_gcc
+    cd iricdev_gcc
+    ./download.sh
+    ./build_gcc.sh
+
+## Linux ICC Build (tested using icc (ICC) 17.0.2 20170213)
+
+    git clone https://github.com/scharlton2/iricdev.git iricdev_icc
+    cd iricdev_icc
+    ./download.sh
+    ./build_icc.sh
