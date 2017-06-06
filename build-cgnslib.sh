@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -z $GENERATOR ]; then
+if [ -z "$GENERATOR" ]; then
   echo "No Generator has been set"
   exit 1
 fi
@@ -9,8 +9,8 @@ fi
 VER=$CGNSLIB_VER
 
 rm -rf lib/src/cgnslib-$VER
-rd -rf lib/build/cgnslib-$VER
-rd -rf lib/install/cgnslib-$VER
+rm -rf lib/build/cgnslib-$VER
+rm -rf lib/install/cgnslib-$VER
 
 mkdir -p lib/src
 cd lib/src
