@@ -55,3 +55,27 @@ if (WIN32)
   file(COPY "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-${VER}/src/${CONF_DIR}/cgnsdll.dll" DESTINATION "${CTEST_SCRIPT_DIRECTORY}/lib/build/cgnslib-${VER}/src")
 endif()
 CTEST_BUILD(BUILD "${CTEST_BINARY_DIRECTORY}" TARGET install)
+
+# fix comments for cgnslib_f.h
+
+FILE(RENAME
+  ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/include/cgnslib_f.h
+  ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/include/cgnslib_f.h.orig
+)
+
+FILE(STRINGS
+  ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/include/cgnslib_f.h.orig
+  lines
+)
+
+foreach(line IN LISTS lines)
+  if (line)
+    STRING(REGEX REPLACE "^c" "!c" new_line ${line})
+  else()
+    set(new_line ${line})
+  endif()
+  file(APPEND
+    ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/include/cgnslib_f.h
+    "${new_line}\n"
+  )
+endforeach()
