@@ -2,6 +2,7 @@
 
 CC=icc
 CXX=icpc
+FC=ifort
 GENERATOR="Unix Makefiles"
 SGEN="icc"
 
