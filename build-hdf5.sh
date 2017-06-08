@@ -18,6 +18,6 @@ tar xvzf ../../hdf5-$VER.tar.gz
 cd ../..
 
 
-ctest -S build-hdf5.cmake -DCONF_DIR:STRING=debug   -DCTEST_CMAKE_GENERATOR:STRING="Unix Makefiles" -C Debug   -V -O $SGEN-hdf5-debug.log
+ctest -S build-hdf5.cmake -DCONF_DIR:STRING=debug   "-DCTEST_CMAKE_GENERATOR:STRING=$GENERATOR" -C Debug   -V -O $SGEN-hdf5-debug.log
 
-ctest -S build-hdf5.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING="Unix Makefiles" -C Release -V -O $SGEN-hdf5-release.log
+ctest -S build-hdf5.cmake -DCONF_DIR:STRING=release "-DCTEST_CMAKE_GENERATOR:STRING=$GENERATOR" -C Release -V -O $SGEN-hdf5-release.log
