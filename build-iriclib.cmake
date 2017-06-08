@@ -8,15 +8,13 @@ set(HDF5_VER "$ENV{HDF5_VER}")
 set(CTEST_SOURCE_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/src/iriclib")
 set(CTEST_BINARY_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/build/iriclib")
 
-# this doesn't work w/ cmake-2.8
-# set(PREFIX_PATH "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/share/cmake/hdf5;${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${CGNS_VER}/${CONF_DIR}")
-# set(PREFIX_PATH "${PREFIX_PATH}\\;${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${CGNS_VER}/${CONF_DIR}")
-# "-DCMAKE_PREFIX_PATH:PATH=${PREFIX_PATH}"
+# build PREFIX_PATH (Note the escaped semicolon)
+set(PREFIX_PATH "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/share/cmake/hdf5")
+set(PREFIX_PATH "${PREFIX_PATH}\;${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${CGNS_VER}/${CONF_DIR}")
 
-# unable to simplify CMAKE_PREFIX_PATH 
 set(BUILD_OPTIONS 
 "-DCMAKE_INSTALL_PREFIX:PATH=${CTEST_SCRIPT_DIRECTORY}/lib/install/iriclib/${CONF_DIR}"
-"-DCMAKE_PREFIX_PATH:PATH=${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/share/cmake/hdf5\;${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${CGNS_VER}/${CONF_DIR}"
+"-DCMAKE_PREFIX_PATH:PATH=${PREFIX_PATH}"
 )
 
 CTEST_START("Experimental")
