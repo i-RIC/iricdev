@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . ./versions.sh
 if [ ! -f "hdf5-${HDF5_VER}.tar.gz" ]; then
   wget --no-check-certificate https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VER}/cmake/SZip.tar.gz

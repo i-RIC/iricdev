@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "$GENERATOR" ]; then
   echo "No Generator has been set"
