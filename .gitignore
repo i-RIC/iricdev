@@ -7,6 +7,7 @@ gdal-*.tar.gz
 geos-*.tar.bz2
 hdf5-*.tar.gz
 hdf5-*.zip
+iriclib-*.zip
 netcdf-*.zip
 paths.pri
 proj-*.zip
