@@ -14,9 +14,11 @@ set(CTEST_BINARY_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/build/iriclib-${SVER}"
 set(PREFIX_PATH "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/share/cmake/hdf5")
 set(PREFIX_PATH "${PREFIX_PATH}\;${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${CGNS_VER}/${CONF_DIR}")
 
+# override LIBDIR to be consistent w/ hdf5 and cgns
 set(BUILD_OPTIONS 
 "-DCMAKE_INSTALL_PREFIX:PATH=${CTEST_SCRIPT_DIRECTORY}/lib/install/iriclib-${SVER}/${CONF_DIR}"
 "-DCMAKE_PREFIX_PATH:PATH=${PREFIX_PATH}"
+"-DCMAKE_INSTALL_LIBDIR:PATH=lib"
 )
 
 CTEST_START("Experimental")
