@@ -14,3 +14,14 @@ if [ ! -f "iriclib-${IRICLIB_VER:0:7}.zip" ]; then
   wget --no-check-certificate https://github.com/scharlton2/iriclib-test/archive/${IRICLIB_VER}.zip --output-document=iriclib-${IRICLIB_VER:0:7}.zip
 fi
 
+if [ ! -f "shapelib-${SHAPELIB_VER}.zip" ]; then
+  wget --no-check-certificate http://download.osgeo.org/shapelib/shapelib-${SHAPELIB_VER}.zip
+fi
+
+if [ ! -f "qwt-${QWT_VER}.zip" ]; then
+  wget --no-check-certificate https://sourceforge.net/projects/qwt/files/qwt/${QWT_VER}/qwt-${QWT_VER}.zip
+fi
+
+if [ ! -f "gdal-${GDAL_VER}.tar.gz" ]; then
+  wget --no-check-certificate http://download.osgeo.org/gdal/${GDAL_VER}/gdal-${GDAL_VER}.tar.gz
+fi
