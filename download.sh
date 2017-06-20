@@ -18,8 +18,8 @@ if [ ! -f "shapelib-${SHAPELIB_VER}.zip" ]; then
   wget --no-check-certificate http://download.osgeo.org/shapelib/shapelib-${SHAPELIB_VER}.zip
 fi
 
-if [ ! -f "qwt-${QWT_VER}.zip" ]; then
-  wget --no-check-certificate https://sourceforge.net/projects/qwt/files/qwt/${QWT_VER}/qwt-${QWT_VER}.zip
+if [ ! -f "qwt-${QWT_VER}.tar.bz2" ]; then
+  wget --no-check-certificate https://sourceforge.net/projects/qwt/files/qwt/${QWT_VER}/qwt-${QWT_VER}.tar.bz2
 fi
 
 if [ ! -f "gdal-${GDAL_VER}.tar.gz" ]; then

@@ -12,6 +12,7 @@ netcdf-*.zip
 paths.pri
 proj-*.zip
 qwt-*.zip
+qwt-*.tar.bz2
 shapelib-*.zip
 SZip.tar.gz
 VTK-*.zip
