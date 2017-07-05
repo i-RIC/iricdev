@@ -21,4 +21,6 @@ REM
 REM replace . with _
 REM
 set BOOST_UVER=%BOOST-VER:.=_%
-
+if [%BUILD_TOOLS%]==[] (
+  set BUILD_TOOLS="OFF"
+)
