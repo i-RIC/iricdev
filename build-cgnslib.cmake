@@ -12,6 +12,18 @@ if("${CONF_DIR}" STREQUAL "debug")
   set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/lib/hdf5_D.lib")
 else()
   set(HDF_LIB "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/lib/hdf5.lib")
+
+  # HACK to force extract_subset.c to compile (fails w/ VS2013 Release build)
+  if (WIN32)
+    FILE(RENAME
+      ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c
+      ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c.orig
+    )
+    FILE(WRITE
+      ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c
+      "int main(int argc, char *argv[]) { return 0; }\n"
+    )
+  endif()
 endif()
 
 set(BUILD_OPTIONS 
@@ -56,3 +68,25 @@ foreach(line IN LISTS lines)
     "${new_line}\n"
   )
 endforeach()
+
+if("${CONF_DIR}" STREQUAL "release")
+  if (WIN32)
+    # restore original extract_subset.c
+    FILE(REMOVE
+      ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c
+    )
+    FILE(RENAME
+      ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c.orig
+      ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c
+    )
+    # delete fake extract_subset.exe
+    FILE(REMOVE
+      ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/extract_subset.exe
+    )
+    # write note about extract-subset.exe
+    FILE(WRITE
+      ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/extract_subset.exe.txt
+      "${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c causes an internal compiler error in VS2013 Release. (see ${CTEST_SCRIPT_DIRECTORY}/build-cgnslib.cmake.\n"
+    )
+  endif()
+endif()
