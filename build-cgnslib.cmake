@@ -15,11 +15,11 @@ else()
 
   # HACK to force extract_subset.c to compile (fails w/ VS2013 Release build)
   if (WIN32)
-    FILE(RENAME
+    file(RENAME
       ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c
       ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c.orig
     )
-    FILE(WRITE
+    file(WRITE
       ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c
       "int main(int argc, char *argv[]) { return 0; }\n"
     )
@@ -47,12 +47,12 @@ CTEST_BUILD(BUILD "${CTEST_BINARY_DIRECTORY}" TARGET INSTALL)
 
 # fix comments for cgnslib_f.h
 
-FILE(RENAME
+file(RENAME
   ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/include/cgnslib_f.h
   ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/include/cgnslib_f.h.orig
 )
 
-FILE(STRINGS
+file(STRINGS
   ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/include/cgnslib_f.h.orig
   lines
 )
@@ -69,24 +69,49 @@ foreach(line IN LISTS lines)
   )
 endforeach()
 
-if("${CONF_DIR}" STREQUAL "release")
+if($ENV{BUILD_TOOLS} MATCHES "[Oo][Nn]" AND "${CONF_DIR}" STREQUAL "release")
   if (WIN32)
     # restore original extract_subset.c
-    FILE(REMOVE
+    file(REMOVE
       ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c
     )
-    FILE(RENAME
+    file(RENAME
       ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c.orig
       ${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c
     )
     # delete fake extract_subset.exe
-    FILE(REMOVE
+    file(REMOVE
       ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/extract_subset.exe
     )
     # write note about extract-subset.exe
-    FILE(WRITE
+    file(WRITE
       ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/extract_subset.exe.txt
       "${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}/src/cgnstools/utilities/extract_subset.c causes an internal compiler error in VS2013 Release. (see ${CTEST_SCRIPT_DIRECTORY}/build-cgnslib.cmake.\n"
+    )
+  endif()
+endif()
+
+if ($ENV{BUILD_TOOLS} MATCHES "[Oo][Nn]")
+  if (WIN32)
+    # add hdf5 path to cgconfig.bat
+    file(RENAME
+      ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/cgconfig.bat
+      ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/cgconfig.bat.orig
+    )
+    file(STRINGS
+      ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/cgconfig.bat.orig
+      lines
+    )
+    foreach(line IN LISTS lines)
+      file(APPEND
+        ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/cgconfig.bat
+        "${line}\n"
+      )
+    endforeach()
+    file(TO_NATIVE_PATH "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/bin" HDF5PATH)
+    file(APPEND
+      ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/cgconfig.bat
+      "set PATH=%PATH%;${HDF5PATH}\n"
     )
   endif()
 endif()

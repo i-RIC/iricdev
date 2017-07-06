@@ -24,7 +24,5 @@ Build libraries needed to build iRIC on Windows
     create folder [prepost-gui-root]\libdlls\Debug.
     create folder [prepost-gui-root]\libdlls\Release.
     :: if building tools
-    add HDF5 bin to path of install\cgnslib-[ver]\debug\bin\cgconfig.bat
-    add HDF5 bin to path of install\cgnslib-[ver]\release\bin\cgconfig.bat
     add install\cgnslib-[ver]\release\bin and install\hdf5-[ver]\release\bin to "Path"
     
