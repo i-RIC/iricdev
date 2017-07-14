@@ -24,7 +24,7 @@ IF NOT EXIST "hdf5-%HDF5_VER%.zip" (
 IF NOT EXIST "cgnslib_%CGNSLIB_VER%.tar.gz" (
   wget --no-check-certificate https://downloads.sourceforge.net/project/cgns/cgnslib_3.2/cgnslib_%CGNSLIB_VER%.tar.gz
 )
-IF NOT EXIST "iriclib_%IRICLIB_VER:~0,7%.zip" (
+IF NOT EXIST "iriclib-%IRICLIB_VER:~0,7%.zip" (
   wget --no-check-certificate https://github.com/scharlton2/iriclib-test/archive/%IRICLIB_VER%.zip --output-document=iriclib-%IRICLIB_VER:~0,7%.zip
 )
 IF NOT EXIST "shapelib-%SHAPELIB_VER%.zip" (
