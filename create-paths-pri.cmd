@@ -14,7 +14,7 @@ call versions.cmd
 @echo.	LIBS += -L"%topdir%lib/install/cgnslib-%CGNSLIB-VER%/debug/lib"
 @echo.
 @echo.	# iriclib
-@echo.	LIBS += -L"$$PWD/iriclib/debug"
+@echo.	LIBS += -L"%topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/debug/lib"
 @echo.
 @echo.	# Qwt
 @echo.	LIBS += -L"%topdir%lib/install/qwt-%QWT-VER%/lib"
@@ -48,7 +48,7 @@ call versions.cmd
 @echo.	LIBS += -L"%topdir%lib/install/cgnslib-%CGNSLIB-VER%/release/lib"
 @echo.
 @echo.	# iriclib
-@echo.	LIBS += -L"$$PWD/iriclib/release"
+@echo.	LIBS += -L"%topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/release/lib"
 @echo.
 @echo.	# Qwt
 @echo.	LIBS += -L"%topdir%lib/install/qwt-%QWT-VER%/lib"
@@ -84,7 +84,7 @@ call versions.cmd
 @echo.INCLUDEPATH += "%topdir%lib/install/cgnslib-%CGNSLIB-VER%/debug/include"
 @echo.
 @echo.# iriclib
-@echo.INCLUDEPATH += "$$PWD/iriclib"
+@echo.INCLUDEPATH += "%topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/release/include"
 @echo.
 @echo.# Qwt
 @echo.INCLUDEPATH += "%topdir%lib/install/qwt-%QWT-VER%/include"

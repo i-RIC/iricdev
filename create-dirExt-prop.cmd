@@ -8,6 +8,7 @@ call versions.cmd
 @echo.gdal     = %topdir%lib/install/gdal-%GDAL-VER%/release/bin/
 @echo.geos     = %topdir%lib/install/geos-%GEOS-VER%/release/bin/
 @echo.hdf5     = %topdir%lib/install/hdf5-%HDF5-VER%/release/bin/
+@echo.iriclib  = %topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/release/lib/
 @echo.netcdf   = %topdir%lib/install/netcdf-%NETCDF-VER%/release/bin/
 @echo.proj     = %topdir%lib/install/proj-%PROJ-VER%/release/bin/
 @echo.qwt      = %topdir%lib/install/Qwt-%QWT-VER%/lib/
@@ -22,6 +23,7 @@ call versions.cmd
 @echo.gdal     = %topdir%lib/install/gdal-%GDAL-VER%/debug/bin/
 @echo.geos     = %topdir%lib/install/geos-%GEOS-VER%/debug/bin/
 @echo.hdf5     = %topdir%lib/install/hdf5-%HDF5-VER%/debug/bin/
+@echo.iriclib  = %topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/debug/lib/
 @echo.netcdf   = %topdir%lib/install/netcdf-%NETCDF-VER%/debug/bin/
 @echo.proj     = %topdir%lib/install/proj-%PROJ-VER%/release/bin/
 @echo.qwt      = %topdir%lib/install/Qwt-%QWT-VER%/lib/

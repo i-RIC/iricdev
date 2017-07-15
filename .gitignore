@@ -6,6 +6,7 @@ dirExt.prop
 gdal-*.tar.gz
 geos-*.tar.bz2
 hdf5-*.zip
+iriclib-*.zip
 netcdf-*.zip
 paths.pri
 proj-*.zip
