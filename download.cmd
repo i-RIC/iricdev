@@ -17,9 +17,10 @@ IF NOT EXIST "VTK-%VTK-VER%.zip" (
   wget --no-check-certificate http://www.vtk.org/files/release/!MAJOR.MINOR!/VTK-%VTK-VER%.zip
 )
 IF NOT EXIST "hdf5-%HDF5-VER%.zip" (
-  wget --no-check-certificate https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%HDF5-VER%/cmake/SZip.tar.gz
-  wget --no-check-certificate https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%HDF5-VER%/cmake/ZLib.tar.gz
-  wget --no-check-certificate https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%HDF5-VER%/src/hdf5-%HDF5-VER%.zip
+  for /f "tokens=1,2 delims=." %%a in ("%HDF5-VER%") do set MAJOR.MINOR=%%a.%%b
+  wget ftp://ftp.hdfgroup.org/HDF5/releases/hdf5-!MAJOR.MINOR!/hdf5-%HDF5-VER%/cmake/SZip.tar.gz
+  wget ftp://ftp.hdfgroup.org/HDF5/releases/hdf5-!MAJOR.MINOR!/hdf5-%HDF5-VER%/cmake/ZLib.tar.gz
+  wget ftp://ftp.hdfgroup.org/HDF5/releases/hdf5-!MAJOR.MINOR!/hdf5-%HDF5-VER%/src/hdf5-%HDF5-VER%.zip
 )
 IF NOT EXIST "cgnslib_%CGNSLIB-VER%.tar.gz" (
   wget --no-check-certificate https://downloads.sourceforge.net/project/cgns/cgnslib_3.2/cgnslib_%CGNSLIB-VER%.tar.gz
