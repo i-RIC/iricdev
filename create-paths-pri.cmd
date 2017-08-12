@@ -5,7 +5,7 @@ set topdir=%topdir:\=/%
 call versions.cmd
 @echo.CONFIG^(debug, debug^|release^) {
 @echo.	# gdal
-@echo.	LIBS += -L"%topdir%lib/src/gdal-%GDAL-VER%"
+@echo.	LIBS += -L"%topdir%lib/src/gdal-%GDAL-VER%/debug/lib"
 @echo.
 @echo.	# vtk
 @echo.	LIBS += -L"%topdir%lib/install/vtk-%VTK-VER%/debug/lib"
