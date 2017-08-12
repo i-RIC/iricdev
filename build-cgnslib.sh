@@ -18,6 +18,5 @@ tar xvzf ../../cgnslib_$VER.tar.gz
 mv cgnslib_$VER cgnslib-$VER
 cd ../..
 
-ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=debug   -DCTEST_CMAKE_GENERATOR:STRING="Unix Makefiles" -C Debug   -V -O $SGEN-cgnslib-debug.log
-
-ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING="Unix Makefiles" -C Release -V -O $SGEN-cgnslib-release.log
+ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=debug   "-DCTEST_CMAKE_GENERATOR:STRING=${GENERATOR}" -C Debug   -VV -O ${SGEN}-cgnslib-debug.log
+ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=release "-DCTEST_CMAKE_GENERATOR:STRING=${GENERATOR}" -C Release -VV -O ${SGEN}-cgnslib-release.log

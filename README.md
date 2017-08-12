@@ -27,9 +27,23 @@ Build libraries needed to build iRIC on Linux and Windows
 
 * C compiler
 * C++ compiler
-* cmake (tested using cmake version 2.8.12.1)
+* cmake
 * wget
 * Qt 5.5 available from http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
+
+
+## Ubuntu 16.04.2 LTS Build (Full)
+
+* C compiler (gcc (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609)
+* C++ compiler (g++ (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609)
+* cmake (cmake version 3.5.1)
+* wget (GNU Wget 1.17.1 built on linux-gnu)
+* Qt 5.5 available from http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
+
+    git clone https://github.com/scharlton2/iricdev.git iricdev_gcc
+    cd iricdev_gcc
+    ./download.sh
+    ./build_gcc.sh
 
 ## Linux GCC Build (tested using gcc (GCC) 4.4.7 20120313)
 
