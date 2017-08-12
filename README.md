@@ -18,7 +18,7 @@ Build libraries needed to build iRIC on Windows
     git clone https://github.com/scharlton2/iricdev.git iricdev_2013
     cd iricdev_2013
     download.cmd
-    build_2013.cmd  (or build_2013_tools.cmd to build cgns and hdf5 tools)
+    build_2013.cmd  (or build_2013_w_tools.cmd to build cgns and hdf5 tools)
     copy paths.pri [prepost-gui-root]\.
     copy dirExt.prop [prepost-gui-root]\tools\data\.
     create folder [prepost-gui-root]\libdlls\Debug.
