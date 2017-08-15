@@ -7,7 +7,7 @@ if [%GENERATOR%]==[] (
 )
 
 call versions.cmd
-set VER=%CGNSLIB-VER%
+set VER=%CGNSLIB_VER%
 
 if exist lib\src\cgnslib-%VER%     rd /s /q lib\src\cgnslib-%VER%
 if exist lib\build\cgnslib-%VER%   rd /s /q lib\build\cgnslib-%VER%

@@ -7,7 +7,7 @@ if [%GENERATOR%]==[] (
 )
 
 call versions.cmd
-set VER=%HDF5-VER%
+set VER=%HDF5_VER%
 
 if exist lib\src\hdf5-%VER%     rd /s /q lib\src\hdf5-%VER%
 if exist lib\build\hdf5-%VER%   rd /s /q lib\build\hdf5-%VER%

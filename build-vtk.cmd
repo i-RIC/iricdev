@@ -7,7 +7,7 @@ if [%GENERATOR%]==[] (
 )
 
 call versions.cmd
-set VER=%VTK-VER%
+set VER=%VTK_VER%
 
 if exist lib\src\VTK-%VER%     rd /s /q lib\src\VTK-%VER%
 if exist lib\build\VTK-%VER%   rd /s /q lib\build\VTK-%VER%

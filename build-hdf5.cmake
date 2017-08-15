@@ -1,7 +1,7 @@
 set(CTEST_BUILD_NAME "$ENV{SGEN}-hdf5")
 set(CTEST_SITE "$ENV{COMPUTERNAME}")
 
-set(VER "$ENV{HDF5-VER}")
+set(VER "$ENV{HDF5_VER}")
 set(CTEST_SOURCE_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/src/hdf5-${VER}")
 set(CTEST_BINARY_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/build/hdf5-${VER}")
 
@@ -36,7 +36,14 @@ CTEST_BUILD(BUILD "${CTEST_BINARY_DIRECTORY}")
 # since the szip and zlib libraries cmake configurations
 # are created only during the packaging stage
 # see lib/install/hdf5-${VER}/${CONF_DIR}/cmake
-CTEST_BUILD(BUILD "${CTEST_BINARY_DIRECTORY}" TARGET PACKAGE)
+CTEST_BUILD(BUILD "${CTEST_BINARY_DIRECTORY}" TARGET package)
 
-file(COPY "${CTEST_BINARY_DIRECTORY}/_CPack_Packages/win64/TGZ/HDF5-${VER}-win64/"
-  DESTINATION "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${VER}/${CONF_DIR}")
+if (WIN32)
+  file(COPY "${CTEST_BINARY_DIRECTORY}/_CPack_Packages/win64/TGZ/HDF5-${VER}-win64/"
+    DESTINATION "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${VER}/${CONF_DIR}")
+endif()
+
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+  file(COPY "${CTEST_BINARY_DIRECTORY}/_CPack_Packages/Linux/TGZ/HDF5-${VER}-Linux/HDF_Group/HDF5/${VER}/"
+    DESTINATION "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${VER}/${CONF_DIR}")
+endif()

@@ -1,8 +1,8 @@
 ## iricdev
 
-Build libraries needed to build iRIC on Windows
+Build libraries needed to build iRIC on Linux and Windows
 
-## Prerequisites:
+## Windows Prerequisites:
 
 * Visual Studio 2013 available from https://my.visualstudio.com/Downloads?pid=1901
 * wget available from http://gnuwin32.sourceforge.net/packages/wget.htm
@@ -13,7 +13,7 @@ Build libraries needed to build iRIC on Windows
 * Add wget and 7-zip installation path to "Path" environment variable.
 * Tcl available from https://www.activestate.com/activetcl/downloads (if building cgns and hdf5 tools)
 
-## Build
+## Windows Build
 
     git clone https://github.com/scharlton2/iricdev.git iricdev_2013
     cd iricdev_2013
@@ -21,8 +21,43 @@ Build libraries needed to build iRIC on Windows
     build_2013.cmd  (or build_2013_w_tools.cmd to build cgns and hdf5 tools)
     copy paths.pri [prepost-gui-root]\.
     copy dirExt.prop [prepost-gui-root]\tools\data\.
-    create folder [prepost-gui-root]\libdlls\Debug.
-    create folder [prepost-gui-root]\libdlls\Release.
+    mkdir [prepost-gui-root]\libdlls\debug.
+    mkdir [prepost-gui-root]\libdlls\release.
     :: if building tools
     add install\cgnslib-[ver]\release\bin and install\hdf5-[ver]\release\bin to "Path"
-    
+
+## Linux Prerequisites:
+
+* C compiler
+* C++ compiler
+* cmake
+* wget
+* Qt 5.5 available from http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
+
+
+## Ubuntu 16.04.2 LTS Build (Full)
+
+* C compiler (gcc (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609)
+* C++ compiler (g++ (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609)
+* cmake (cmake version 3.5.1)
+* wget (GNU Wget 1.17.1 built on linux-gnu)
+* Qt 5.5 available from http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
+
+    git clone https://github.com/scharlton2/iricdev.git iricdev_gcc
+    cd iricdev_gcc
+    ./download.sh
+    ./build_gcc.sh
+
+## Linux GCC Build (tested using gcc (GCC) 4.4.7 20120313)
+
+    git clone https://github.com/scharlton2/iricdev.git iricdev_gcc
+    cd iricdev_gcc
+    ./download.sh
+    ./build_gcc.sh
+
+## Linux ICC Build (tested using icc (ICC) 17.0.2 20170213)
+
+    git clone https://github.com/scharlton2/iricdev.git iricdev_icc
+    cd iricdev_icc
+    ./download.sh
+    ./build_icc.sh

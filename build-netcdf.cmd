@@ -7,7 +7,7 @@ if [%GENERATOR%]==[] (
 )
 
 call versions.cmd
-set VER=%NETCDF-VER%
+set VER=%NETCDF_VER%
 
 if exist lib\src\netcdf-%VER%     rd /s /q lib\src\netcdf-%VER%
 if exist lib\build\netcdf-%VER%   rd /s /q lib\build\netcdf-%VER%
