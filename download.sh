@@ -18,7 +18,7 @@ if [ ! -f "cgnslib_${CGNSLIB_VER}.tar.gz" ]; then
 fi
 
 if [ ! -f "iriclib-${IRICLIB_VER:0:7}.zip" ]; then
-  wget --no-check-certificate https://github.com/scharlton2/iriclib-test/archive/${IRICLIB_VER}.zip --output-document=iriclib-${IRICLIB_VER:0:7}.zip
+  wget --no-check-certificate https://github.com/i-RIC/iriclib/archive/${IRICLIB_VER}.zip --output-document=iriclib-${IRICLIB_VER:0:7}.zip
 fi
 
 if [ ! -f "shapelib-${SHAPELIB_VER}.tar.gz" ]; then

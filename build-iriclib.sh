@@ -15,7 +15,7 @@ rm -rf lib/install/iriclib-${VER:0:7}
 mkdir -p lib/src
 cd lib/src
 unzip ../../iriclib-${VER:0:7}.zip
-mv iriclib-test-$VER iriclib-${VER:0:7}
+mv iriclib-$VER iriclib-${VER:0:7}
 cd ../..
 
 ctest -S build-iriclib.cmake -DCONF_DIR:STRING=debug   "-DCTEST_CMAKE_GENERATOR:STRING=$GENERATOR" -C Debug   -V -O $SGEN-iriclib-debug.log

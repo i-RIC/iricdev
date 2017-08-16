@@ -2,7 +2,7 @@
 VTK_VER=6.1.0
 HDF5_VER=1.8.14
 CGNSLIB_VER=3.2.1
-IRICLIB_VER=985bbf74f1a0c75e8a09b0387016765d366e5f3d
+IRICLIB_VER=$(git ls-remote https://github.com/i-RIC/iriclib.git HEAD | cut -f1)
 SHAPELIB_VER=1.3.0
 QWT_VER=6.1.3
 GDAL_VER=1.11.2
