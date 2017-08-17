@@ -10,7 +10,7 @@ if [%GENERATOR%]==[] (
 )
 
 call versions.cmd
-set VER=%YAML-CPP-VER%
+set VER=%YAML_CPP_VER%
 
 if exist lib\src\yaml-cpp-release-%VER% rd /s /q lib\src\yaml-cpp-release-%VER%
 if exist lib\src\yaml-cpp-%VER%         rd /s /q lib\src\yaml-cpp-%VER%

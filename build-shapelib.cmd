@@ -2,7 +2,7 @@
 setlocal enableextensions
 
 call versions.cmd
-set VER=%SHAPELIB-VER%
+set VER=%SHAPELIB_VER%
 
 if exist lib\src\shapelib-%VER%     rd /s /q lib\src\shapelib-%VER%
 if exist lib\build\shapelib-%VER%   rd /s /q lib\build\shapelib-%VER%
