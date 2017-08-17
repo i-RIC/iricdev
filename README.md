@@ -13,7 +13,7 @@ Build libraries needed to build iRIC on Linux and Windows
 * Tcl available from https://www.activestate.com/activetcl/downloads (if building cgns and hdf5 tools)
 
 ```
-git clone https://github.com/scharlton2/iricdev.git iricdev_2013
+git clone https://github.com/i-RIC/iricdev.git iricdev_2013
 cd iricdev_2013
 download.cmd
 build_2013.cmd  (or build_2013_w_tools.cmd to build cgns and hdf5 tools)
@@ -34,7 +34,7 @@ add install\cgnslib-[ver]\release\bin and install\hdf5-[ver]\release\bin to "Pat
 * Qt 5.5 available from http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
 
 ```
-git clone https://github.com/scharlton2/iricdev.git iricdev_gcc
+git clone https://github.com/i-RIC/iricdev.git iricdev_gcc
 cd iricdev_gcc
 ./download.sh
 ./build_gcc.sh
@@ -47,7 +47,7 @@ cd iricdev_gcc
 * wget (GNU Wget 1.12 built on linux-gnu)
 
 ```
-git clone https://github.com/scharlton2/iricdev.git iricdev_icc
+git clone https://github.com/i-RIC/iricdev.git iricdev_icc
 cd iricdev_icc
 ./download.sh
 ./build_icc.sh
