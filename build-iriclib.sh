@@ -18,5 +18,5 @@ unzip ../../iriclib-${VER:0:7}.zip
 mv iriclib-$VER iriclib-${VER:0:7}
 cd ../..
 
-ctest -S build-iriclib.cmake -DCONF_DIR:STRING=debug   "-DCTEST_CMAKE_GENERATOR:STRING=$GENERATOR" -C Debug   -V -O $SGEN-iriclib-debug.log
-ctest -S build-iriclib.cmake -DCONF_DIR:STRING=release "-DCTEST_CMAKE_GENERATOR:STRING=$GENERATOR" -C Release -V -O $SGEN-iriclib-release.log
+ctest -S build-iriclib.cmake -DCONF_DIR:STRING=debug   "-DCTEST_CMAKE_GENERATOR:STRING=$GENERATOR" -C Debug   -VV -O $SGEN-iriclib-debug.log
+ctest -S build-iriclib.cmake -DCONF_DIR:STRING=release "-DCTEST_CMAKE_GENERATOR:STRING=$GENERATOR" -C Release -VV -O $SGEN-iriclib-release.log
