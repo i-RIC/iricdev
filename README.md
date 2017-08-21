@@ -34,6 +34,7 @@ add install\cgnslib-[ver]\release\bin and install\hdf5-[ver]\release\bin to "Pat
 * Qt 5.5 available from http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
 
 ```
+sudo apt-get install gcc g++ cmake wget libxt-dev qt5-default qttools5-dev libqt5svg5-dev
 git clone https://github.com/i-RIC/iricdev.git iricdev_gcc
 cd iricdev_gcc
 ./download.sh
