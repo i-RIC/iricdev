@@ -7,7 +7,7 @@ if [%GENERATOR%]==[] (
 )
 
 call versions.cmd
-set VER=%GEOS-VER%
+set VER=%GEOS_VER%
 
 if exist lib\src\geos-%VER%     rd /s /q lib\src\geos-%VER%
 if exist lib\build\geos-%VER%   rd /s /q lib\build\geos-%VER%

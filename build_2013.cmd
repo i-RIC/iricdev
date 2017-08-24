@@ -9,7 +9,7 @@ popd
 set GENERATOR="Visual Studio 12 2013 Win64"
 set SGEN="vs2013-x64"
 
-call build-vtk.cmd
+REM call build-vtk.cmd
 call build-hdf5.cmd
 call build-cgnslib.cmd
 call build-iriclib.cmd

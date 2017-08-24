@@ -2,7 +2,7 @@
 setlocal enableextensions
 
 call versions.cmd
-set VER=%BOOST-VER%
+set VER=%BOOST_VER%
 set UVER=%BOOST_UVER%
 
 if exist lib\src\boost_%UVER% rd /s /q lib\src\boost_%UVER%
