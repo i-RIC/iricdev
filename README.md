@@ -31,7 +31,6 @@ add install\cgnslib-[ver]\release\bin and install\hdf5-[ver]\release\bin to "Pat
 * C++ compiler (g++ (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609)
 * cmake (cmake version 3.5.1)
 * wget (GNU Wget 1.17.1 built on linux-gnu)
-* Qt 5.5 available from http://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
 
 ```
 sudo apt-get install gcc g++ gfortran cmake wget libxt-dev qt5-default qttools5-dev libqt5svg5-dev m4
