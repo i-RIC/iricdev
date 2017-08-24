@@ -33,7 +33,7 @@ add install\cgnslib-[ver]\release\bin and install\hdf5-[ver]\release\bin to "Pat
 * wget (GNU Wget 1.17.1 built on linux-gnu)
 
 ```
-sudo apt-get install gcc g++ gfortran cmake wget libxt-dev qt5-default qttools5-dev libqt5svg5-dev m4
+sudo apt-get install gcc g++ gfortran cmake wget libxt-dev qt5-default qttools5-dev libqt5svg5-dev libqt5webkit5-dev m4
 git clone https://github.com/i-RIC/iricdev.git iricdev_gcc
 cd iricdev_gcc
 ./download.sh
