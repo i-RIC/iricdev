@@ -80,6 +80,9 @@ call versions.cmd
 @echo.# vtk
 @echo.INCLUDEPATH += "%topdir%lib/install/vtk-%VTK_VER%/debug/include/vtk-6.1"
 @echo.
+@echo.# hdf5
+@echo.INCLUDEPATH += "%topdir%lib/install/hdf5-%HDF5_VER%/release/include"
+@echo.
 @echo.# cgnslib
 @echo.INCLUDEPATH += "%topdir%lib/install/cgnslib-%CGNSLIB_VER%/debug/include"
 @echo.
