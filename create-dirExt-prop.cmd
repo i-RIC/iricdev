@@ -3,6 +3,9 @@ setlocal
 set topdir=%~dp0
 set topdir=%topdir:\=/%
 call versions.cmd
+if "%CGNSLIB_VER%"=="3.2.1" (
+  set CGNSLIB_VER=%CGNSLIB_VER%-patch1
+)
 @echo.[release]
 @echo.cgnslib  = %topdir%lib/install/cgnslib-%CGNSLIB_VER%/release/bin/
 @echo.gdal     = %topdir%lib/install/gdal-%GDAL_VER%/release/bin/
