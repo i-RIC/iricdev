@@ -1,6 +1,8 @@
 #!/bin/bash
 topdir=$(pwd)
 . ./versions.sh
+VTK_MAJOR=$(echo ${VTK_VER} | cut -d '.' -f 1)
+VTK_MINOR=$(echo ${VTK_VER} | cut -d '.' -f 2)
 echo "CONFIG(debug, debug|release) {"
 echo "	# gdal"
 echo "	LIBS += -L\"${topdir}/lib/install/gdal-${GDAL_VER}/lib\""
@@ -76,7 +78,7 @@ echo "# gdal"
 echo "INCLUDEPATH +=\"${topdir}/lib/install/gdal-${GDAL_VER}/include\""
 echo ""
 echo "# vtk"
-echo "INCLUDEPATH +=\"${topdir}/lib/install/vtk-${VTK_VER}/debug/include/vtk-6.1\""
+echo "INCLUDEPATH +=\"${topdir}/lib/install/vtk-${VTK_VER}/debug/include/vtk-${VTK_MAJOR}.${VTK_MINOR}\""
 echo ""
 echo "# hdf5"
 echo "INCLUDEPATH +=\"${topdir}/lib/install/hdf5-${HDF5_VER}/release/include\""
@@ -116,4 +118,5 @@ echo ""
 echo "target.path = /usr/local/iRIC"
 echo "INSTALLS += target"
 echo ""
-
+echo "VTK_MAJ_MIN=${VTK_MAJOR}.${VTK_MINOR}"
+echo ""
