@@ -6,6 +6,7 @@ call versions.cmd
 if "%CGNSLIB_VER%"=="3.2.1" (
   set CGNSLIB_VER=%CGNSLIB_VER%-patch1
 )
+for /f "tokens=1,2 delims=." %%a in ("%VTK_VER%") do set VTK_MAJ_MIN=%%a.%%b
 @echo.CONFIG^(debug, debug^|release^) {
 @echo.	# gdal
 @echo.	LIBS += -L"%topdir%lib/install/gdal-%GDAL_VER%/debug/lib"
@@ -81,7 +82,7 @@ if "%CGNSLIB_VER%"=="3.2.1" (
 @echo.INCLUDEPATH += "%topdir%lib/install/gdal-%GDAL_VER%/debug/include"
 @echo.
 @echo.# vtk
-@echo.INCLUDEPATH += "%topdir%lib/install/vtk-%VTK_VER%/debug/include/vtk-6.1"
+@echo.INCLUDEPATH += "%topdir%lib/install/vtk-%VTK_VER%/debug/include/vtk-%VTK_MAJ_MIN%"
 @echo.
 @echo.# hdf5
 @echo.INCLUDEPATH += "%topdir%lib/install/hdf5-%HDF5_VER%/release/include"
@@ -121,4 +122,5 @@ if "%CGNSLIB_VER%"=="3.2.1" (
 @echo.target.path = /usr/local/iRIC
 @echo.INSTALLS += target
 @echo.
+@echo.VTK_MAJ_MIN=%VTK_MAJ_MIN%
 endlocal

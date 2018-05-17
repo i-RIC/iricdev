@@ -1,6 +1,8 @@
 #!/bin/bash
 topdir=$(pwd)
 . ./versions.sh
+VTK_MAJOR=$(echo ${VTK_VER} | cut -d '.' -f 1)
+VTK_MINOR=$(echo ${VTK_VER} | cut -d '.' -f 2)
 echo "CONFIG(debug, debug|release) {"
 echo "	# gdal"
 echo "	LIBS += -L\"${topdir}/lib/install/gdal-${GDAL_VER}/lib\""
@@ -116,4 +118,5 @@ echo ""
 echo "target.path = /usr/local/iRIC"
 echo "INSTALLS += target"
 echo ""
-
+echo "VTK_MAJ_MIN=${VTK_MAJOR}.${VTK_MINOR}"
+echo ""
