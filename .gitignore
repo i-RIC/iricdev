@@ -4,6 +4,7 @@ boost_*.7z
 boost_*.tar.bz2
 cgnslib*.tar.gz
 dirExt.prop
+dirExt-debug-vtk-leaks.prop
 gdal-*.tar.gz
 geos-*.tar.bz2
 hdf5-*.tar.gz
@@ -13,6 +14,7 @@ lib
 netcdf-*.tar.gz
 netcdf-*.zip
 paths.pri
+paths-debug-vtk-leaks.pri
 proj-*.tar.gz
 proj-*.zip
 qwt-*.tar.bz2
