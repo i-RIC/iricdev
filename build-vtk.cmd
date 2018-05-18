@@ -15,7 +15,7 @@ if exist lib\install\VTK-%VER% rd /s /q lib\install\VTK-%VER%
 
 7z x VTK-%VER%.zip -o"lib\src"
 
-ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug   -DCTEST_CMAKE_GENERATOR:STRING=%GENERATOR% -C Debug   -VV -O %SGEN%-vtk-debug.log
-ctest -S build-vtk.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=%GENERATOR% -C Release -VV -O %SGEN%-vtk-release.log
-
+ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug           -DCTEST_CMAKE_GENERATOR:STRING=%GENERATOR% -C Debug   -VV -O %SGEN%-vtk-debug.log
+ctest -S build-vtk.cmake -DCONF_DIR:STRING=release         -DCTEST_CMAKE_GENERATOR:STRING=%GENERATOR% -C Release -VV -O %SGEN%-vtk-release.log
+ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug-vtk-leaks -DCTEST_CMAKE_GENERATOR:STRING=%GENERATOR% -C Debug   -VV -O %SGEN%-vtk-debug-vtk-leaks.log
 endlocal
