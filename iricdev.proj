@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="programs.prop" />
+
+  <PropertyGroup>
+    <INSTALL_DIR>lib\install</INSTALL_DIR>
+    <SRC_DIR>lib\src</SRC_DIR>
+  </PropertyGroup>  
+  
+  <PropertyGroup>
+    <VTK_MAJMIN>$([System.Text.RegularExpressions.Regex]::Match($(VTK_VER), `[0-9]\d*\.[0-9]\d*`))</VTK_MAJMIN>
+    <HDF5_MAJMIN>$([System.Text.RegularExpressions.Regex]::Match($(HDF5_VER), `[0-9]\d*\.[0-9]\d*`))</HDF5_MAJMIN>
+    <CGNSLIB_MAJMIN>$([System.Text.RegularExpressions.Regex]::Match($(CGNSLIB_VER), `[0-9]\d*\.[0-9]\d*`))</CGNSLIB_MAJMIN>
+    <CGNSLIB_VER Condition=" '$(CGNSLIB_VER)' == '3.2.1' " >$(CGNSLIB_VER)-patch1</CGNSLIB_VER>
+    <IRICLIB_SVER>$(IRICLIB_VER.SubString(0, 7))</IRICLIB_SVER>
+  </PropertyGroup>
+  
+  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;cgnslib-build;hdf5-build;geos-build;yaml-cpp-build;boost-src">
+    <Exec Command="create-files.cmd" />
+  </Target>
+  
+  <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download">
+  </Target>
+  
+  <!-- shapelib -->
+  
+  <Target Name="shapelib-build" DependsOnTargets="shapelib-build-debug;shapelib-build-release" />
+  
+  <Target Name="shapelib-build-release" DependsOnTargets="shapelib-src" Condition="!Exists('$(INSTALL_DIR)\shapelib-$(SHAPELIB_VER)\release')">
+    <Exec Command="nmake -f makefile.vc clean" WorkingDirectory="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)" />
+    <Exec Command="nmake -f makefile.vc" WorkingDirectory="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)" />    
+    <ItemGroup>
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\shapefil.h" />
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\*.exe" />
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\*.exp" />
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\*.dll" />
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\*.lib" />
+    </ItemGroup>
+    <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(INSTALL_DIR)\shapelib-$(SHAPELIB_VER)\release" />
+  </Target>
+  
+  <Target Name="shapelib-build-debug" DependsOnTargets="shapelib-src" Condition="!Exists('$(INSTALL_DIR)\shapelib-$(SHAPELIB_VER)\debug')">
+    <Exec Command="nmake -f makefile.vc clean" WorkingDirectory="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)" />
+    <Exec Command="nmake -f makefile.vc CFLAGS=&quot;/nologo /Ox /MDd /DSHAPELIB_DLLEXPORT&quot;" WorkingDirectory="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)" />    
+    <ItemGroup>
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\shapefil.h" />
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\*.exe" />
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\*.exp" />
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\*.dll" />
+      <OutputFiles Include="$(SRC_DIR)\shapelib-$(SHAPELIB_VER)\*.lib" />
+    </ItemGroup>
+    <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(INSTALL_DIR)\shapelib-$(SHAPELIB_VER)\debug" />
+  </Target>
+  
+  <Target Name="shapelib-src" DependsOnTargets="shapelib-download" Condition="!Exists('$(SRC_DIR)\shapelib-$(SHAPELIB_VER)')">
+    <Exec Command="7z x shapelib-$(SHAPELIB_VER).zip -o$(SRC_DIR)"/>
+  </Target>
+  
+  <Target Name="shapelib-download" Condition="!Exists('shapelib-$(SHAPELIB_VER).zip')">
+    <Message Text="Downloading shapelib-$(SHAPELIB_VER).zip" />
+    <Exec Command="$(CURL) http://download.osgeo.org/shapelib/shapelib-$(SHAPELIB_VER).zip" />
+  </Target> 
+  
+  <!-- qwt -->
+  
+  <Target Name="qwt-build" DependsOnTargets="qwt-src" Condition="!Exists('$(INSTALL_DIR)\qwt-$(QWT_VER)\lib')">
+    <PropertyGroup>
+      <topdir>$(MSBuildProjectDirectory)</topdir>
+    </PropertyGroup>
+    <Exec Command="qmake" WorkingDirectory="$(topdir)\$(SRC_DIR)\qwt-$(QWT_VER)" />
+    <Exec Command="nmake all" WorkingDirectory="$(topdir)\$(SRC_DIR)\qwt-$(QWT_VER)" />
+    <Exec Command="nmake install" WorkingDirectory="$(topdir)\$(SRC_DIR)\qwt-$(QWT_VER)" />
+    <Exec Command="move c:\Qwt-$(QWT_VER) $(INSTALL_DIR)\." />
+  </Target>  
+  
+  <Target Name="qwt-src" DependsOnTargets="qwt-download" Condition="!Exists('$(SRC_DIR)\qwt-$(QWT_VER)')">
+    <Exec Command="7z x qwt-$(QWT_VER).zip -o$(SRC_DIR)"/>
+  </Target>
+  
+  <Target Name="qwt-download" Condition="!Exists('qwt-$(QWT_VER).zip')">
+    <Message Text="Downloading qwt-$(QWT_VER).zip" />
+    <Exec Command="$(CURL) https://sourceforge.net/projects/qwt/files/qwt/$(QWT_VER)/qwt-$(QWT_VER).zip" />
+  </Target> 
+  
+  <!-- gdal -->
+  
+  <Target Name="gdal-build" DependsOnTargets="gdal-build-debug;gdal-build-release" />
+  
+  <Target Name="gdal-build-debug" DependsOnTargets="gdal-src" Condition="!Exists('$(INSTALL_DIR)\gdal-$(GDAL_VER)\debug')">
+    <PropertyGroup>
+      <topdir>$(MSBuildProjectDirectory)</topdir>
+    </PropertyGroup>
+    <Exec Command="rd /s /q c:\warmerda" Condition="Exists('c:\warmerda')" />    
+    <MakeDir Directories="c:\warmerda\bld" />
+    <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 clean" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="nmake -f makefile.vc DEBUG=1 WIN64=YES MSVC_VER=1800" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="nmake -f makefile.vc DEBUG=1 WIN64=YES MSVC_VER=1800 devinstall" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <MakeDir Directories="$(INSTALL_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="move c:\warmerda\bld $(INSTALL_DIR)\gdal-$(GDAL_VER)\." />
+    <Exec Command="ren $(INSTALL_DIR)\gdal-$(GDAL_VER)\bld debug" />
+    <Exec Command="rmdir c:\warmerda" />
+  </Target>  
+  
+  <Target Name="gdal-build-release" DependsOnTargets="gdal-src" Condition="!Exists('$(INSTALL_DIR)\gdal-$(GDAL_VER)\release')">
+    <PropertyGroup>
+      <topdir>$(MSBuildProjectDirectory)</topdir>
+    </PropertyGroup>
+    <Exec Command="rd /s /q c:\warmerda" Condition="Exists('c:\warmerda')" />    
+    <MakeDir Directories="c:\warmerda\bld" />
+    <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 clean" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 devinstall" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <MakeDir Directories="$(INSTALL_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="move c:\warmerda\bld $(INSTALL_DIR)\gdal-$(GDAL_VER)\." />
+    <Exec Command="ren $(INSTALL_DIR)\gdal-$(GDAL_VER)\bld release" />
+    <Exec Command="rmdir c:\warmerda" />
+  </Target>  
+  
+  <Target Name="gdal-src" DependsOnTargets="gdal-download" Condition="!Exists('$(SRC_DIR)\gdal-$(GDAL_VER)')">
+    <Exec Command="7z x gdal-$(GDAL_VER).tar.gz -so | 7z x -si -ttar -o$(SRC_DIR)"/>
+  </Target>
+  
+  <Target Name="gdal-download" Condition="!Exists('gdal-$(GDAL_VER).tar.gz')">
+    <Message Text="Downloading gdal-$(GDAL_VER).tar.gz" />
+    <Exec Command="$(CURL) http://download.osgeo.org/gdal/$(GDAL_VER)/gdal-$(GDAL_VER).tar.gz" />
+  </Target>
+  
+  <!-- vtk -->
+  
+  <Target Name="vtk-build" DependsOnTargets="vtk-build-debug;vtk-build-release;vtk-build-debug-leaks" />
+  
+  <Target Name="vtk-build-debug" DependsOnTargets="vtk-src" Condition="!Exists('$(INSTALL_DIR)\vtk-$(VTK_VER)\debug')">
+    <!-- export version than run ctest -->
+    <Exec Command="(set VTK_VER=$(VTK_VER)) &amp; ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-vtk-debug.log"/>
+  </Target>  
+  
+  <Target Name="vtk-build-release" DependsOnTargets="vtk-src" Condition="!Exists('$(INSTALL_DIR)\vtk-$(VTK_VER)\release')">
+    <!-- export version than run ctest -->
+    <Exec Command="(set VTK_VER=$(VTK_VER)) &amp; ctest -S build-vtk.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-vtk-release.log"/>
+  </Target>  
+  
+  <Target Name="vtk-build-debug-leaks" DependsOnTargets="vtk-src" Condition="!Exists('$(INSTALL_DIR)\vtk-$(VTK_VER)\debug-vtk-leaks')">
+    <!-- export version than run ctest -->
+    <Exec Command="(set VTK_VER=$(VTK_VER)) &amp; ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug-vtk-leaks -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-vtk-debug-leaks.log"/>
+  </Target>
+  
+  <Target Name="vtk-src" DependsOnTargets="vtk-download" Condition="!Exists('$(SRC_DIR)\VTK-$(VTK_VER)')">
+    <Exec Command="7z x VTK-$(VTK_VER).zip -o$(SRC_DIR)"/>
+  </Target>  
+  
+  <Target Name="vtk-download" Condition="!Exists('VTK-$(VTK_VER).zip')">
+    <Message Text="Downloading VTK-$(VTK_VER).zip" />
+    <Exec Command="$(CURL) https://www.vtk.org/files/release/$(VTK_MAJMIN)/VTK-$(VTK_VER).zip" />
+  </Target>
+
+  <!-- proj -->
+
+  <Target Name="proj-build" DependsOnTargets="proj-src" Condition="!Exists('$(INSTALL_DIR)\proj-$(PROJ_VER)\release')">
+    <PropertyGroup>
+      <topdir>$(MSBuildProjectDirectory)</topdir>
+    </PropertyGroup>
+    <Exec Command="nmake -f makefile.vc INSTDIR=$(topdir)\lib\install\proj-$(PROJ_VER)\release" WorkingDirectory="$(topdir)\$(SRC_DIR)\proj-$(PROJ_VER)"/>
+    <Exec Command="nmake -f makefile.vc INSTDIR=$(topdir)\lib\install\proj-$(PROJ_VER)\release install-all" WorkingDirectory="$(topdir)\$(SRC_DIR)\proj-$(PROJ_VER)"/>
+  </Target>
+  
+  <Target Name="proj-src" DependsOnTargets="proj-download" Condition="!Exists('$(SRC_DIR)\proj-$(PROJ_VER)')">
+    <Exec Command="7z x proj-$(PROJ_VER).zip -o$(SRC_DIR)"/>
+  </Target>
+  
+  <Target Name="proj-download" Condition="!Exists('proj-$(PROJ_VER).zip')">
+    <Message Text="Downloading proj-$(PROJ_VER).zip" />
+    <Exec Command="$(CURL) http://download.osgeo.org/proj/proj-$(PROJ_VER).zip" />
+  </Target>
+  
+  <!-- netcdf -->  
+  
+  <Target Name="netcdf-build" DependsOnTargets="netcdf-build-debug;netcdf-build-release" />
+  
+  <Target Name="netcdf-build-debug" DependsOnTargets="netcdf-src;hdf5-build-debug" Condition="!Exists('$(INSTALL_DIR)\netcdf-$(NETCDF_VER)\debug')">
+    <!-- export versions than run ctest -->
+    <Exec Command="(set NETCDF_VER=$(NETCDF_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-netcdf.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-netcdf-debug.log"/>
+  </Target>  
+  
+  <Target Name="netcdf-build-release" DependsOnTargets="netcdf-src;hdf5-build-release" Condition="!Exists('$(INSTALL_DIR)\netcdf-$(NETCDF_VER)\release')">
+    <!-- export versions than run ctest -->
+    <Exec Command="(set NETCDF_VER=$(NETCDF_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-netcdf.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-netcdf-release.log"/>
+  </Target>  
+  
+  <Target Name="netcdf-src" DependsOnTargets="netcdf-download" Condition="!Exists('$(SRC_DIR)\netcdf-$(NETCDF_VER)')">
+    <Exec Command="7z x netcdf-$(NETCDF_VER).zip -o$(SRC_DIR)" />
+  </Target>
+  
+  <Target Name="netcdf-download" Condition="!Exists('netcdf-$(NETCDF_VER).zip')">
+    <Message Text="Downloading netcdf-$(NETCDF_VER).zip" />
+    <Exec Command="$(CURL) ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-$(NETCDF_VER).zip" />
+  </Target>
+  
+  <!-- iriclib -->
+  
+  <Target Name="iriclib-build" DependsOnTargets="iriclib-build-debug;iriclib-build-release" />
+  
+  <Target Name="iriclib-build-debug" DependsOnTargets="iriclib-src;cgnslib-build-debug" Condition="!Exists('$(INSTALL_DIR)\iriclib-$(IRICLIB_SVER)\debug')">
+    <!-- export versions than run ctest -->
+    <Exec Command="(set IRICLIB_VER=$(IRICLIB_VER)) &amp; (set CGNSLIB_VER=$(CGNSLIB_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-iriclib.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-iriclib-debug.log"/>
+  </Target>
+  
+  <Target Name="iriclib-build-release" DependsOnTargets="iriclib-src;cgnslib-build-release" Condition="!Exists('$(INSTALL_DIR)\iriclib-$(IRICLIB_SVER)\release')">
+    <!-- export versions than run ctest -->
+    <Exec Command="(set IRICLIB_VER=$(IRICLIB_VER)) &amp; (set CGNSLIB_VER=$(CGNSLIB_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-iriclib.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-iriclib-release.log"/>
+  </Target>
+    
+  <Target Name="iriclib-src" DependsOnTargets="iriclib-download" Condition="!Exists('$(SRC_DIR)\iriclib-$(IRICLIB_SVER)')">
+    <Exec Command="7z x iriclib-$(IRICLIB_SVER).zip -o$(SRC_DIR)" />
+    <Exec Command="ren $(SRC_DIR)\iriclib-$(IRICLIB_VER) iriclib-$(IRICLIB_SVER)"/>    
+  </Target>
+
+  <Target Name="iriclib-download" Condition="!Exists('iriclib-$(IRICLIB_SVER).zip')">
+    <Message Text="Downloading iriclib_$(IRICLIB_SVER).zip" />
+    <Exec Command="$(CURL) https://github.com/i-RIC/iriclib/archive/$(IRICLIB_VER).zip" />
+    <Move SourceFiles="$(IRICLIB_VER).zip" DestinationFiles="iriclib-$(IRICLIB_SVER).zip"/>
+  </Target>
+  
+  <!-- cgnslib -->
+  
+  <Target Name="cgnslib-build" DependsOnTargets="cgnslib-build-debug;cgnslib-build-release" />
+  
+  <Target Name="cgnslib-build-debug" DependsOnTargets="cgnslib-src;hdf5-build-debug" Condition="!Exists('$(INSTALL_DIR)\cgnslib-$(CGNSLIB_VER)\debug')">
+    <!-- export versions than run ctest -->
+    <Exec Command="(set CGNSLIB_VER=$(CGNSLIB_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-cgnslib-debug.log"/>
+  </Target>
+  
+  <Target Name="cgnslib-build-release" DependsOnTargets="cgnslib-src;hdf5-build-release" Condition="!Exists('$(INSTALL_DIR)\cgnslib-$(CGNSLIB_VER)\release')">
+    <!-- export versions than run ctest -->
+    <Exec Command="(set CGNSLIB_VER=$(CGNSLIB_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-cgnslib-release.log"/>
+  </Target>
+    
+  <Target Name="cgnslib-src" DependsOnTargets="cgnslib-download" Condition="!Exists('$(SRC_DIR)\cgnslib-$(CGNSLIB_VER)')">
+    <Exec Command="7z x cgnslib_$(CGNSLIB_VER).tar.gz -so | 7z x -si -ttar -o$(SRC_DIR)" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch1' "/>
+    <Exec Command="git clone --branch v3.2.1-patch1 git@github.com:scharlton2/CGNS.git lib/src/cgnslib-$(CGNSLIB_VER)" Condition=" '$(CGNSLIB_VER)'=='3.2.1-patch1' "/>
+  </Target>  
+
+  <Target Name="cgnslib-download" Condition="!Exists('cgnslib_$(CGNSLIB_VER).tar.gz')">
+    <Message Text="Downloading cgnslib_$(CGNSLIB_VER).tar.gz" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch1' "/>
+    <Exec Command="$(CURL) https://downloads.sourceforge.net/project/cgns/cgnslib_$(CGNSLIB_MAJMIN)/cgnslib_$(CGNSLIB_VER).tar.gz" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch1' "/>
+  </Target>
+  
+  <!-- hdf5 -->
+  
+  <Target Name="hdf5-build" DependsOnTargets="hdf5-build-debug;hdf5-build-release" />
+  
+  <Target Name="hdf5-build-debug" DependsOnTargets="hdf5-src" Condition="!Exists('$(INSTALL_DIR)\hdf5-$(HDF5_VER)\debug')">
+    <!-- export version than run ctest -->
+    <Exec Command="(set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-hdf5.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-hdf5-debug.log"/>
+  </Target>
+  
+  <Target Name="hdf5-build-release" DependsOnTargets="hdf5-src" Condition="!Exists('$(INSTALL_DIR)\hdf5-$(HDF5_VER)\release')">
+    <!-- export version than run ctest -->
+    <Exec Command="(set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-hdf5.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-hdf5-release.log"/>
+  </Target>
+  
+  <Target Name="hdf5-src" DependsOnTargets="hdf5-download" Condition="!Exists('$(SRC_DIR)\hdf5-$(HDF5_VER)')">
+    <Exec Command="7z x hdf5-$(HDF5_VER).zip -o$(SRC_DIR)" />
+  </Target>
+  
+  <Target Name="hdf5-download" Condition="!Exists('hdf5-$(HDF5_VER).zip')">
+    <Message Text="Downloading hdf5-$(HDF5_VER).zip" />
+    <Exec Command="$(CURL) https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-$(HDF5_MAJMIN)/hdf5-$(HDF5_VER)/cmake/SZip.tar.gz" />
+    <Exec Command="$(CURL) https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-$(HDF5_MAJMIN)/hdf5-$(HDF5_VER)/cmake/ZLib.tar.gz" />
+    <Exec Command="$(CURL) https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-$(HDF5_MAJMIN)/hdf5-$(HDF5_VER)/src/hdf5-$(HDF5_VER).zip" />
+  </Target>
+
+  <!-- geos -->
+  
+  <Target Name="geos-build" DependsOnTargets="geos-build-debug;geos-build-release" />
+  
+  <Target Name="geos-build-debug" DependsOnTargets="geos-src" Condition="!Exists('$(INSTALL_DIR)\geos-$(GEOS_VER)\debug')">
+    <Exec Command="(set GEOS_VER=$(GEOS_VER)) &amp; ctest -S build-geos.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-geos-debug.log"/>
+  </Target>  
+  
+  <Target Name="geos-build-release" DependsOnTargets="geos-src" Condition="!Exists('$(INSTALL_DIR)\geos-$(GEOS_VER)\release')">
+    <!-- export version than run ctest -->
+    <Exec Command="(set GEOS_VER=$(GEOS_VER)) &amp; ctest -S build-geos.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-geos-release.log"/>
+  </Target>
+  
+  <Target Name="geos-src" DependsOnTargets="geos-download" Condition="!Exists('$(SRC_DIR)\geos-$(GEOS_VER)')">
+    <Exec Command="7z x geos-$(GEOS_VER).tar.bz2 -so | 7z x -si -ttar -o$(SRC_DIR)"/>
+  </Target>
+  
+  <Target Name="geos-download" Condition="!Exists('geos-$(GEOS_VER).tar.bz2')">
+    <Message Text="Downloading geos-$(GEOS_VER).tar.bz2" />
+    <Exec Command="$(CURL) http://download.osgeo.org/geos/geos-$(GEOS_VER).tar.bz2" />
+  </Target>  
+  
+  <!-- yaml-cpp -->
+  
+  <Target Name="yaml-cpp-build" DependsOnTargets="yaml-cpp-build-debug;yaml-cpp-build-release" />
+  
+  <Target Name="yaml-cpp-build-debug" DependsOnTargets="yaml-cpp-src;boost-src" Condition="!Exists('$(INSTALL_DIR)\yaml-cpp-$(YAML_CPP_VER)\debug')">
+    <!-- export versions than run ctest -->
+    <Exec Command="(set YAML_CPP_VER=$(YAML_CPP_VER)) &amp; (set BOOST_VER=$(BOOST_VER)) &amp; ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-yaml-cpp-debug.log"/>
+  </Target>  
+  
+  <Target Name="yaml-cpp-build-release" DependsOnTargets="yaml-cpp-src;boost-src" Condition="!Exists('$(INSTALL_DIR)\yaml-cpp-$(YAML_CPP_VER)\release')">
+    <!-- export versions than run ctest -->
+    <Exec Command="(set YAML_CPP_VER=$(YAML_CPP_VER)) &amp; (set BOOST_VER=$(BOOST_VER)) &amp; ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-yaml-cpp-release.log"/>
+  </Target>
+  
+  <Target Name="yaml-cpp-src" DependsOnTargets="yaml-cpp-download" Condition="!Exists('$(SRC_DIR)\yaml-cpp-$(YAML_CPP_VER)')">
+    <Exec Command="7z x yaml-cpp-release-$(YAML_CPP_VER).zip -o$(SRC_DIR)"/>
+    <Exec Command="ren $(SRC_DIR)\yaml-cpp-release-$(YAML_CPP_VER) yaml-cpp-$(YAML_CPP_VER)"/>
+  </Target>
+  
+  <Target Name="yaml-cpp-download" Condition="!Exists('yaml-cpp-release-$(YAML_CPP_VER).zip')">
+    <Message Text="Downloading release-$(YAML_CPP_VER).zip" />
+    <Exec Command="$(CURL) https://github.com/jbeder/yaml-cpp/archive/release-$(YAML_CPP_VER).zip" />
+    <Copy SourceFiles="release-$(YAML_CPP_VER).zip" DestinationFiles="yaml-cpp-release-$(YAML_CPP_VER).zip" />
+    <Delete Files="release-$(YAML_CPP_VER).zip" />
+  </Target>
+
+  <!-- boost -->
+  
+  <Target Name="boost-src" DependsOnTargets="boost-download" Condition="!Exists('$(SRC_DIR)\boost-$(BOOST_VER)')">
+    <Exec Command="7z x boost_$(BOOST_UVER).7z -o$(SRC_DIR)"/>
+    <Exec Command="ren $(SRC_DIR)\boost_$(BOOST_UVER) boost-$(BOOST_VER)"/>
+  </Target>
+  
+  <Target Name="boost-download" Condition="!Exists('boost_$(BOOST_UVER).7z')">
+    <Message Text="Downloading boost_$(BOOST_UVER).7z" />
+    <Exec Command="$(CURL) https://sourceforge.net/projects/boost/files/boost/$(BOOST_VER)/boost_$(BOOST_UVER).7z" />
+  </Target>
+  
+  <!-- dump variables -->
+
+  <Target Name="dump">
+    <Message Text="BOOST_UVER=$(BOOST_UVER)" />
+    <Message Text="BOOST_VER=$(BOOST_VER)" />
+    <Message Text="BUILD_TOOLS=$(BUILD_TOOLS)" />
+    <Message Text="CGNSLIB_MAJMIN=$(CGNSLIB_MAJMIN)" />
+    <Message Text="CGNSLIB_VER=$(CGNSLIB_VER)" />
+    <Message Text="CURL=$(CURL)" />
+    <Message Text="GDAL_VER=$(GDAL_VER)" />
+    <Message Text="GEOS_VER=$(GEOS_VER)" />
+    <Message Text="HDF5_MAJMIN=$(HDF5_MAJMIN)" />
+    <Message Text="HDF5_VER=$(HDF5_VER)" />
+    <Message Text="INSTALL_DIR=$(INSTALL_DIR)" />
+    <Message Text="IRICLIB_SVER=$(IRICLIB_SVER)" />
+    <Message Text="IRICLIB_VER=$(IRICLIB_VER)" />
+    <Message Text="NETCDF_VER=$(NETCDF_VER)" />
+    <Message Text="PROJ_VER=$(PROJ_VER)" />
+    <Message Text="QWT_VER=$(QWT_VER)" />
+    <Message Text="SHAPELIB_VER=$(SHAPELIB_VER)" />
+    <Message Text="SRC_DIR=$(SRC_DIR)" />
+    <Message Text="VTK_MAJMIN=$(VTK_MAJMIN)" />
+    <Message Text="VTK_VER=$(VTK_VER)" />
+    <Message Text="YAML_CPP_VER=$(YAML_CPP_VER)" />
+  </Target>
+
+</Project>

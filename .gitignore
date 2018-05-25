@@ -15,6 +15,7 @@ netcdf-*.tar.gz
 netcdf-*.zip
 paths.pri
 paths-debug-vtk-leaks.pri
+programs.prop
 proj-*.tar.gz
 proj-*.zip
 qwt-*.tar.bz2
