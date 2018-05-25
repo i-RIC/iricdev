@@ -25,3 +25,8 @@ set BOOST_UVER=%BOOST_VER:.=_%
 if [%BUILD_TOOLS%]==[] (
   set BUILD_TOOLS="OFF"
 )
+
+:: nmake cannot create environment variables
+set GENERATOR=Visual Studio 12 2013 Win64
+set SGEN=vs2013-x64
+set VERSIONS_CMD_RUN=YES
