@@ -18,7 +18,7 @@ git clone https://github.com/i-RIC/iricdev.git iricdev_2013
 cd iricdev_2013
 ```
 
-### copy programs_std.prop to programs.prop and make any necessary changes (ie path to git curl program)
+copy programs_std.prop to programs.prop and make any necessary changes (ie path to git curl program)
 
 ### in a VS2013 x64 Native Tools Command Prompt
 ```
