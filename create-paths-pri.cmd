@@ -4,7 +4,7 @@ set topdir=%~dp0
 set topdir=%topdir:\=/%
 call versions.cmd
 if "%CGNSLIB_VER%"=="3.2.1" (
-  set CGNSLIB_VER=%CGNSLIB_VER%-patch1
+  set CGNSLIB_VER=%CGNSLIB_VER%-patch2
 )
 for /f "tokens=1,2 delims=." %%a in ("%VTK_VER%") do set VTK_MAJ_MIN=%%a.%%b
 @echo.CONFIG^(debug, debug^|release^) {
