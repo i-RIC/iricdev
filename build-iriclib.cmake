@@ -6,7 +6,7 @@ set(VER "$ENV{IRICLIB_VER}")
 string(SUBSTRING ${VER} 0 7 SVER)
 set(CGNS_VER "$ENV{CGNSLIB_VER}")
 set(HDF5_VER "$ENV{HDF5_VER}")
-if(${CGNS_VER} STREQUAL "3.2.1")
+if(WIN32 AND ${CGNS_VER} STREQUAL "3.2.1")
   set(CGNS_VER "$ENV{CGNSLIB_VER}-patch2")
 endif()
 
