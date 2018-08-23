@@ -4,7 +4,7 @@ set topdir=%~dp0
 set topdir=%topdir:\=/%
 call versions.cmd
 if "%CGNSLIB_VER%"=="3.2.1" (
-  set CGNSLIB_VER=%CGNSLIB_VER%-patch1
+  set CGNSLIB_VER=%CGNSLIB_VER%-patch2
 )
 for /f "tokens=1,2 delims=." %%a in ("%VTK_VER%") do set VTK_MAJ_MIN=%%a.%%b
 @echo.CONFIG^(debug, debug^|release^) {
@@ -12,7 +12,11 @@ for /f "tokens=1,2 delims=." %%a in ("%VTK_VER%") do set VTK_MAJ_MIN=%%a.%%b
 @echo.	LIBS += -L"%topdir%lib/install/gdal-%GDAL_VER%/debug/lib"
 @echo.
 @echo.	# vtk
-@echo.	LIBS += -L"%topdir%lib/install/vtk-%VTK_VER%/debug/lib"
+if "%DEBUG_LEAKS%"=="YES" (
+  @echo.	LIBS += -L"%topdir%lib/install/vtk-%VTK_VER%/debug-vtk-leaks/lib"
+) else (
+  @echo.	LIBS += -L"%topdir%lib/install/vtk-%VTK_VER%/debug/lib"
+)
 @echo.
 @echo.	# cgnslib
 @echo.	LIBS += -L"%topdir%lib/install/cgnslib-%CGNSLIB_VER%/debug/lib"
@@ -82,7 +86,11 @@ for /f "tokens=1,2 delims=." %%a in ("%VTK_VER%") do set VTK_MAJ_MIN=%%a.%%b
 @echo.INCLUDEPATH += "%topdir%lib/install/gdal-%GDAL_VER%/debug/include"
 @echo.
 @echo.# vtk
-@echo.INCLUDEPATH += "%topdir%lib/install/vtk-%VTK_VER%/debug/include/vtk-%VTK_MAJ_MIN%"
+if "%DEBUG_LEAKS%"=="YES" (
+  @echo.INCLUDEPATH += "%topdir%lib/install/vtk-%VTK_VER%/debug-vtk-leaks/include/vtk-%VTK_MAJ_MIN%"
+) else (
+  @echo.INCLUDEPATH += "%topdir%lib/install/vtk-%VTK_VER%/debug/include/vtk-%VTK_MAJ_MIN%"
+)
 @echo.
 @echo.# hdf5
 @echo.INCLUDEPATH += "%topdir%lib/install/hdf5-%HDF5_VER%/release/include"

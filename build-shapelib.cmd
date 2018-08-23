@@ -10,7 +10,7 @@ if exist lib\install\shapelib-%VER% rd /s /q lib\install\shapelib-%VER%
 
 7z x shapelib-%VER%.zip -o"lib\src"
 
-# build and install release
+:: build and install release
 pushd .
 cd lib\src\shapelib-%VER%
 nmake -f makefile.vc
@@ -22,7 +22,7 @@ copy *.dll ..\..\install\shapelib-%VER%\release
 copy *.lib ..\..\install\shapelib-%VER%\release
 popd
 
-# build and install debug
+:: build and install debug
 pushd .
 cd lib\src\shapelib-%VER%
 nmake -f makefile.vc clean

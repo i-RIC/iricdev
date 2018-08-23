@@ -10,7 +10,7 @@ if exist lib\install\qwt-%VER% rd /s /q lib\install\qwt-%VER%
 
 7z x qwt-%VER%.zip -o"lib\src"
 
-# build and install debug
+:: build and install debug
 pushd lib\src\qwt-%VER%
 qmake
 nmake all
