@@ -6,7 +6,7 @@ set VTK_VER=6.1.0
 REM set HDF5_VER=1.8.13
 set HDF5_VER=1.8.14
 set CGNSLIB_VER=3.2.1
-for /f %%h in ('git ls-remote https://github.com/kskinoue0612/iriclib.git flush_fix') do set IRICLIB_VER=%%h
+for /f %%h in ('git ls-remote https://github.com/i-RIC/iriclib.git HEAD') do set IRICLIB_VER=%%h
 set SHAPELIB_VER=1.3.0
 REM set QWT_VER=6.1.0
 set QWT_VER=6.1.3
@@ -18,10 +18,13 @@ REM set GEOS_VER=3.4.2
 set GEOS_VER=3.4.3
 set BOOST_VER=1.59.0
 set YAML_CPP_VER=0.5.2
+set EXPAT_VER=2.2.6
+set UDUNITS_VER=2.2.26
 REM
 REM replace . with _
 REM
 set BOOST_UVER=%BOOST_VER:.=_%
+set EXPAT_UVER=R_%EXPAT_VER:.=_%
 if [%BUILD_TOOLS%]==[] (
   set BUILD_TOOLS="OFF"
 )

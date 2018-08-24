@@ -4,7 +4,7 @@ set(CTEST_SITE "$ENV{COMPUTERNAME}")
 
 set(VER "$ENV{CGNSLIB_VER}")
 if(WIN32 AND "${VER}" STREQUAL "3.2.1")
-  set(VER "$ENV{CGNSLIB_VER}-patch2")
+  set(VER "$ENV{CGNSLIB_VER}-patch1")
 endif()
 set(HDF5_VER "$ENV{HDF5_VER}")
 set(CTEST_SOURCE_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/src/cgnslib-${VER}")
