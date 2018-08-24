@@ -19,7 +19,7 @@
     <Exec Command="create-files.cmd" />
   </Target>
   
-  <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download">
+  <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download;expat-download;udunits-download">
   </Target>
   
   <!-- shapelib -->
@@ -129,18 +129,15 @@
   <Target Name="vtk-build" DependsOnTargets="vtk-build-debug;vtk-build-release;vtk-build-debug-leaks" />
   
   <Target Name="vtk-build-debug" DependsOnTargets="vtk-src" Condition="!Exists('$(INSTALL_DIR)\vtk-$(VTK_VER)\debug')">
-    <!-- export version than run ctest -->
-    <Exec Command="(set VTK_VER=$(VTK_VER)) &amp; ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-vtk-debug.log"/>
+    <Exec Command="ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-vtk-debug.log"/>
   </Target>  
   
   <Target Name="vtk-build-release" DependsOnTargets="vtk-src" Condition="!Exists('$(INSTALL_DIR)\vtk-$(VTK_VER)\release')">
-    <!-- export version than run ctest -->
-    <Exec Command="(set VTK_VER=$(VTK_VER)) &amp; ctest -S build-vtk.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-vtk-release.log"/>
+    <Exec Command="ctest -S build-vtk.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-vtk-release.log"/>
   </Target>  
   
   <Target Name="vtk-build-debug-leaks" DependsOnTargets="vtk-src" Condition="!Exists('$(INSTALL_DIR)\vtk-$(VTK_VER)\debug-vtk-leaks')">
-    <!-- export version than run ctest -->
-    <Exec Command="(set VTK_VER=$(VTK_VER)) &amp; ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug-vtk-leaks -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-vtk-debug-leaks.log"/>
+    <Exec Command="ctest -S build-vtk.cmake -DCONF_DIR:STRING=debug-vtk-leaks -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-vtk-debug-leaks.log"/>
   </Target>
   
   <Target Name="vtk-src" DependsOnTargets="vtk-download" Condition="!Exists('$(SRC_DIR)\VTK-$(VTK_VER)')">
@@ -176,13 +173,11 @@
   <Target Name="netcdf-build" DependsOnTargets="netcdf-build-debug;netcdf-build-release" />
   
   <Target Name="netcdf-build-debug" DependsOnTargets="netcdf-src;hdf5-build-debug" Condition="!Exists('$(INSTALL_DIR)\netcdf-$(NETCDF_VER)\debug')">
-    <!-- export versions than run ctest -->
-    <Exec Command="(set NETCDF_VER=$(NETCDF_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-netcdf.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-netcdf-debug.log"/>
+    <Exec Command="ctest -S build-netcdf.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-netcdf-debug.log"/>
   </Target>  
   
   <Target Name="netcdf-build-release" DependsOnTargets="netcdf-src;hdf5-build-release" Condition="!Exists('$(INSTALL_DIR)\netcdf-$(NETCDF_VER)\release')">
-    <!-- export versions than run ctest -->
-    <Exec Command="(set NETCDF_VER=$(NETCDF_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-netcdf.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-netcdf-release.log"/>
+    <Exec Command="ctest -S build-netcdf.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-netcdf-release.log"/>
   </Target>  
   
   <Target Name="netcdf-src" DependsOnTargets="netcdf-download" Condition="!Exists('$(SRC_DIR)\netcdf-$(NETCDF_VER)')">
@@ -199,13 +194,11 @@
   <Target Name="iriclib-build" DependsOnTargets="iriclib-build-debug;iriclib-build-release" />
   
   <Target Name="iriclib-build-debug" DependsOnTargets="iriclib-src;cgnslib-build-debug" Condition="!Exists('$(INSTALL_DIR)\iriclib-$(IRICLIB_SVER)\debug')">
-    <!-- export versions than run ctest -->
-    <Exec Command="(set IRICLIB_VER=$(IRICLIB_VER)) &amp; (set CGNSLIB_VER=$(CGNSLIB_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-iriclib.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-iriclib-debug.log"/>
+    <Exec Command="ctest -S build-iriclib.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-iriclib-debug.log"/>
   </Target>
   
   <Target Name="iriclib-build-release" DependsOnTargets="iriclib-src;cgnslib-build-release" Condition="!Exists('$(INSTALL_DIR)\iriclib-$(IRICLIB_SVER)\release')">
-    <!-- export versions than run ctest -->
-    <Exec Command="(set IRICLIB_VER=$(IRICLIB_VER)) &amp; (set CGNSLIB_VER=$(CGNSLIB_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-iriclib.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-iriclib-release.log"/>
+    <Exec Command="ctest -S build-iriclib.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-iriclib-release.log"/>
   </Target>
     
   <Target Name="iriclib-src" DependsOnTargets="iriclib-download" Condition="!Exists('$(SRC_DIR)\iriclib-$(IRICLIB_SVER)')">
@@ -224,13 +217,11 @@
   <Target Name="cgnslib-build" DependsOnTargets="cgnslib-build-debug;cgnslib-build-release" />
   
   <Target Name="cgnslib-build-debug" DependsOnTargets="cgnslib-src;hdf5-build-debug" Condition="!Exists('$(INSTALL_DIR)\cgnslib-$(CGNSLIB_VER)\debug')">
-    <!-- export versions than run ctest -->
-    <Exec Command="(set CGNSLIB_VER=$(CGNSLIB_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-cgnslib-debug.log"/>
+    <Exec Command="ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-cgnslib-debug.log"/>
   </Target>
   
   <Target Name="cgnslib-build-release" DependsOnTargets="cgnslib-src;hdf5-build-release" Condition="!Exists('$(INSTALL_DIR)\cgnslib-$(CGNSLIB_VER)\release')">
-    <!-- export versions than run ctest -->
-    <Exec Command="(set CGNSLIB_VER=$(CGNSLIB_VER)) &amp; (set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-cgnslib-release.log"/>
+    <Exec Command="ctest -S build-cgnslib.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-cgnslib-release.log"/>
   </Target>
     
   <Target Name="cgnslib-src" DependsOnTargets="cgnslib-download" Condition="!Exists('$(SRC_DIR)\cgnslib-$(CGNSLIB_VER)')">
@@ -248,13 +239,11 @@
   <Target Name="hdf5-build" DependsOnTargets="hdf5-build-debug;hdf5-build-release" />
   
   <Target Name="hdf5-build-debug" DependsOnTargets="hdf5-src" Condition="!Exists('$(INSTALL_DIR)\hdf5-$(HDF5_VER)\debug')">
-    <!-- export version than run ctest -->
-    <Exec Command="(set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-hdf5.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-hdf5-debug.log"/>
+    <Exec Command="ctest -S build-hdf5.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-hdf5-debug.log"/>
   </Target>
   
   <Target Name="hdf5-build-release" DependsOnTargets="hdf5-src" Condition="!Exists('$(INSTALL_DIR)\hdf5-$(HDF5_VER)\release')">
-    <!-- export version than run ctest -->
-    <Exec Command="(set HDF5_VER=$(HDF5_VER)) &amp; ctest -S build-hdf5.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-hdf5-release.log"/>
+    <Exec Command="ctest -S build-hdf5.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-hdf5-release.log"/>
   </Target>
   
   <Target Name="hdf5-src" DependsOnTargets="hdf5-download" Condition="!Exists('$(SRC_DIR)\hdf5-$(HDF5_VER)')">
@@ -273,12 +262,11 @@
   <Target Name="geos-build" DependsOnTargets="geos-build-debug;geos-build-release" />
   
   <Target Name="geos-build-debug" DependsOnTargets="geos-src" Condition="!Exists('$(INSTALL_DIR)\geos-$(GEOS_VER)\debug')">
-    <Exec Command="(set GEOS_VER=$(GEOS_VER)) &amp; ctest -S build-geos.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-geos-debug.log"/>
+    <Exec Command="ctest -S build-geos.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-geos-debug.log"/>
   </Target>  
   
   <Target Name="geos-build-release" DependsOnTargets="geos-src" Condition="!Exists('$(INSTALL_DIR)\geos-$(GEOS_VER)\release')">
-    <!-- export version than run ctest -->
-    <Exec Command="(set GEOS_VER=$(GEOS_VER)) &amp; ctest -S build-geos.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-geos-release.log"/>
+    <Exec Command="ctest -S build-geos.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-geos-release.log"/>
   </Target>
   
   <Target Name="geos-src" DependsOnTargets="geos-download" Condition="!Exists('$(SRC_DIR)\geos-$(GEOS_VER)')">
@@ -295,13 +283,11 @@
   <Target Name="yaml-cpp-build" DependsOnTargets="yaml-cpp-build-debug;yaml-cpp-build-release" />
   
   <Target Name="yaml-cpp-build-debug" DependsOnTargets="yaml-cpp-src;boost-src" Condition="!Exists('$(INSTALL_DIR)\yaml-cpp-$(YAML_CPP_VER)\debug')">
-    <!-- export versions than run ctest -->
-    <Exec Command="(set YAML_CPP_VER=$(YAML_CPP_VER)) &amp; (set BOOST_VER=$(BOOST_VER)) &amp; ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-yaml-cpp-debug.log"/>
+    <Exec Command="ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-yaml-cpp-debug.log"/>
   </Target>  
   
   <Target Name="yaml-cpp-build-release" DependsOnTargets="yaml-cpp-src;boost-src" Condition="!Exists('$(INSTALL_DIR)\yaml-cpp-$(YAML_CPP_VER)\release')">
-    <!-- export versions than run ctest -->
-    <Exec Command="(set YAML_CPP_VER=$(YAML_CPP_VER)) &amp; (set BOOST_VER=$(BOOST_VER)) &amp; ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-yaml-cpp-release.log"/>
+    <Exec Command="ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-yaml-cpp-release.log"/>
   </Target>
   
   <Target Name="yaml-cpp-src" DependsOnTargets="yaml-cpp-download" Condition="!Exists('$(SRC_DIR)\yaml-cpp-$(YAML_CPP_VER)')">
@@ -333,12 +319,11 @@
   <Target Name="expat-build" DependsOnTargets="expat-build-debug;expat-build-release" />
   
   <Target Name="expat-build-debug" DependsOnTargets="expat-src" Condition="!Exists('$(INSTALL_DIR)\expat-$(EXPAT_VER)\debug')">
-    <Exec Command="(set EXPAT_VER=$(EXPAT_VER)) &amp; ctest -S build-expat.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-expat-debug.log"/>
+    <Exec Command="ctest -S build-expat.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-expat-debug.log"/>
   </Target>  
   
   <Target Name="expat-build-release" DependsOnTargets="expat-src" Condition="!Exists('$(INSTALL_DIR)\expat-$(EXPAT_VER)\release')">
-    <!-- export version than run ctest -->
-    <Exec Command="(set EXPAT_VER=$(EXPAT_VER)) &amp; ctest -S build-expat.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-expat-release.log"/>
+    <Exec Command="ctest -S build-expat.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-expat-release.log"/>
   </Target>
   
   <Target Name="expat-src" DependsOnTargets="expat-download" Condition="!Exists('$(SRC_DIR)\expat-$(EXPAT_VER)')">
@@ -352,17 +337,16 @@
     <Move SourceFiles="$(EXPAT_UVER).zip" DestinationFiles="expat-$(EXPAT_VER).zip"/>
   </Target>
 
-<!-- udunits -->
+  <!-- udunits -->
 
   <Target Name="udunits-build" DependsOnTargets="udunits-build-debug;udunits-build-release" />
 
-  <Target Name="udunits-build-debug" DependsOnTargets="udunits-src" Condition="!Exists('$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\debug')">
-    <Exec Command="(set UDUNITS_VER=$(UDUNITS_VER)) &amp; ctest -S build-udunits.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-udunits-debug.log"/>
+  <Target Name="udunits-build-debug" DependsOnTargets="udunits-src;expat-build-debug" Condition="!Exists('$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\debug')">
+    <Exec Command="ctest -S build-udunits.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-udunits-debug.log"/>
   </Target>
 
-  <Target Name="udunits-build-release" DependsOnTargets="udunits-src" Condition="!Exists('$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\release')">
-    <!-- export version than run ctest -->
-    <Exec Command="(set UDUNITS_VER=$(UDUNITS_VER)) &amp; ctest -S build-usunits.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-udunits-release.log"/>
+  <Target Name="udunits-build-release" DependsOnTargets="udunits-src;expat-build-release" Condition="!Exists('$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\release')">
+    <Exec Command="ctest -S build-udunits.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-udunits-release.log"/>
   </Target>
 
   <Target Name="udunits-src" DependsOnTargets="udunits-download" Condition="!Exists('$(SRC_DIR)\udunits-$(UDUNITS_VER)')">
