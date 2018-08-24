@@ -5,6 +5,7 @@ boost_*.tar.bz2
 cgnslib*.tar.gz
 dirExt.prop
 dirExt-debug-vtk-leaks.prop
+expat-*.zip
 gdal-*.tar.gz
 geos-*.tar.bz2
 hdf5-*.tar.gz
@@ -23,6 +24,7 @@ qwt-*.zip
 shapelib-*.tar.gz
 shapelib-*.zip
 SZip.tar.gz
+udunits-*.tar.gz
 VTK-*.tar.gz
 VTK-*.zip
 yaml-cpp-*.tar.gz

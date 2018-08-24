@@ -21,6 +21,8 @@ call build-netcdf.cmd
 call build-geos.cmd
 call build-boost.cmd
 call build-yaml-cpp.cmd
+call build-expat.cmd
+call build-udunits.cmd
 
 call create-files.cmd
 
