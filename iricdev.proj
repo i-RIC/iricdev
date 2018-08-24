@@ -70,7 +70,8 @@
     <Exec Command="qmake" WorkingDirectory="$(topdir)\$(SRC_DIR)\qwt-$(QWT_VER)" />
     <Exec Command="nmake all" WorkingDirectory="$(topdir)\$(SRC_DIR)\qwt-$(QWT_VER)" />
     <Exec Command="nmake install" WorkingDirectory="$(topdir)\$(SRC_DIR)\qwt-$(QWT_VER)" />
-    <Exec Command="move c:\Qwt-$(QWT_VER) $(INSTALL_DIR)\." />
+    <Exec Command="xcopy c:\Qwt-$(QWT_VER) $(INSTALL_DIR)\Qwt-$(QWT_VER) /I/S/E" />
+    <Exec Command="rmdir /q /s c:\Qwt-$(QWT_VER)" />
   </Target>  
   
   <Target Name="qwt-src" DependsOnTargets="qwt-download" Condition="!Exists('$(SRC_DIR)\qwt-$(QWT_VER)')">
@@ -96,9 +97,8 @@
     <Exec Command="nmake -f makefile.vc DEBUG=1 WIN64=YES MSVC_VER=1800" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
     <Exec Command="nmake -f makefile.vc DEBUG=1 WIN64=YES MSVC_VER=1800 devinstall" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
     <MakeDir Directories="$(INSTALL_DIR)\gdal-$(GDAL_VER)" />
-    <Exec Command="move c:\warmerda\bld $(INSTALL_DIR)\gdal-$(GDAL_VER)\." />
-    <Exec Command="ren $(INSTALL_DIR)\gdal-$(GDAL_VER)\bld debug" />
-    <Exec Command="rmdir c:\warmerda" />
+    <Exec Command="xcopy c:\warmerda\bld $(INSTALL_DIR)\gdal-$(GDAL_VER)\debug /I/S/E" />
+    <Exec Command="rmdir /q /s c:\warmerda" />
   </Target>  
   
   <Target Name="gdal-build-release" DependsOnTargets="gdal-src" Condition="!Exists('$(INSTALL_DIR)\gdal-$(GDAL_VER)\release')">
@@ -111,9 +111,8 @@
     <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
     <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 devinstall" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
     <MakeDir Directories="$(INSTALL_DIR)\gdal-$(GDAL_VER)" />
-    <Exec Command="move c:\warmerda\bld $(INSTALL_DIR)\gdal-$(GDAL_VER)\." />
-    <Exec Command="ren $(INSTALL_DIR)\gdal-$(GDAL_VER)\bld release" />
-    <Exec Command="rmdir c:\warmerda" />
+    <Exec Command="xcopy c:\warmerda\bld $(INSTALL_DIR)\gdal-$(GDAL_VER)\release /I/S/E" />
+    <Exec Command="rmdir /q /s c:\warmerda" />
   </Target>  
   
   <Target Name="gdal-src" DependsOnTargets="gdal-download" Condition="!Exists('$(SRC_DIR)\gdal-$(GDAL_VER)')">
