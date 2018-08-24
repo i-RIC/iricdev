@@ -15,7 +15,7 @@
     <IRICLIB_SVER>$(IRICLIB_VER.SubString(0, 7))</IRICLIB_SVER>
   </PropertyGroup>
   
-  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;cgnslib-build;hdf5-build;geos-build;yaml-cpp-build;boost-src">
+  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;cgnslib-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build">
     <Exec Command="create-files.cmd" />
   </Target>
   
@@ -328,6 +328,52 @@
     <Exec Command="$(CURL) https://sourceforge.net/projects/boost/files/boost/$(BOOST_VER)/boost_$(BOOST_UVER).7z" />
   </Target>
   
+  <!-- expat -->
+  
+  <Target Name="expat-build" DependsOnTargets="expat-build-debug;expat-build-release" />
+  
+  <Target Name="expat-build-debug" DependsOnTargets="expat-src" Condition="!Exists('$(INSTALL_DIR)\expat-$(EXPAT_VER)\debug')">
+    <Exec Command="(set EXPAT_VER=$(EXPAT_VER)) &amp; ctest -S build-expat.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-expat-debug.log"/>
+  </Target>  
+  
+  <Target Name="expat-build-release" DependsOnTargets="expat-src" Condition="!Exists('$(INSTALL_DIR)\expat-$(EXPAT_VER)\release')">
+    <!-- export version than run ctest -->
+    <Exec Command="(set EXPAT_VER=$(EXPAT_VER)) &amp; ctest -S build-expat.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-expat-release.log"/>
+  </Target>
+  
+  <Target Name="expat-src" DependsOnTargets="expat-download" Condition="!Exists('$(SRC_DIR)\expat-$(EXPAT_VER)')">
+    <Exec Command="7z x expat-$(EXPAT_VER).zip -o$(SRC_DIR)"/>
+    <Exec Command="ren $(SRC_DIR)\libexpat-$(EXPAT_UVER) expat-$(EXPAT_VER)"/>
+  </Target>
+  
+  <Target Name="expat-download" Condition="!Exists('expat-$(EXPAT_VER).zip')">
+    <Message Text="Downloading expat-$(EXPAT_VER).zip" />
+    <Exec Command="$(CURL) https://github.com/libexpat/libexpat/archive/$(EXPAT_UVER).zip" />
+    <Move SourceFiles="$(EXPAT_UVER).zip" DestinationFiles="expat-$(EXPAT_VER).zip"/>
+  </Target>
+
+<!-- udunits -->
+
+  <Target Name="udunits-build" DependsOnTargets="udunits-build-debug;udunits-build-release" />
+
+  <Target Name="udunits-build-debug" DependsOnTargets="udunits-src" Condition="!Exists('$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\debug')">
+    <Exec Command="(set UDUNITS_VER=$(UDUNITS_VER)) &amp; ctest -S build-udunits.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-udunits-debug.log"/>
+  </Target>
+
+  <Target Name="udunits-build-release" DependsOnTargets="udunits-src" Condition="!Exists('$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\release')">
+    <!-- export version than run ctest -->
+    <Exec Command="(set UDUNITS_VER=$(UDUNITS_VER)) &amp; ctest -S build-usunits.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-udunits-release.log"/>
+  </Target>
+
+  <Target Name="udunits-src" DependsOnTargets="udunits-download" Condition="!Exists('$(SRC_DIR)\udunits-$(UDUNITS_VER)')">
+    <Exec Command="7z x udunits-$(UDUNITS_VER).tar.gz -so | 7z x -si -ttar -o$(SRC_DIR)"/>
+  </Target>
+
+  <Target Name="udunits-download" Condition="!Exists('udunits-$(UDUNITS_VER).tar.gz')">
+    <Message Text="Downloading udunits-$(UDUNITS_VER).tar.gz" />
+    <Exec Command="$(CURL) ftp://ftp.unidata.ucar.edu/pub/udunits/udunits-$(UDUNITS_VER).tar.gz" />
+  </Target>
+
   <!-- dump variables -->
 
   <Target Name="dump">
@@ -337,6 +383,7 @@
     <Message Text="CGNSLIB_MAJMIN=$(CGNSLIB_MAJMIN)" />
     <Message Text="CGNSLIB_VER=$(CGNSLIB_VER)" />
     <Message Text="CURL=$(CURL)" />
+    <Message Text="EXPAT_VER=$(EXPAT_VER)" />
     <Message Text="GDAL_VER=$(GDAL_VER)" />
     <Message Text="GEOS_VER=$(GEOS_VER)" />
     <Message Text="HDF5_MAJMIN=$(HDF5_MAJMIN)" />
@@ -349,6 +396,7 @@
     <Message Text="QWT_VER=$(QWT_VER)" />
     <Message Text="SHAPELIB_VER=$(SHAPELIB_VER)" />
     <Message Text="SRC_DIR=$(SRC_DIR)" />
+    <Message Text="UDUNITS_VER=$(UDUNITS_VER)" />
     <Message Text="VTK_MAJMIN=$(VTK_MAJMIN)" />
     <Message Text="VTK_VER=$(VTK_VER)" />
     <Message Text="YAML_CPP_VER=$(YAML_CPP_VER)" />
