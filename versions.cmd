@@ -18,10 +18,13 @@ REM set GEOS_VER=3.4.2
 set GEOS_VER=3.4.3
 set BOOST_VER=1.59.0
 set YAML_CPP_VER=0.5.2
+set EXPAT_VER=2.2.6
+set UDUNITS_VER=2.2.26
 REM
 REM replace . with _
 REM
 set BOOST_UVER=%BOOST_VER:.=_%
+set EXPAT_UVER=R_%EXPAT_VER:.=_%
 if [%BUILD_TOOLS%]==[] (
   set BUILD_TOOLS="OFF"
 )
