@@ -11,7 +11,7 @@
     <VTK_MAJMIN>$([System.Text.RegularExpressions.Regex]::Match($(VTK_VER), `[0-9]\d*\.[0-9]\d*`))</VTK_MAJMIN>
     <HDF5_MAJMIN>$([System.Text.RegularExpressions.Regex]::Match($(HDF5_VER), `[0-9]\d*\.[0-9]\d*`))</HDF5_MAJMIN>
     <CGNSLIB_MAJMIN>$([System.Text.RegularExpressions.Regex]::Match($(CGNSLIB_VER), `[0-9]\d*\.[0-9]\d*`))</CGNSLIB_MAJMIN>
-    <CGNSLIB_VER Condition=" '$(CGNSLIB_VER)' == '3.2.1' " >$(CGNSLIB_VER)-patch2</CGNSLIB_VER>
+    <CGNSLIB_VER Condition=" '$(CGNSLIB_VER)' == '3.2.1' " >$(CGNSLIB_VER)-patch1</CGNSLIB_VER>
     <IRICLIB_SVER>$(IRICLIB_VER.SubString(0, 7))</IRICLIB_SVER>
   </PropertyGroup>
   
@@ -235,13 +235,13 @@
   </Target>
     
   <Target Name="cgnslib-src" DependsOnTargets="cgnslib-download" Condition="!Exists('$(SRC_DIR)\cgnslib-$(CGNSLIB_VER)')">
-    <Exec Command="7z x cgnslib_$(CGNSLIB_VER).tar.gz -so | 7z x -si -ttar -o$(SRC_DIR)" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch2' "/>
-    <Exec Command="git clone --branch add_flush git@github.com:kskinoue0612/CGNS.git lib/src/cgnslib-$(CGNSLIB_VER)" Condition=" '$(CGNSLIB_VER)'=='3.2.1-patch2' "/>
+    <Exec Command="7z x cgnslib_$(CGNSLIB_VER).tar.gz -so | 7z x -si -ttar -o$(SRC_DIR)" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch1' "/>
+    <Exec Command="git clone --branch v3.2.1-patch1 git@github.com:scharlton2/CGNS.git lib/src/cgnslib-$(CGNSLIB_VER)" Condition=" '$(CGNSLIB_VER)'=='3.2.1-patch1' "/>
   </Target>  
 
   <Target Name="cgnslib-download" Condition="!Exists('cgnslib_$(CGNSLIB_VER).tar.gz')">
-    <Message Text="Downloading cgnslib_$(CGNSLIB_VER).tar.gz" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch2' "/>
-    <Exec Command="$(CURL) https://downloads.sourceforge.net/project/cgns/cgnslib_$(CGNSLIB_MAJMIN)/cgnslib_$(CGNSLIB_VER).tar.gz" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch2' "/>
+    <Message Text="Downloading cgnslib_$(CGNSLIB_VER).tar.gz" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch1' "/>
+    <Exec Command="$(CURL) https://downloads.sourceforge.net/project/cgns/cgnslib_$(CGNSLIB_MAJMIN)/cgnslib_$(CGNSLIB_VER).tar.gz" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch1' "/>
   </Target>
   
   <!-- hdf5 -->
