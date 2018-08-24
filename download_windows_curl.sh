@@ -61,3 +61,12 @@ if [ ! -f "yaml-cpp-release-${YAML_CPP_VER}.zip" ]; then
   ${CURL} https://github.com/jbeder/yaml-cpp/archive/release-${YAML_CPP_VER}.zip 
   mv release-${YAML_CPP_VER}.zip yaml-cpp-release-${YAML_CPP_VER}.zip
 fi
+
+if [ ! -f "expat-${EXPAT_VER}.zip" ]; then
+  ${CURL} https://github.com/libexpat/libexpat/archive/${EXPAT_UVER}.zip
+  mv ${EXPAT_UVER}.zip expat-${EXPAT_VER}.zip
+fi
+
+if [ ! -f "udunits-${UDUNITS_VER}.tar.gz" ]; then
+  ${CURL} ftp://ftp.unidata.ucar.edu/pub/udunits/udunits-${UDUNITS_VER}.tar.gz
+fi
