@@ -24,7 +24,6 @@ call build-yaml-cpp.cmd
 call build-expat.cmd
 call build-udunits.cmd
 
-call create-paths-pri.cmd > paths.pri
-call create-dirExt-prop.cmd > dirExt.prop
+call create-files.cmd
 
 endlocal

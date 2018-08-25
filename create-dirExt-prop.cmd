@@ -32,6 +32,10 @@ if "%CGNSLIB_VER%"=="3.2.1" (
 @echo.qwt      = %topdir%lib/install/Qwt-%QWT_VER%/lib/
 @echo.shapelib = %topdir%lib/install/shapelib-%SHAPELIB_VER%/debug/
 @echo.szip     = %topdir%lib/install/hdf5-%HDF5_VER%/debug/bin/
-@echo.vtk      = %topdir%lib/install/VTK-%VTK_VER%/debug/bin/
+if "%DEBUG_LEAKS%"=="YES" (
+  @echo.vtk      = %topdir%lib/install/VTK-%VTK_VER%/debug-vtk-leaks/bin/
+) else (
+  @echo.vtk      = %topdir%lib/install/VTK-%VTK_VER%/debug/bin/
+)
 @echo.yaml-cpp = %topdir%lib/install/yaml-cpp-%YAML_CPP_VER%/debug/bin
 @echo.zlib     = %topdir%lib/install/hdf5-%HDF5_VER%/debug/bin/

@@ -17,19 +17,33 @@ Build libraries needed to build iRIC on Linux and Windows
 ```
 git clone https://github.com/i-RIC/iricdev.git iricdev_2013
 cd iricdev_2013
-./download_windows_curl.sh
 ```
 
-### in a command prompt
+copy programs_std.prop to programs.prop and make any necessary changes (ie path to git curl program)
+
+### in a VS2013 x64 Native Tools Command Prompt
 ```
 cd iricdev_2013
-build_2013.cmd  (or build_2013_w_tools.cmd to build cgns and hdf5 tools)
+msbuild_2013.cmd (or msbuild_2013_w_tools.cmd to build cgns and hdf5 tools)
 copy paths.pri [prepost-gui-root]\.
 copy dirExt.prop [prepost-gui-root]\tools\data\.
 mkdir [prepost-gui-root]\libdlls\debug.
 mkdir [prepost-gui-root]\libdlls\release.
 :: if building tools
-add install\cgnslib-[ver]\release\bin and install\hdf5-[ver]\release\bin to "Path"
+add install\cgnslib-[CGNS_VER]\release\bin and install\hdf5-[HDF5_VER]\release\bin to "Path"
+```
+
+or if you want to use the VTK_DEBUG_LEAKS configuration
+
+```
+cd iricdev_2013
+msbuild_2013.cmd (or msbuild_2013_w_tools.cmd to build cgns and hdf5 tools)
+copy paths-debug-vtk-leaks.pri [prepost-gui-root]\paths.pri
+copy dirExt-debug-vtk-leaks.prop [prepost-gui-root]\tools\data\dirExt.prop
+mkdir [prepost-gui-root]\libdlls\debug.
+mkdir [prepost-gui-root]\libdlls\release.
+:: if building tools
+add install\cgnslib-[CGNS_VER]\release\bin and install\hdf5-[HDF5_VER]\release\bin to "Path"
 ```
 
 ## Ubuntu 16.04.2 LTS Build (Full)
