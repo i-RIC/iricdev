@@ -2,9 +2,9 @@ version: 0.0.{build}
 
 image: Visual Studio 2013
 
+clone_folder: C:\iricdev_2013
+
 before_build:
-  - dir C:\Qt\5.5\msvc2013_64
-  - dir C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd "%APPVEYOR_BUILD_FOLDER%"
@@ -14,11 +14,14 @@ before_build:
   - set SGEN="vs2013-x64"
 
 build_script:
-  - msbuild /nologo /target:qwt-build iricdev.proj
+  - msbuild /nologo /target:yaml-cpp-build-appveyor iricdev.proj
+  - mkdir logs
+  - copy *.log logs\.
 
 test_script:
-#  - cd "%APPVEYOR_BUILD_FOLDER%"
-#  - dir /s
+  - cd "%APPVEYOR_BUILD_FOLDER%"
+  - msbuild /nologo /target:dump iricdev.proj
 
 artifacts:
   - path: lib\install
+  - path: logs

@@ -18,6 +18,9 @@
   <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;cgnslib-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build">
     <Exec Command="create-files.cmd" />
   </Target>
+
+  <Target Name="appveyor" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;cgnslib-build;hdf5-build;geos-build;yaml-cpp-build-appveyor;expat-build;udunits-build">
+  </Target>
   
   <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download;expat-download;udunits-download">
   </Target>
@@ -279,12 +282,22 @@
   </Target>  
   
   <!-- yaml-cpp -->
+
+  <Target Name="yaml-cpp-build-appveyor" DependsOnTargets="yaml-cpp-build-debug-appveyor;yaml-cpp-build-release-appveyor" />
+
+  <Target Name="yaml-cpp-build-debug-appveyor" DependsOnTargets="yaml-cpp-src" Condition="!Exists('$(INSTALL_DIR)\yaml-cpp-$(YAML_CPP_VER)\debug')">
+    <Exec Command="ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-yaml-cpp-debug.log"/>
+  </Target>
+
+  <Target Name="yaml-cpp-build-release-appveyor" DependsOnTargets="yaml-cpp-src" Condition="!Exists('$(INSTALL_DIR)\yaml-cpp-$(YAML_CPP_VER)\release')">
+    <Exec Command="ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-yaml-cpp-release.log"/>
+  </Target>
   
   <Target Name="yaml-cpp-build" DependsOnTargets="yaml-cpp-build-debug;yaml-cpp-build-release" />
   
   <Target Name="yaml-cpp-build-debug" DependsOnTargets="yaml-cpp-src;boost-src" Condition="!Exists('$(INSTALL_DIR)\yaml-cpp-$(YAML_CPP_VER)\debug')">
     <Exec Command="ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-yaml-cpp-debug.log"/>
-  </Target>  
+  </Target>
   
   <Target Name="yaml-cpp-build-release" DependsOnTargets="yaml-cpp-src;boost-src" Condition="!Exists('$(INSTALL_DIR)\yaml-cpp-$(YAML_CPP_VER)\release')">
     <Exec Command="ctest -S build-yaml-cpp.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-yaml-cpp-release.log"/>
