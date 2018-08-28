@@ -229,7 +229,7 @@
     
   <Target Name="cgnslib-src" DependsOnTargets="cgnslib-download" Condition="!Exists('$(SRC_DIR)\cgnslib-$(CGNSLIB_VER)')">
     <Exec Command="7z x cgnslib_$(CGNSLIB_VER).tar.gz -so | 7z x -si -ttar -o$(SRC_DIR)" Condition=" '$(CGNSLIB_VER)'!='3.2.1-patch1' "/>
-    <Exec Command="git clone --branch v3.2.1-patch1 git@github.com:scharlton2/CGNS.git lib/src/cgnslib-$(CGNSLIB_VER)" Condition=" '$(CGNSLIB_VER)'=='3.2.1-patch1' "/>
+    <Exec Command="git clone --branch v3.2.1-patch1 https://github.com/scharlton2/CGNS.git lib/src/cgnslib-$(CGNSLIB_VER)" Condition=" '$(CGNSLIB_VER)'=='3.2.1-patch1' "/>
   </Target>  
 
   <Target Name="cgnslib-download" Condition="!Exists('cgnslib_$(CGNSLIB_VER).tar.gz')">
