@@ -12,9 +12,10 @@ before_build:
   - call versions.cmd
   - set GENERATOR="Visual Studio 12 2013 Win64"
   - set SGEN="vs2013-x64"
+  - set CL=/MP
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:appveyor iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:vtk-debug-build iricdev.proj
 
 after_build:
   - mkdir logs
