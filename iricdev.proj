@@ -384,6 +384,8 @@
     <Message Text="VTK_MAJMIN=$(VTK_MAJMIN)" />
     <Message Text="VTK_VER=$(VTK_VER)" />
     <Message Text="YAML_CPP_VER=$(YAML_CPP_VER)" />
+    <Message Text="Environment:" />
+    <Exec Command="set" />
   </Target>
 
 </Project>

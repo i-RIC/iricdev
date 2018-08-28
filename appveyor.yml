@@ -6,6 +6,7 @@ before_build:
   - dir C:\Qt\5.5\msvc2013_64
   - dir C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
 #  - cd "%APPVEYOR_BUILD_FOLDER%"
 #  - copy appveyor_programs.prop programs.prop
 #  - call versions.cmd
@@ -13,12 +14,12 @@ before_build:
 #  - set SGEN="vs2013-x64"
 
 build_script:
-#  - msbuild /nologo /target:geos-build iricdev.proj
+  - where qmake
+  - msbuild /nologo /target:dump iricdev.proj
 
 test_script:
 #  - cd "%APPVEYOR_BUILD_FOLDER%"
 #  - dir /s
-  - set
 
 #artifacts:
 #  - path: lib\install
