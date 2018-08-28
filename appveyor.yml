@@ -3,18 +3,22 @@ version: 0.0.{build}
 image: Visual Studio 2013
 
 before_build:
-  - cd "%APPVEYOR_BUILD_FOLDER%"
-  - copy appveyor_programs.prop programs.prop
-  - call versions.cmd
-  - set GENERATOR="Visual Studio 12 2013 Win64"
-  - set SGEN="vs2013-x64"
+  - dir C:\Qt\5.5\msvc2013_64
+  - dir C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
+  - call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
+#  - cd "%APPVEYOR_BUILD_FOLDER%"
+#  - copy appveyor_programs.prop programs.prop
+#  - call versions.cmd
+#  - set GENERATOR="Visual Studio 12 2013 Win64"
+#  - set SGEN="vs2013-x64"
 
 build_script:
-  - msbuild /nologo /target:geos-build iricdev.proj
+#  - msbuild /nologo /target:geos-build iricdev.proj
 
 test_script:
-  - cd "%APPVEYOR_BUILD_FOLDER%"
-  - dir /s
+#  - cd "%APPVEYOR_BUILD_FOLDER%"
+#  - dir /s
+  - set
 
-artifacts:
-  - path: lib\install
+#artifacts:
+#  - path: lib\install
