@@ -19,7 +19,7 @@
     <Exec Command="create-files.cmd" />
   </Target>
 
-  <--! -- all release except vtk-build-release(36:21) -->
+  <!-- all release except vtk-build-release(36:21) -->
   <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;cgnslib-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release">
   </Target>
 
