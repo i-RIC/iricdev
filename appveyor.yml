@@ -14,7 +14,9 @@ before_build:
   - set SGEN="vs2013-x64"
 
 build_script:
-  - msbuild /nologo /target:yaml-cpp-build-appveyor iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:appveyor iricdev.proj
+
+after_build:
   - mkdir logs
   - copy *.log logs\.
 
