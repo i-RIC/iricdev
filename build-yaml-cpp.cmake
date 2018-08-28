@@ -9,9 +9,9 @@ set(CTEST_SOURCE_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/src/yaml-cpp-${VER}")
 set(CTEST_BINARY_DIRECTORY "${CTEST_SCRIPT_DIRECTORY}/lib/build/yaml-cpp-${VER}")
 
 if(DEFINED ENV{APPVEYOR_BUILD_FOLDER})
-  set(BOOST_INC C:/Libraries/boost_${BUVER}
+  set(BOOST_INC C:/Libraries/boost_${BUVER})
 else()
-  set(BOOST_INC ${CTEST_SCRIPT_DIRECTORY}/lib/src/boost-${BVER}
+  set(BOOST_INC ${CTEST_SCRIPT_DIRECTORY}/lib/src/boost-${BVER})
 endif()
 
 set(BUILD_OPTIONS 
