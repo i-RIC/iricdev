@@ -10,7 +10,8 @@ before_build:
   - set SGEN="vs2013-x64"
 
 build_script:
-  - set
-  - where curl
-  - msbuild /nologo /target:netcdf-src iricdev.proj
+  - msbuild /nologo /target:netcdf-build iricdev.proj
+
+test_script:
+  - cd "%APPVEYOR_BUILD_FOLDER%"
   - dir /s
