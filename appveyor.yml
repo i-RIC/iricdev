@@ -15,7 +15,7 @@ before_build:
   - set CL=/MP
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:vtk-debug-build iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:vtk-build-debug iricdev.proj
 
 after_build:
   - mkdir logs
