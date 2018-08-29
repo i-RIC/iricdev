@@ -162,6 +162,7 @@
     <PropertyGroup>
       <topdir>$(MSBuildProjectDirectory)</topdir>
     </PropertyGroup>
+    <MakeDir Directories="$(topdir)\lib\install\proj-$(PROJ_VER)"/>
     <Exec Command="nmake -f makefile.vc INSTDIR=$(topdir)\lib\install\proj-$(PROJ_VER)\release" WorkingDirectory="$(topdir)\$(SRC_DIR)\proj-$(PROJ_VER)"/>
     <Exec Command="nmake -f makefile.vc INSTDIR=$(topdir)\lib\install\proj-$(PROJ_VER)\release install-all" WorkingDirectory="$(topdir)\$(SRC_DIR)\proj-$(PROJ_VER)"/>
   </Target>
