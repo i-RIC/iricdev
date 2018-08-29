@@ -16,7 +16,7 @@ before_build:
   - set SGEN="vs2013-x64"
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:vtk-build-release iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:shapelib-build-release iricdev.proj
 
 after_build:
   - md logs
