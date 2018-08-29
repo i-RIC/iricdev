@@ -14,7 +14,7 @@ before_build:
   - set SGEN="vs2013-x64"
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:appveyor-release iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:proj-build iricdev.proj
 
 after_build:
   - mkdir logs
