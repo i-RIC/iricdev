@@ -14,9 +14,10 @@ before_build:
   - call versions.cmd
   - set GENERATOR="Visual Studio 12 2013 Win64"
   - set SGEN="vs2013-x64"
+  - set BUILD_TOOLS=OFF
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:shapelib-build-release iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:cgnslib-build-release iricdev.proj
 
 after_build:
   - md logs
