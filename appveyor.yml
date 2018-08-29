@@ -12,6 +12,14 @@ before_build:
   - call versions.cmd
   - set GENERATOR="Visual Studio 12 2013 Win64"
   - set SGEN="vs2013-x64"
+  - mkdir lib
+  - mkdir lib\install
+  - mkdir lib\install\proj-%PROJ_VER%
+  - mkdir lib\install\proj-%PROJ_VER%\release
+  - mkdir lib\install\proj-%PROJ_VER%\release\bin
+  - mkdir lib\install\proj-%PROJ_VER%\release\share
+  - mkdir lib\install\proj-%PROJ_VER%\release\lib
+  - mkdir lib\install\proj-%PROJ_VER%\release\include
 
 build_script:
   - msbuild /nologo /verbosity:minimal /target:proj-build iricdev.proj
