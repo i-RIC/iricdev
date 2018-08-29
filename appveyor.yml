@@ -14,10 +14,9 @@ before_build:
   - call versions.cmd
   - set GENERATOR="Visual Studio 12 2013 Win64"
   - set SGEN="vs2013-x64"
-##  - if NOT EXIST lib\install\proj-%PROJ_VER% md lib\install\proj-%PROJ_VER%
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:proj-build iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:appveyor-release iricdev.proj
 
 after_build:
   - md logs
@@ -25,7 +24,10 @@ after_build:
 
 test_script:
   - cd "%APPVEYOR_BUILD_FOLDER%"
-##  - msbuild /nologo /target:dump iricdev.proj
+
+on_failure:
+  - cd "%APPVEYOR_BUILD_FOLDER%"
+  - dir /s lib\install
 
 artifacts:
   - path: lib\install
