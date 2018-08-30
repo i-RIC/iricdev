@@ -1,4 +1,4 @@
-version: 0.0.{build}
+version: {build}
 
 image: Visual Studio 2013
 
@@ -17,7 +17,7 @@ before_build:
   - set BUILD_TOOLS=OFF
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:cgnslib-build-release iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:appveyor-release iricdev.proj
 
 after_build:
   - md logs
