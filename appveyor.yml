@@ -28,12 +28,7 @@ before_build:
   - call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd "%APPVEYOR_BUILD_FOLDER%"
-  - echo ^<?xml version="1.0" encoding="utf-8" ?^>> programs.prop
-  - echo ^<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"^>>> programs.prop
-  - echo   ^<PropertyGroup^>>> programs.prop
-  - echo     ^<CURL^>curl -L -O^</CURL^>>> programs.prop
-  - echo   ^</PropertyGroup^>>> programs.prop
-  - echo ^</Project^>>> programs.prop
+  - copy appveyor_programs.prop programs.prop
   - echo %Configuration%
   - call versions.cmd
   - set BUILD_TOOLS=OFF
