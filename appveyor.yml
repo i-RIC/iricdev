@@ -2,33 +2,48 @@ version: '{build}'
 
 image: Visual Studio 2013
 
-clone_folder: C:\iricdev_2013
+# called before clone
+init:
+  - echo %APPVEYOR_BUILD_WORKER_IMAGE%
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" (set GENERATOR="Visual Studio 15 2017 Win64" && set SGEN=vs2017-x64)
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" (set GENERATOR="Visual Studio 14 2015 Win64" && set SGEN=vs2015-x64)
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" (set GENERATOR="Visual Studio 12 2013 Win64" && set SGEN=vs2013-x64)
+  - echo %GENERATOR%
+  - echo %Configuration%
+  - if "%Configuration%"=="Debug"   (set config=debug)
+  - if "%Configuration%"=="Release" (set config=release)
+  - set BUILD_TOOLS=OFF
+  - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
+  - echo %YEAR%
+
+clone_folder: C:\iricdev
+
+configuration:
+  - Debug
+  - Release
 
 # Note mkdir is from Git (C:\Program Files\Git\usr\bin\mkdir.exe)
-# It might give unexpected results
+# It might give unexpected results (use md instead)
 before_build:
   - call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd "%APPVEYOR_BUILD_FOLDER%"
-  - copy appveyor_programs.prop programs.prop
+  - echo ^<?xml version="1.0" encoding="utf-8" ?^>> programs.prop
+  - echo ^<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"^>>> programs.prop
+  - echo   ^<PropertyGroup^>>> programs.prop
+  - echo     ^<CURL^>curl -L -O^</CURL^>>> programs.prop
+  - echo   ^</PropertyGroup^>>> programs.prop
+  - echo ^</Project^>>> programs.prop
+  - echo %Configuration%
   - call versions.cmd
-  - set GENERATOR="Visual Studio 12 2013 Win64"
-  - set SGEN="vs2013-x64"
   - set BUILD_TOOLS=OFF
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:appveyor-release iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:geos-build-%config% iricdev.proj
 
 after_build:
   - md logs
   - if exist *.log copy *.log logs\.
-
-test_script:
-  - cd "%APPVEYOR_BUILD_FOLDER%"
-
-on_failure:
-  - cd "%APPVEYOR_BUILD_FOLDER%"
-  - dir /s lib\install
 
 artifacts:
   - path: lib\install
