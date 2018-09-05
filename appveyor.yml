@@ -34,6 +34,8 @@ before_build:
   - set BUILD_TOOLS=OFF
 
 build_script:
+  - cd "%APPVEYOR_BUILD_FOLDER%"
+  - rd /s /q lib
   - msbuild /nologo /verbosity:minimal /target:vtk-build-%config% iricdev.proj
 
 after_build:
@@ -46,3 +48,4 @@ artifacts:
 
 cache:
   - lib\install
+  - logs
