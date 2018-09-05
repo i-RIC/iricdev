@@ -37,7 +37,7 @@ build_script:
   - msbuild /nologo /verbosity:minimal /target:iriclib-build-%config% iricdev.proj
 
 after_build:
-  - md logs
+  - if not exist logs md logs
   - if exist *.log copy *.log logs\.
 
 artifacts:
