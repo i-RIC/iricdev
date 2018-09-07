@@ -29,12 +29,11 @@ before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd "%APPVEYOR_BUILD_FOLDER%"
   - copy appveyor_programs.prop programs.prop
-  - echo %Configuration%
   - call versions.cmd
   - set BUILD_TOOLS=OFF
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:iriclib-build-%config% iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:appveyor-%config% iricdev.proj
 
 after_build:
   - if not exist logs md logs
