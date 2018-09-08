@@ -1,4 +1,4 @@
-## iricdev
+## iricdev [![Build status](https://ci.appveyor.com/api/projects/status/vgub5bimojgucmx4?svg=true)](https://ci.appveyor.com/project/i-RIC/iricdev)
 
 Build libraries needed to build iRIC on Linux and Windows
 

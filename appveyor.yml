@@ -1,0 +1,48 @@
+version: '{build}'
+
+image: Visual Studio 2013
+
+# called before clone
+init:
+  - echo %APPVEYOR_BUILD_WORKER_IMAGE%
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" (set GENERATOR="Visual Studio 15 2017 Win64" && set SGEN=vs2017-x64)
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" (set GENERATOR="Visual Studio 14 2015 Win64" && set SGEN=vs2015-x64)
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" (set GENERATOR="Visual Studio 12 2013 Win64" && set SGEN=vs2013-x64)
+  - echo %GENERATOR%
+  - echo %Configuration%
+  - if "%Configuration%"=="Debug"   (set config=debug)
+  - if "%Configuration%"=="Release" (set config=release)
+  - set BUILD_TOOLS=OFF
+  - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
+  - echo %YEAR%
+
+clone_folder: C:\iricdev
+
+configuration:
+  - Debug
+  - Release
+
+# Note mkdir is from Git (C:\Program Files\Git\usr\bin\mkdir.exe)
+# It might give unexpected results (use md instead)
+before_build:
+  - call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
+  - cd "%APPVEYOR_BUILD_FOLDER%"
+  - copy appveyor_programs.prop programs.prop
+  - call versions.cmd
+  - set BUILD_TOOLS=OFF
+
+build_script:
+  - msbuild /nologo /verbosity:minimal /target:vtk-build-%config% iricdev.proj
+
+after_build:
+  - if not exist logs md logs
+  - if exist *.log copy *.log logs\.
+
+artifacts:
+  - path: lib\install
+  - path: logs
+
+cache:
+  - lib\install
+  - logs
