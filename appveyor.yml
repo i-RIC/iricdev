@@ -33,7 +33,7 @@ before_build:
   - set BUILD_TOOLS=OFF
 
 build_script:
-  - msbuild /nologo /verbosity:minimal /target:vtk-build-%config% iricdev.proj
+  - msbuild /nologo /verbosity:minimal /target:iriclib-build-%config% iricdev.proj
 
 after_build:
   - if not exist logs md logs
