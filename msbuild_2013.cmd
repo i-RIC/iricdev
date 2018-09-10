@@ -6,6 +6,6 @@ call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_
 popd
 call versions.cmd
 set GENERATOR="Visual Studio 12 2013 Win64"
-set SGEN="vs2013-x64"
+set SGEN=vs2013-x64
 msbuild /nologo /target:all iricdev.proj
 endlocal
