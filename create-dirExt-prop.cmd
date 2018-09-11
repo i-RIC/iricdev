@@ -13,6 +13,7 @@ if "%CGNSLIB_VER%"=="3.2.1" (
 @echo.hdf5     = %topdir%lib/install/hdf5-%HDF5_VER%/release/bin/
 @echo.iriclib  = %topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/release/lib/
 @echo.netcdf   = %topdir%lib/install/netcdf-%NETCDF_VER%/release/bin/
+@echo.openssl  = %topdir%lib/install/openssl-%OPENSSL_VER%/release/bin/
 @echo.proj     = %topdir%lib/install/proj-%PROJ_VER%/release/bin/
 @echo.qwt      = %topdir%lib/install/Qwt-%QWT_VER%/lib/
 @echo.shapelib = %topdir%lib/install/shapelib-%SHAPELIB_VER%/release/
@@ -28,6 +29,7 @@ if "%CGNSLIB_VER%"=="3.2.1" (
 @echo.hdf5     = %topdir%lib/install/hdf5-%HDF5_VER%/debug/bin/
 @echo.iriclib  = %topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/debug/lib/
 @echo.netcdf   = %topdir%lib/install/netcdf-%NETCDF_VER%/debug/bin/
+@echo.openssl  = %topdir%lib/install/openssl-%OPENSSL_VER%/debug/bin/
 @echo.proj     = %topdir%lib/install/proj-%PROJ_VER%/release/bin/
 @echo.qwt      = %topdir%lib/install/Qwt-%QWT_VER%/lib/
 @echo.shapelib = %topdir%lib/install/shapelib-%SHAPELIB_VER%/debug/

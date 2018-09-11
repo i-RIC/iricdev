@@ -10,6 +10,7 @@ Build libraries needed to build iRIC on Linux and Windows
 * 7-zip available from http://www.7-zip.org/
 * NSIS available from http://nsis.sourceforge.net/Download/ (for HDF5 packaging)
 * Add 7-zip installation path to "Path" environment variable.
+* Perl available from https://www.activestate.com/activeperl/downloads (for OpenSSL)
 * Tcl available from https://www.activestate.com/activetcl/downloads (if building cgns and hdf5 tools)
 * curl available from https://www.nuget.org/packages/curl/ (not required if using the git packaged version)
 
