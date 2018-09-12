@@ -1,0 +1,48 @@
+<Project DefaultTargets="openssl-build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="programs.prop" Condition="'$(CURL)'==''"/>
+
+  <PropertyGroup>
+    <INSTALL_DIR Condition=" '$(INSTALL_DIR)' == '' ">lib\install</INSTALL_DIR>
+    <SRC_DIR Condition=" '$(SRC_DIR)' == '' ">lib\src</SRC_DIR>
+  </PropertyGroup>
+
+  <Target Name="openssl-build" DependsOnTargets="openssl-build-debug;openssl-build-release" />
+
+  <Target Name="openssl-build-release" Inputs="openssl.targets" Outputs="$(INSTALL_DIR)\openssl-$(OPENSSL_VER)\release\bin\libeay32.dll" DependsOnTargets="openssl-src">
+    <PropertyGroup>
+      <topdir>$(MSBuildProjectDirectory)</topdir>
+      <installtop>$(topdir)\$(INSTALL_DIR)\openssl-$(OPENSSL_VER)\release</installtop>
+    </PropertyGroup>
+    <RemoveDir Directories="$(INSTALL_DIR)\openssl-$(OPENSSL_VER)\release" />
+    <Exec Command="perl Configure VC-WIN64A no-asm" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
+    <Exec Command="ms\do_win64a.bat" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
+    <Exec Command="nmake /f ms\ntdll.mak clean" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" Condition="Exists('$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)\tmp32dll')"/>
+    <Exec Command="nmake /f ms\ntdll.mak" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
+    <Exec Command="nmake /f ms\ntdll.mak INSTALLTOP=$(installtop) OPENSSLDIR=$(installtop) install" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
+  </Target>
+
+  <Target Name="openssl-build-debug" Inputs="openssl.targets" Outputs="$(INSTALL_DIR)\openssl-$(OPENSSL_VER)\debug\bin\libeay32.dll" DependsOnTargets="openssl-src">
+    <PropertyGroup>
+      <topdir>$(MSBuildProjectDirectory)</topdir>
+      <openssl_cflag_debug>/MDd /Od -DOPENSSL_THREADS  -DDSO_WIN32 -W3 -Gs0 -Gy -nologo -DOPENSSL_SYSNAME_WIN32 -DWIN32_LEAN_AND_MEAN -DL_ENDIAN -DUNICODE -D_UNICODE -D_CRT_SECURE_NO_DEPRECATE -DOPENSSL_USE_APPLINK -I. -DOPENSSL_NO_RC5 -DOPENSSL_NO_MD2 -DOPENSSL_NO_SSL2 -DOPENSSL_NO_KRB5 -DOPENSSL_NO_JPAKE -DOPENSSL_NO_WEAK_SSL_CIPHERS -DOPENSSL_NO_STATIC_ENGINE</openssl_cflag_debug>
+      <installtop>$(topdir)\$(INSTALL_DIR)\openssl-$(OPENSSL_VER)\debug</installtop>
+    </PropertyGroup>
+    <RemoveDir Directories="$(INSTALL_DIR)\openssl-$(OPENSSL_VER)\debug" />
+    <Exec Command="perl Configure VC-WIN64A no-asm" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
+    <Exec Command="ms\do_win64a.bat" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
+    <Exec Command="nmake /f ms\ntdll.mak clean" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" Condition="Exists('$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)\tmp32dll')"/>
+    <Exec Command="nmake /f ms\ntdll.mak CFLAG=&quot;$(openssl_cflag_debug)&quot;" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
+    <Exec Command="nmake /f ms\ntdll.mak INSTALLTOP=$(installtop) OPENSSLDIR=$(installtop) install" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
+  </Target>
+
+  <Target Name="openssl-src" DependsOnTargets="openssl-download" Condition="!Exists('$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)')">
+    <Exec Command="7z x OpenSSL_$(OPENSSL_UVER).zip -o$(SRC_DIR)"/>
+  </Target>
+
+  <Target Name="openssl-download" Condition="!Exists('OpenSSL_$(OPENSSL_UVER).zip')">
+    <Message Text="Downloading OpenSSL_$(OPENSSL_UVER).zip" />
+    <Exec Command="$(CURL) https://github.com/openssl/openssl/archive/OpenSSL_$(OPENSSL_UVER).zip" />
+  </Target>
+
+</Project>

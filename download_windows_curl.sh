@@ -70,3 +70,7 @@ fi
 if [ ! -f "udunits-${UDUNITS_VER}.tar.gz" ]; then
   ${CURL} ftp://ftp.unidata.ucar.edu/pub/udunits/udunits-${UDUNITS_VER}.tar.gz
 fi
+
+if [ ! -f "OpenSSL_${OPENSSL_UVER}.zip" ]; then
+  ${CURL} https://github.com/openssl/openssl/archive/OpenSSL_${OPENSSL_UVER}.zip
+fi
