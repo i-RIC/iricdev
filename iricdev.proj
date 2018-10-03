@@ -21,10 +21,12 @@
 
   <!-- all release except vtk-build-release(36:21)-->
   <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;cgnslib-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release;openssl-build-release">
+    <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all debug except vtk-build-debug(36:21)-->
   <Target Name="appveyor-debug" DependsOnTargets="shapelib-build-debug;qwt-build;gdal-build-debug;proj-build;netcdf-build-debug;iriclib-build-debug;cgnslib-build-debug;hdf5-build-debug;geos-build-debug;yaml-cpp-build-debug-appveyor;expat-build-debug;udunits-build-debug;openssl-build-debug">
+    <Exec Command="create-files.cmd" />
   </Target>
 
   <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download;expat-download;udunits-download;openssl-download">
