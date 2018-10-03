@@ -36,12 +36,14 @@ build_script:
   - msbuild /nologo /verbosity:minimal /target:appveyor-%config% iricdev.proj
 
 after_build:
-  - if not exist logs md logs
-  - if exist *.log copy *.log logs\.
+  - if not exist logs (md logs)
+  - if exist *.log (copy *.log logs\.)
 
 artifacts:
   - path: lib\install
   - path: logs
+  - path: paths.pri
+  - path: dirExt.prop
 
 cache:
   - lib\install

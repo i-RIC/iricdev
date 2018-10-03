@@ -120,7 +120,11 @@ if "%DEBUG_LEAKS%"=="YES" (
 @echo.INCLUDEPATH += "%topdir%lib/install/yaml-cpp-%YAML_CPP_VER%/release/include"
 @echo.
 @echo.# boost
-@echo.INCLUDEPATH += "%topdir%lib/src/boost-%BOOST_VER%"
+if "%APPVEYOR_BUILD_FOLDER%"=="" (
+  @echo.INCLUDEPATH += "%topdir%lib/src/boost-%BOOST_VER%"
+) else (
+  @echo.INCLUDEPATH += "C:/Libraries/boost_%BOOST_UVER%"
+)
 @echo.
 @echo.#internal libs
 @echo.INCLUDEPATH += "$$PWD/libs"
