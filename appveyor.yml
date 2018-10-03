@@ -31,6 +31,8 @@ before_build:
   - copy appveyor_programs.prop programs.prop
   - call versions.cmd
   - set BUILD_TOOLS=OFF
+  - curl -L -O https://github.com/MestreLion/git-tools/raw/master/git-restore-mtime
+  - python git-restore-mtime
 
 build_script:
   - msbuild /nologo /verbosity:minimal /target:appveyor-%config% iricdev.proj
