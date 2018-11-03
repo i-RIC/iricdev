@@ -1,4 +1,4 @@
-version: '{build}'
+version: '{branch}-{build}'
 
 image: Visual Studio 2013
 
