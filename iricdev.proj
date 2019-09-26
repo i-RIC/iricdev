@@ -204,23 +204,23 @@
 
   <Target Name="iriclib-build" DependsOnTargets="iriclib-build-debug;iriclib-build-release" />
 
-  <Target Name="iriclib-build-debug" DependsOnTargets="iriclib-src;cgnslib-build-debug" Condition="!Exists('$(INSTALL_DIR)\iriclib-$(IRICLIB_SVER)\debug')">
+  <Target Name="iriclib-build-debug" DependsOnTargets="iriclib-src;cgnslib-build-debug" Condition="!Exists('$(INSTALL_DIR)\iriclib-$(IRICLIB_VER)\debug')">
     <Exec Command="ctest -S build-iriclib.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-iriclib-debug.log"/>
   </Target>
 
-  <Target Name="iriclib-build-release" DependsOnTargets="iriclib-src;cgnslib-build-release" Condition="!Exists('$(INSTALL_DIR)\iriclib-$(IRICLIB_SVER)\release')">
+  <Target Name="iriclib-build-release" DependsOnTargets="iriclib-src;cgnslib-build-release" Condition="!Exists('$(INSTALL_DIR)\iriclib-$(IRICLIB_VER)\release')">
     <Exec Command="ctest -S build-iriclib.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-iriclib-release.log"/>
   </Target>
 
-  <Target Name="iriclib-src" DependsOnTargets="iriclib-download" Condition="!Exists('$(SRC_DIR)\iriclib-$(IRICLIB_SVER)')">
-    <Exec Command="7z x iriclib-$(IRICLIB_SVER).zip -o$(SRC_DIR)" />
-    <Exec Command="ren $(SRC_DIR)\iriclib-$(IRICLIB_VER) iriclib-$(IRICLIB_SVER)"/>
+  <Target Name="iriclib-src" DependsOnTargets="iriclib-download" Condition="!Exists('$(SRC_DIR)\iriclib-$(IRICLIB_VER)')">
+    <Exec Command="7z x iriclib-$(IRICLIB_VER).zip -o$(SRC_DIR)" />
+    <Exec Command="ren $(SRC_DIR)\iriclib-$(IRICLIB_VER) iriclib-$(IRICLIB_VER)"/>
   </Target>
 
-  <Target Name="iriclib-download" Condition="!Exists('iriclib-$(IRICLIB_SVER).zip')">
-    <Message Text="Downloading iriclib_$(IRICLIB_SVER).zip" />
-    <Exec Command="$(CURL) https://github.com/i-RIC/iriclib/archive/$(IRICLIB_VER).zip" />
-    <Move SourceFiles="$(IRICLIB_VER).zip" DestinationFiles="iriclib-$(IRICLIB_SVER).zip"/>
+  <Target Name="iriclib-download" Condition="!Exists('iriclib-$(IRICLIB_VER).zip')">
+    <Message Text="Downloading iriclib_$(IRICLIB_VER).zip" />
+    <Exec Command="$(CURL) https://github.com/i-RIC/iriclib/archive/v$(IRICLIB_VER).zip" />
+    <Move SourceFiles="v$(IRICLIB_VER).zip" DestinationFiles="iriclib-$(IRICLIB_VER).zip"/>
   </Target>
 
   <!-- cgnslib -->
