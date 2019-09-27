@@ -30,6 +30,7 @@ before_build:
   - cd "%APPVEYOR_BUILD_FOLDER%"
   - copy appveyor_programs.prop programs.prop
   - call versions.cmd
+  - call cleanup-cache.cmd
   - set BUILD_TOOLS=OFF
   - curl -L -O https://github.com/MestreLion/git-tools/raw/master/git-restore-mtime
   - python git-restore-mtime
