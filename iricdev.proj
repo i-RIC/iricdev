@@ -12,7 +12,6 @@
     <HDF5_MAJMIN>$([System.Text.RegularExpressions.Regex]::Match($(HDF5_VER), `[0-9]\d*\.[0-9]\d*`))</HDF5_MAJMIN>
     <CGNSLIB_MAJMIN>$([System.Text.RegularExpressions.Regex]::Match($(CGNSLIB_VER), `[0-9]\d*\.[0-9]\d*`))</CGNSLIB_MAJMIN>
     <CGNSLIB_VER Condition=" '$(CGNSLIB_VER)' == '3.2.1' " >$(CGNSLIB_VER)-patch1</CGNSLIB_VER>
-    <IRICLIB_SVER Condition="$(IRICLIB_VER.Length) >= 7" >$(IRICLIB_VER.SubString(0, 7))</IRICLIB_SVER>
   </PropertyGroup>
 
   <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;cgnslib-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build;openssl-build">
@@ -398,7 +397,6 @@
     <Message Text="HDF5_MAJMIN=$(HDF5_MAJMIN)" />
     <Message Text="HDF5_VER=$(HDF5_VER)" />
     <Message Text="INSTALL_DIR=$(INSTALL_DIR)" />
-    <Message Text="IRICLIB_SVER=$(IRICLIB_SVER)" />
     <Message Text="IRICLIB_VER=$(IRICLIB_VER)" />
     <Message Text="NETCDF_VER=$(NETCDF_VER)" />
     <Message Text="PROJ_VER=$(PROJ_VER)" />
