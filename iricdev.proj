@@ -14,17 +14,17 @@
     <CGNSLIB_VER Condition=" '$(CGNSLIB_VER)' == '3.2.1' " >$(CGNSLIB_VER)-patch1</CGNSLIB_VER>
   </PropertyGroup>
 
-  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;cgnslib-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build;openssl-build">
+  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;iriclib-adf-build;cgnslib-build;cgnslib-adf-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build;openssl-build">
     <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all release except vtk-build-release(36:21)-->
-  <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;cgnslib-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release;openssl-build-release">
+  <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;iriclib-adf-build-release;cgnslib-build-release;cgnslib-adf-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release;openssl-build-release">
     <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all debug except vtk-build-debug(36:21)-->
-  <Target Name="appveyor-debug" DependsOnTargets="shapelib-build-debug;qwt-build;gdal-build-debug;proj-build;netcdf-build-debug;iriclib-build-debug;cgnslib-build-debug;hdf5-build-debug;geos-build-debug;yaml-cpp-build-debug-appveyor;expat-build-debug;udunits-build-debug;openssl-build-debug">
+  <Target Name="appveyor-debug" DependsOnTargets="shapelib-build-debug;qwt-build;gdal-build-debug;proj-build;netcdf-build-debug;iriclib-build-debug;iriclib-adf-build-debug;cgnslib-build-debug;cgnslib-adf-build-debug;hdf5-build-debug;geos-build-debug;yaml-cpp-build-debug-appveyor;expat-build-debug;udunits-build-debug;openssl-build-debug">
     <Exec Command="create-files.cmd" />
   </Target>
 
