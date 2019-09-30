@@ -7,5 +7,5 @@ popd
 call versions.cmd
 set GENERATOR="Visual Studio 12 2013 Win64"
 set SGEN=vs2013-x64
-msbuild /nologo /target:all iricdev.proj
+msbuild /nologo /target:iriclib-adf-build iricdev.proj
 endlocal

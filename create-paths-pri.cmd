@@ -96,10 +96,18 @@ if "%DEBUG_LEAKS%"=="YES" (
 @echo.INCLUDEPATH += "%topdir%lib/install/hdf5-%HDF5_VER%/release/include"
 @echo.
 @echo.# cgnslib
-@echo.INCLUDEPATH += "%topdir%lib/install/cgnslib-%CGNSLIB_VER%/debug/include"
+if "%CGNS_ADF%"=="YES" (
+  @echo.INCLUDEPATH += "%topdir%lib/install/cgnslib-adf-%CGNSLIB_VER%/debug/include"
+) else (
+  @echo.INCLUDEPATH += "%topdir%lib/install/cgnslib-%CGNSLIB_VER%/debug/include"
+)
 @echo.
 @echo.# iriclib
-@echo.INCLUDEPATH += "%topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/release/include"
+if "%CGNS_ADF%"=="YES" (
+  @echo.INCLUDEPATH += "%topdir%lib/install/iriclib-adf-%IRICLIB_VER%/debug/include"
+) else (
+  @echo.INCLUDEPATH += "%topdir%lib/install/iriclib-%IRICLIB_VER:~0,7%/debug/include"
+)
 @echo.
 @echo.# Qwt
 @echo.INCLUDEPATH += "%topdir%lib/install/qwt-%QWT_VER%/include"
