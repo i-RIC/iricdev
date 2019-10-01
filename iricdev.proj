@@ -14,18 +14,28 @@
     <CGNSLIB_VER Condition=" '$(CGNSLIB_VER)' == '3.2.1' " >$(CGNSLIB_VER)-patch1</CGNSLIB_VER>
   </PropertyGroup>
 
-  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;cgnslib-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build;openssl-build">
+  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;iriclib-adf-build;cgnslib-build;cgnslib-adf-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build;openssl-build">
     <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all release except vtk-build-release(36:21)-->
-  <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;cgnslib-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release;openssl-build-release">
+  <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;iriclib-adf-build-release;cgnslib-build-release;cgnslib-adf-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release;openssl-build-release">
     <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all debug except vtk-build-debug(36:21)-->
-  <Target Name="appveyor-debug" DependsOnTargets="shapelib-build-debug;qwt-build;gdal-build-debug;proj-build;netcdf-build-debug;iriclib-build-debug;cgnslib-build-debug;hdf5-build-debug;geos-build-debug;yaml-cpp-build-debug-appveyor;expat-build-debug;udunits-build-debug;openssl-build-debug">
+  <Target Name="appveyor-debug" DependsOnTargets="shapelib-build-debug;qwt-build;gdal-build-debug;proj-build;netcdf-build-debug;iriclib-build-debug;iriclib-adf-build-debug;cgnslib-build-debug;cgnslib-adf-build-debug;hdf5-build-debug;geos-build-debug;yaml-cpp-build-debug-appveyor;expat-build-debug;udunits-build-debug;openssl-build-debug">
     <Exec Command="create-files.cmd" />
+  </Target>
+
+  <!-- all release adf-->
+  <Target Name="appveyor-adf-release" DependsOnTargets="iriclib-adf-build-release;cgnslib-adf-build-release">
+    <Exec Command="create-adf-files.cmd" />
+  </Target>
+
+  <!-- all debug adf-->
+  <Target Name="appveyor-adf-debug" DependsOnTargets="iriclib-adf-build-debug;cgnslib-adf-build-debug">
+    <Exec Command="create-adf-files.cmd" />
   </Target>
 
   <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download;expat-download;udunits-download;openssl-download">
@@ -382,6 +392,40 @@
 
   <Import Project="openssl.targets" />
 
+  <!-- iriclib-adf -->
+
+  <Target Name="iriclib-adf-build" DependsOnTargets="iriclib-adf-build-debug;iriclib-adf-build-release" />
+
+  <Target Name="iriclib-adf-build-debug" DependsOnTargets="iriclib-adf-src;cgnslib-adf-build-debug" Condition="!Exists('$(INSTALL_DIR)\iriclib-adf-$(IRICLIB_ADF_VER)\debug')">
+    <Exec Command="ctest -S build-iriclib-adf.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-iriclib-adf-debug.log"/>
+  </Target>
+
+  <Target Name="iriclib-adf-build-release" DependsOnTargets="iriclib-adf-src;cgnslib-adf-build-release" Condition="!Exists('$(INSTALL_DIR)\iriclib-adf-$(IRICLIB_ADF_VER)\release')">
+    <Exec Command="ctest -S build-iriclib-adf.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-iriclib-adf-release.log"/>
+  </Target>
+
+  <Target Name="iriclib-adf-src" DependsOnTargets="iriclib-adf-download" Condition="!Exists('$(SRC_DIR)\iriclib-adf-$(IRICLIB_ADF_VER)')">
+    <Exec Command="7z x iriclib-adf-$(IRICLIB_ADF_VER).zip -o$(SRC_DIR)" />
+  </Target>
+
+  <Target Name="iriclib-adf-download" Condition="!Exists('iriclib-adf-$(IRICLIB_ADF_VER).zip')">
+    <Message Text="Downloading iriclib_$(IRICLIB_ADF_VER).zip" />
+    <Exec Command="$(CURL) https://github.com/scharlton2/iriclib/archive/adf-$(IRICLIB_ADF_VER).zip" />
+    <Move SourceFiles="adf-$(IRICLIB_ADF_VER).zip" DestinationFiles="iriclib-adf-$(IRICLIB_ADF_VER).zip"/>
+  </Target>
+
+  <!-- cgnslib-adf -->
+
+  <Target Name="cgnslib-adf-build" DependsOnTargets="cgnslib-adf-build-debug;cgnslib-adf-build-release" />
+
+  <Target Name="cgnslib-adf-build-debug" DependsOnTargets="cgnslib-src" Condition="!Exists('$(INSTALL_DIR)\cgnslib-adf-$(CGNSLIB_VER)\debug')">
+    <Exec Command="ctest -S build-cgnslib-adf.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-cgnslib-adf-debug.log"/>
+  </Target>
+
+  <Target Name="cgnslib-adf-build-release" DependsOnTargets="cgnslib-src" Condition="!Exists('$(INSTALL_DIR)\cgnslib-adf-$(CGNSLIB_VER)\release')">
+    <Exec Command="ctest -S build-cgnslib-adf.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-cgnslib-adf-release.log"/>
+  </Target>
+
   <!-- dump variables -->
 
   <Target Name="dump">
@@ -398,6 +442,8 @@
     <Message Text="HDF5_VER=$(HDF5_VER)" />
     <Message Text="INSTALL_DIR=$(INSTALL_DIR)" />
     <Message Text="IRICLIB_VER=$(IRICLIB_VER)" />
+    <Message Text="IRICLIB_ADF_SVER=$(IRICLIB_ADF_SVER)" />
+    <Message Text="IRICLIB_ADF_VER=$(IRICLIB_ADF_VER)" />
     <Message Text="NETCDF_VER=$(NETCDF_VER)" />
     <Message Text="PROJ_VER=$(PROJ_VER)" />
     <Message Text="QWT_VER=$(QWT_VER)" />
