@@ -24,9 +24,14 @@ if [ ! -f "cgnslib_${CGNSLIB_VER}.tar.gz" ]; then
   ${CURL} https://downloads.sourceforge.net/project/cgns/cgnslib_${MAJOR}.${MINOR}/cgnslib_${CGNSLIB_VER}.tar.gz
 fi
 
-if [ ! -f "iriclib-${IRICLIB_VER:0:7}.zip" ]; then
-  ${CURL} https://github.com/i-RIC/iriclib/archive/${IRICLIB_VER}.zip 
-  mv ${IRICLIB_VER}.zip iriclib-${IRICLIB_VER:0:7}.zip
+if [ ! -f "iriclib-${IRICLIB_VER}.zip" ]; then
+  ${CURL} https://github.com/i-RIC/iriclib/archive/v${IRICLIB_VER}.zip
+  mv v${IRICLIB_VER}.zip iriclib-${IRICLIB_VER}.zip
+fi
+
+if [ ! -f "iriclib-adf-${IRICLIB_VER}.zip" ]; then
+  ${CURL} https://github.com/scharlton2/iriclib/archive/adf-${IRICLIB_ADF_VER}.zip
+  mv adf-${IRICLIB_ADF_VER}.zip iriclib-adf-${IRICLIB_ADF_VER}.zip
 fi
 
 if [ ! -f "shapelib-${SHAPELIB_VER}.zip" ]; then

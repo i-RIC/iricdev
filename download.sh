@@ -19,8 +19,8 @@ if [ ! -f "cgnslib_${CGNSLIB_VER}.tar.gz" ]; then
   wget --no-check-certificate https://downloads.sourceforge.net/project/cgns/cgnslib_3.2/cgnslib_${CGNSLIB_VER}.tar.gz
 fi
 
-if [ ! -f "iriclib-${IRICLIB_VER:0:7}.zip" ]; then
-  wget --no-check-certificate https://github.com/i-RIC/iriclib/archive/${IRICLIB_VER}.zip --output-document=iriclib-${IRICLIB_VER:0:7}.zip
+if [ ! -f "iriclib-${IRICLIB_VER}.zip" ]; then
+  wget --no-check-certificate https://github.com/i-RIC/iriclib/archive/v${IRICLIB_VER}.zip --output-document=iriclib-${IRICLIB_VER}.zip
 fi
 
 if [ ! -f "shapelib-${SHAPELIB_VER}.tar.gz" ]; then

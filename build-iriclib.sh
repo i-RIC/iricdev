@@ -8,14 +8,14 @@ fi
 . ./versions.sh
 VER=$IRICLIB_VER
 
-rm -rf lib/src/iriclib-${VER:0:7}
-rm -rf lib/build/iriclib-${VER:0:7}
-rm -rf lib/install/iriclib-${VER:0:7}
+rm -rf lib/src/iriclib-${VER}
+rm -rf lib/build/iriclib-${VER}
+rm -rf lib/install/iriclib-${VER}
 
 mkdir -p lib/src
 cd lib/src
-unzip ../../iriclib-${VER:0:7}.zip
-mv iriclib-$VER iriclib-${VER:0:7}
+unzip ../../iriclib-${VER}.zip
+mv iriclib-$VER iriclib-${VER}
 cd ../..
 
 ctest -S build-iriclib.cmake -DCONF_DIR:STRING=debug   "-DCTEST_CMAKE_GENERATOR:STRING=$GENERATOR" -C Debug   -VV -O $SGEN-iriclib-debug.log
