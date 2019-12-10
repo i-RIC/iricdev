@@ -44,6 +44,9 @@ if "%DEBUG_LEAKS%"=="YES" (
 @echo.
 @echo.	# yaml-cpp
 @echo.	LIBS += -L"%topdir%lib/install/yaml-cpp-%YAML_CPP_VER%/debug/lib"
+@echo.
+@echo.	# udunits
+@echo.	LIBS += -L"%topdir%lib/install/udunits-%UDUNITS_VER%/debug/lib"
 @echo.}
 @echo.else {
 @echo.	# gdal
@@ -78,6 +81,9 @@ if "%DEBUG_LEAKS%"=="YES" (
 @echo.
 @echo.	# yaml-cpp
 @echo.	LIBS += -L"%topdir%lib/install/yaml-cpp-%YAML_CPP_VER%/release/lib"
+@echo.
+@echo.	# udunits
+@echo.	LIBS += -L"%topdir%lib/install/udunits-%UDUNITS_VER%/release/lib"
 @echo.}
 @echo.
 @echo.INCLUDEPATH += .
@@ -126,6 +132,9 @@ if "%CGNS_ADF%"=="YES" (
 @echo.
 @echo.# yaml-cpp
 @echo.INCLUDEPATH += "%topdir%lib/install/yaml-cpp-%YAML_CPP_VER%/release/include"
+@echo.
+@echo.# udunits
+@echo.INCLUDEPATH += "%topdir%lib/install/udunits-%UDUNITS_VER%/release/include"
 @echo.
 @echo.# boost
 if "%APPVEYOR_BUILD_FOLDER%"=="" (
