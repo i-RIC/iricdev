@@ -32,7 +32,7 @@ before_build:
   - call versions.cmd
   - call cleanup-cache.cmd
   - set BUILD_TOOLS=OFF
-  - curl -L -O https://github.com/MestreLion/git-tools/raw/master/git-restore-mtime
+  - curl -L -O https://raw.githubusercontent.com/MestreLion/git-tools/cd87904e0b85d74b1d05f6acbd10553a0ceaceb0/git-restore-mtime
   - python git-restore-mtime
 
 build_script:
