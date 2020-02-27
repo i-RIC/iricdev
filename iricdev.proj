@@ -232,6 +232,45 @@
     <Move SourceFiles="v$(IRICLIB_VER).zip" DestinationFiles="iriclib-$(IRICLIB_VER).zip"/>
   </Target>
 
+  <!-- appveyor-iriclib-artifacts -->
+
+  <Target Name="appveyor-iriclib-artifacts" DependsOnTargets="iriclib-git-build-release">
+    <Copy SourceFiles="$(INSTALL_DIR)\cgnslib-$(CGNSLIB_VER)\release\lib\cgnsdll.lib"
+          DestinationFiles="$(SRC_DIR)\iriclib-git\_artifacts\libs\cgnsdll_x64_ifort.lib"
+    />
+    <Copy SourceFiles="$(INSTALL_DIR)\cgnslib-$(CGNSLIB_VER)\release\include\cgnslib_f.h"
+          DestinationFiles="$(SRC_DIR)\iriclib-git\_artifacts\libs\cgnslib_f.h"
+    />
+    <Copy SourceFiles="$(SRC_DIR)\iriclib-git\_build_release\INSTALL\include\iriclib_f.h"
+          DestinationFiles="$(SRC_DIR)\iriclib-git\_artifacts\libs\iriclib_f.h"
+    />
+    <Copy SourceFiles="$(SRC_DIR)\iriclib-git\_build_release\INSTALL\lib\iriclib.lib"
+          DestinationFiles="$(SRC_DIR)\iriclib-git\_artifacts\libs\iriclib_x64_ifort.lib"
+    />
+    <Exec Command="7z a libs.zip libs\."
+          WorkingDirectory="$(SRC_DIR)\iriclib-git\_artifacts"
+    />
+  </Target>
+
+  <!-- iriclib-git -->
+
+  <Target Name="iriclib-git-build" DependsOnTargets="iriclib-git-build-debug;iriclib-git-build-release" />
+
+  <Target Name="iriclib-git-build-debug" DependsOnTargets="iriclib-git-clone;cgnslib-build-debug">
+    <RemoveDir Directories="$(SRC_DIR)\iriclib-git\_build_debug"/>
+    <Exec Command="ctest -S iriclib-git.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-iriclib-git-debug.log"/>
+  </Target>
+
+  <Target Name="iriclib-git-build-release" DependsOnTargets="iriclib-git-clone;cgnslib-build-release">
+    <RemoveDir Directories="$(SRC_DIR)\iriclib-git\_build_release"/>
+    <Exec Command="ctest -S iriclib-git.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-iriclib-git-release.log"/>
+  </Target>
+
+  <Target Name="iriclib-git-clone" Condition="!Exists('$(SRC_DIR)\iriclib-git')">
+    <Message Text="Cloning https://github.com/i-RIC/iriclib.git" />
+    <Exec Command="git clone https://github.com/i-RIC/iriclib.git lib/src/iriclib-git" />
+  </Target>
+
   <!-- cgnslib -->
 
   <Target Name="cgnslib-build" DependsOnTargets="cgnslib-build-debug;cgnslib-build-release" />

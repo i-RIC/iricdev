@@ -40,4 +40,9 @@
     <Exec Command="nmake /f ms\ntdll.mak INSTALLTOP=$(installtop) OPENSSLDIR=$(installtop) install" WorkingDirectory="$(SRC_DIR)\openssl-OpenSSL_$(OPENSSL_UVER)" />
   </Target>
 
+  <Target Name="openssl-download" Condition="!Exists('OpenSSL_$(OPENSSL_UVER).zip')">
+    <Message Text="Downloading OpenSSL_$(OPENSSL_UVER).zip" />
+    <Exec Command="$(CURL) https://github.com/openssl/openssl/archive/OpenSSL_$(OPENSSL_UVER).zip" />
+  </Target>
+
 </Project>
