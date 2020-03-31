@@ -106,29 +106,29 @@
 
   <Target Name="gdal-build" DependsOnTargets="gdal-build-debug;gdal-build-release" />
 
-  <Target Name="gdal-build-debug" DependsOnTargets="gdal-src" Condition="!Exists('$(INSTALL_DIR)\gdal-$(GDAL_VER)\debug')">
+  <Target Name="gdal-build-debug" DependsOnTargets="gdal-src;netcdf-build-debug" Condition="!Exists('$(INSTALL_DIR)\gdal-$(GDAL_VER)\debug')">
     <PropertyGroup>
       <topdir>$(MSBuildProjectDirectory)</topdir>
     </PropertyGroup>
     <Exec Command="rd /s /q c:\warmerda" Condition="Exists('c:\warmerda')" />
     <MakeDir Directories="c:\warmerda\bld" />
     <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 clean" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
-    <Exec Command="nmake -f makefile.vc DEBUG=1 WIN64=YES MSVC_VER=1800" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
-    <Exec Command="nmake -f makefile.vc DEBUG=1 WIN64=YES MSVC_VER=1800 devinstall" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="nmake -f makefile.vc DEBUG=1 WIN64=YES MSVC_VER=1800 NETCDF_PLUGIN=YES NETCDF_SETTING=YES NETCDF_LIB=C:\iricdev\lib\install\netcdf-4.3.3\debug\lib\netcdf.lib NETCDF_INC_DIR=C:\iricdev\lib\install\netcdf-4.3.3\debug\include NETCDF_HAS_NC4=YES" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="nmake -f makefile.vc DEBUG=1 WIN64=YES MSVC_VER=1800 NETCDF_PLUGIN=YES NETCDF_SETTING=YES NETCDF_LIB=C:\iricdev\lib\install\netcdf-4.3.3\debug\lib\netcdf.lib NETCDF_INC_DIR=C:\iricdev\lib\install\netcdf-4.3.3\debug\include NETCDF_HAS_NC4=YES devinstall" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
     <MakeDir Directories="$(INSTALL_DIR)\gdal-$(GDAL_VER)" />
     <Exec Command="xcopy c:\warmerda\bld $(INSTALL_DIR)\gdal-$(GDAL_VER)\debug /I/S/E" />
     <Exec Command="rmdir /q /s c:\warmerda" />
   </Target>
 
-  <Target Name="gdal-build-release" DependsOnTargets="gdal-src" Condition="!Exists('$(INSTALL_DIR)\gdal-$(GDAL_VER)\release')">
+  <Target Name="gdal-build-release" DependsOnTargets="gdal-src;netcdf-build-release" Condition="!Exists('$(INSTALL_DIR)\gdal-$(GDAL_VER)\release')">
     <PropertyGroup>
       <topdir>$(MSBuildProjectDirectory)</topdir>
     </PropertyGroup>
     <Exec Command="rd /s /q c:\warmerda" Condition="Exists('c:\warmerda')" />
     <MakeDir Directories="c:\warmerda\bld" />
     <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 clean" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
-    <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
-    <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 devinstall" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 NETCDF_PLUGIN=YES NETCDF_SETTING=YES NETCDF_LIB=C:\iricdev\lib\install\netcdf-4.3.3\debug\lib\netcdf.lib NETCDF_INC_DIR=C:\iricdev\lib\install\netcdf-4.3.3\debug\include NETCDF_HAS_NC4=YES" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
+    <Exec Command="nmake -f makefile.vc WIN64=YES MSVC_VER=1800 NETCDF_PLUGIN=YES NETCDF_SETTING=YES NETCDF_LIB=C:\iricdev\lib\install\netcdf-4.3.3\debug\lib\netcdf.lib NETCDF_INC_DIR=C:\iricdev\lib\install\netcdf-4.3.3\debug\include NETCDF_HAS_NC4=YES devinstall" WorkingDirectory="$(topdir)\$(SRC_DIR)\gdal-$(GDAL_VER)" />
     <MakeDir Directories="$(INSTALL_DIR)\gdal-$(GDAL_VER)" />
     <Exec Command="xcopy c:\warmerda\bld $(INSTALL_DIR)\gdal-$(GDAL_VER)\release /I/S/E" />
     <Exec Command="rmdir /q /s c:\warmerda" />
