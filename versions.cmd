@@ -1,7 +1,7 @@
-REM @echo off
-REM
-REM versions.cmd
-REM
+@echo off
+::
+:: versions.cmd
+::
 set VTK_VER=6.1.0
 set HDF5_VER=1.8.14
 set CGNSLIB_VER=3.2.1
@@ -19,21 +19,15 @@ set EXPAT_VER=2.2.6
 set UDUNITS_VER=2.2.26
 set OPENSSL_VER=1.0.2p
 
-REM
-REM replace . with _
-REM
+::
+:: replace . with _
+::
 set BOOST_UVER=%BOOST_VER:.=_%
 set EXPAT_UVER=R_%EXPAT_VER:.=_%
 set OPENSSL_UVER=%OPENSSL_VER:.=_%
-if [%BUILD_TOOLS%]==[] (
-  set BUILD_TOOLS="OFF"
-)
+if NOT defined BUILD_TOOLS  set BUILD_TOOLS="OFF"
 
 :: nmake cannot create environment variables
-if [%GENERATOR%]==[] (
-  set GENERATOR="Visual Studio 12 2013 Win64"
-)
-if [%SGEN%]==[] (
-  set SGEN=vs2013-x64
-)
+if NOT defined GENERATOR    set GENERATOR="Visual Studio 12 2013 Win64"
+if NOT defined SGEN         set SGEN=vs2013-x64
 set VERSIONS_CMD_RUN=YES
