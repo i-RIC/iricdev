@@ -30,6 +30,10 @@ if [%BUILD_TOOLS%]==[] (
 )
 
 :: nmake cannot create environment variables
-set GENERATOR="Visual Studio 12 2013 Win64"
-set SGEN=vs2013-x64
+if [%GENERATOR%]==[] (
+  set GENERATOR="Visual Studio 12 2013 Win64"
+)
+if [%SGEN%]==[] (
+  set SGEN=vs2013-x64
+)
 set VERSIONS_CMD_RUN=YES
