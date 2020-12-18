@@ -6,6 +6,8 @@ call versions.cmd
 if "%CGNSLIB_VER%"=="3.2.1" (
   set CGNSLIB_VER=%CGNSLIB_VER%-patch1
 )
+for /f "tokens=1 delims=." %%a in ("%VTK_VER%") do set VTK_MAJOR_VERSION=%%a
+for /f "tokens=2 delims=." %%a in ("%VTK_VER%") do set VTK_MINOR_VERSION=%%a
 for /f "tokens=1,2 delims=." %%a in ("%VTK_VER%") do set VTK_MAJ_MIN=%%a.%%b
 @echo.CONFIG^(debug, debug^|release^) {
 @echo.	# gdal
@@ -151,5 +153,8 @@ if "%APPVEYOR_BUILD_FOLDER%"=="" (
 @echo.target.path = /usr/local/iRIC
 @echo.INSTALLS += target
 @echo.
-@echo.VTK_MAJ_MIN=%VTK_MAJ_MIN%
+@echo.VTK_MAJOR_VERSION = %VTK_MAJOR_VERSION%
+@echo.VTK_MINOR_VERSION = %VTK_MINOR_VERSION%
+@echo.
+@echo.VTK_MAJ_MIN = $${VTK_MAJOR_VERSION}.$${VTK_MINOR_VERSION}
 endlocal
