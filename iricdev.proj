@@ -14,17 +14,17 @@
     <CGNSLIB_VER Condition=" '$(CGNSLIB_VER)' == '3.2.1' " >$(CGNSLIB_VER)-patch1</CGNSLIB_VER>
   </PropertyGroup>
 
-  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;iriclib-adf-build;cgnslib-build;cgnslib-adf-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build;openssl-build">
+  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;iriclib-adf-build;cgnslib-build;cgnslib-adf-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build;openssl-build;libpng-build">
     <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all release except vtk-build-release(36:21)-->
-  <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;iriclib-adf-build-release;cgnslib-build-release;cgnslib-adf-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release;openssl-build-release">
+  <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;iriclib-adf-build-release;cgnslib-build-release;cgnslib-adf-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release;openssl-build-release;libpng-build-release">
     <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all debug except vtk-build-debug(36:21)-->
-  <Target Name="appveyor-debug" DependsOnTargets="shapelib-build-debug;qwt-build;gdal-build-debug;proj-build;netcdf-build-debug;iriclib-build-debug;iriclib-adf-build-debug;cgnslib-build-debug;cgnslib-adf-build-debug;hdf5-build-debug;geos-build-debug;yaml-cpp-build-debug-appveyor;expat-build-debug;udunits-build-debug;openssl-build-debug">
+  <Target Name="appveyor-debug" DependsOnTargets="shapelib-build-debug;qwt-build;gdal-build-debug;proj-build;netcdf-build-debug;iriclib-build-debug;iriclib-adf-build-debug;cgnslib-build-debug;cgnslib-adf-build-debug;hdf5-build-debug;geos-build-debug;yaml-cpp-build-debug-appveyor;expat-build-debug;udunits-build-debug;openssl-build-debug;libpng-build-debug">
     <Exec Command="create-files.cmd" />
   </Target>
 
@@ -38,7 +38,7 @@
     <Exec Command="create-adf-files.cmd" />
   </Target>
 
-  <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download;expat-download;udunits-download;openssl-download">
+  <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download;expat-download;udunits-download;openssl-download;libpng-download">
   </Target>
 
   <!-- shapelib -->
@@ -170,6 +170,28 @@
   <Target Name="netcdf-download" Condition="!Exists('netcdf-$(NETCDF_VER).zip')">
     <Message Text="Downloading netcdf-$(NETCDF_VER).zip" />
     <Exec Command="$(CURL) ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-$(NETCDF_VER).zip" />
+  </Target>
+
+  <!-- libpng -->
+
+  <Target Name="libpng-build" DependsOnTargets="libpng-build-debug;libpng-build-release" />
+
+  <Target Name="libpng-build-debug" DependsOnTargets="libpng-src" Condition="!Exists('$(INSTALL_DIR)\libpng-$(LIBPNG_VER)\debug')">
+    <Exec Command="ctest -S build-libpng.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-libpng-debug.log"/>
+  </Target>
+
+  <Target Name="libpng-build-release" DependsOnTargets="libpng-src" Condition="!Exists('$(INSTALL_DIR)\libpng-$(LIBPNG_VER)\release')">
+    <Exec Command="ctest -S build-libpng.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-libpng-release.log"/>
+  </Target>
+
+  <Target Name="libpng-src" DependsOnTargets="libpng-download" Condition="!Exists('$(SRC_DIR)\libpng-$(LIBPNG_VER)')">
+    <Exec Command="7z x lpng$(LIBPNG_NVER).zip -o$(SRC_DIR)" />
+    <Exec Command="ren $(SRC_DIR)\lpng$(LIBPNG_NVER) libpng-$(LIBPNG_VER)"/>
+  </Target>
+
+  <Target Name="libpng-download" Condition="!Exists('lpng$(LIBPNG_NVER).zip')">
+    <Message Text="Downloading lpng$(LIBPNG_NVER).zip" />
+    <Exec Command="$(CURL) https://jaist.dl.sourceforge.net/project/libpng/libpng16/$(LIBPNG_VER)/lpng$(LIBPNG_NVER).zip" />
   </Target>
 
   <!-- iriclib -->

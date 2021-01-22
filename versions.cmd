@@ -18,6 +18,7 @@ set YAML_CPP_VER=0.5.2
 set EXPAT_VER=2.2.6
 set UDUNITS_VER=2.2.26
 set OPENSSL_VER=1.0.2p
+set LIBPNG_VER=1.6.37
 
 ::
 :: replace . with _
@@ -25,6 +26,7 @@ set OPENSSL_VER=1.0.2p
 set BOOST_UVER=%BOOST_VER:.=_%
 set EXPAT_UVER=R_%EXPAT_VER:.=_%
 set OPENSSL_UVER=%OPENSSL_VER:.=_%
+set LIBPNG_NVER=%LIBPNG_VER:.=%
 if NOT defined BUILD_TOOLS  set BUILD_TOOLS="OFF"
 
 :: nmake cannot create environment variables
