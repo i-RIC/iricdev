@@ -105,6 +105,8 @@
   <!-- gdal -->
   <Import Project="gdal.targets" />
 
+  <!-- poco -->
+  <Import Project="poco.targets" />
 
   <!-- vtk -->
 
