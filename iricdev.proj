@@ -176,22 +176,21 @@
 
   <Target Name="libpng-build" DependsOnTargets="libpng-build-debug;libpng-build-release" />
 
-  <Target Name="libpng-build-debug" DependsOnTargets="libpng-src" Condition="!Exists('$(INSTALL_DIR)\libpng-$(LIBPNG_VER)\debug')">
+  <Target Name="libpng-build-debug" DependsOnTargets="libpng-src;hdf5-build-debug" Condition="!Exists('$(INSTALL_DIR)\libpng-$(LIBPNG_VER)\debug')">
     <Exec Command="ctest -S build-libpng.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-libpng-debug.log"/>
   </Target>
 
-  <Target Name="libpng-build-release" DependsOnTargets="libpng-src" Condition="!Exists('$(INSTALL_DIR)\libpng-$(LIBPNG_VER)\release')">
+  <Target Name="libpng-build-release" DependsOnTargets="libpng-src;hdf5-build-release" Condition="!Exists('$(INSTALL_DIR)\libpng-$(LIBPNG_VER)\release')">
     <Exec Command="ctest -S build-libpng.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-libpng-release.log"/>
   </Target>
 
   <Target Name="libpng-src" DependsOnTargets="libpng-download" Condition="!Exists('$(SRC_DIR)\libpng-$(LIBPNG_VER)')">
-    <Exec Command="7z x lpng$(LIBPNG_NVER).zip -o$(SRC_DIR)" />
-    <Exec Command="ren $(SRC_DIR)\lpng$(LIBPNG_NVER) libpng-$(LIBPNG_VER)"/>
+    <Exec Command="7z x .\libpng-$(LIBPNG_VER).tar.xz -so | 7z x -si -ttar -o$(SRC_DIR)"/>
   </Target>
 
-  <Target Name="libpng-download" Condition="!Exists('lpng$(LIBPNG_NVER).zip')">
-    <Message Text="Downloading lpng$(LIBPNG_NVER).zip" />
-    <Exec Command="$(CURL) https://jaist.dl.sourceforge.net/project/libpng/libpng16/$(LIBPNG_VER)/lpng$(LIBPNG_NVER).zip" />
+  <Target Name="libpng-download" Condition="!Exists('libpng-$(LIBPNG_VER).tar.xz')">
+    <Message Text="Downloading libpng-$(LIBPNG_VER).tar.xz" />
+    <Exec Command="$(CURL) https://sourceforge.net/projects/libpng/files/libpng16/$(LIBPNG_VER)/libpng-$(LIBPNG_VER).tar.xz" />
   </Target>
 
   <!-- iriclib -->
