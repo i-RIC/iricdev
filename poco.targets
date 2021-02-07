@@ -10,9 +10,10 @@
 
   <Target Name="poco-build" DependsOnTargets="poco-build-debug;poco-build-release" />
 
-  <Target Name="poco-build-debug" Inputs="poco.targets;poco.cmake" Outputs="$(INSTALL_DIR)\poco-$(POCO_VER)\debug\lib\PocoFoundationd.lib" DependsOnTargets="poco-src">
+  <!-- Both debug and release versions are installed to the same directory -->
+
+  <Target Name="poco-build-debug" Inputs="poco.targets;poco.cmake" Outputs="$(INSTALL_DIR)\poco-$(POCO_VER)\lib\PocoFoundationd.lib" DependsOnTargets="poco-src">
     <RemoveDir Directories="$(BUILD_DIR)\poco-$(POCO_VER)\debug" />
-    <!-- <RemoveDir Directories="$(INSTALL_DIR)\poco-$(POCO_VER)\debug" /> -->
     <PropertyGroup>
       <poco_opts_debug>$(poco_opts)</poco_opts_debug>
       <poco_opts_debug>$(poco_opts_debug) -DCTEST_BINARY_DIRECTORY:PATH=lib/build/poco-$(POCO_VER)/debug</poco_opts_debug>
@@ -22,9 +23,8 @@
     <Exec Command="ctest -S poco.cmake $(poco_opts_debug) -C Debug -VV -O $(LOG_DIR)\$(SGEN)-poco-debug.log" />
   </Target>
 
-  <Target Name="poco-build-release" Inputs="poco.targets;poco.cmake" Outputs="$(INSTALL_DIR)\poco-$(POCO_VER)\release\lib\PocoFoundation.lib" DependsOnTargets="poco-src">
+  <Target Name="poco-build-release" Inputs="poco.targets;poco.cmake" Outputs="$(INSTALL_DIR)\poco-$(POCO_VER)\lib\PocoFoundation.lib" DependsOnTargets="poco-src">
     <RemoveDir Directories="$(BUILD_DIR)\poco-$(POCO_VER)\release" />
-    <!-- <RemoveDir Directories="$(INSTALL_DIR)\poco-$(POCO_VER)\release" /> -->
     <PropertyGroup>
       <poco_opts_release>$(poco_opts)</poco_opts_release>
       <poco_opts_release>$(poco_opts_release) -DCTEST_BINARY_DIRECTORY:PATH=lib/build/poco-$(POCO_VER)/release</poco_opts_release>
