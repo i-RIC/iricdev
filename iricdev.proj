@@ -54,6 +54,7 @@
     <appveyor-release-targets Include="libpng-build-release"/>
     <appveyor-release-targets Include="netcdf-build-release"/>
     <appveyor-release-targets Include="openssl-build-release"/>
+    <appveyor-release-targets Include="poco-build-release"/>
     <appveyor-release-targets Include="proj-build"/>
     <appveyor-release-targets Include="qwt-build"/>
     <appveyor-release-targets Include="shapelib-build-release"/>
@@ -78,6 +79,7 @@
     <appveyor-debug-targets Include="libpng-build-debug"/>
     <appveyor-debug-targets Include="netcdf-build-debug"/>
     <appveyor-debug-targets Include="openssl-build-debug"/>
+    <appveyor-debug-targets Include="poco-build-debug"/>
     <appveyor-debug-targets Include="shapelib-build-debug"/>
     <appveyor-debug-targets Include="udunits-build-debug"/>
     <appveyor-debug-targets Include="yaml-cpp-build-debug-appveyor"/>
