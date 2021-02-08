@@ -14,17 +14,78 @@
     <CGNSLIB_VER Condition=" '$(CGNSLIB_VER)' == '3.2.1' " >$(CGNSLIB_VER)-patch1</CGNSLIB_VER>
   </PropertyGroup>
 
-  <Target Name="all" DependsOnTargets="shapelib-build;qwt-build;gdal-build;vtk-build;proj-build;netcdf-build;iriclib-build;iriclib-adf-build;cgnslib-build;cgnslib-adf-build;hdf5-build;geos-build;yaml-cpp-build;boost-src;expat-build;udunits-build;openssl-build;libpng-build">
+  <!-- all -->
+  <ItemGroup>
+    <all-targets Include="boost-src"/>
+    <all-targets Include="cgnslib-adf-build"/>
+    <all-targets Include="cgnslib-build"/>
+    <all-targets Include="expat-build"/>
+    <all-targets Include="gdal-build"/>
+    <all-targets Include="geos-build"/>
+    <all-targets Include="hdf5-build"/>
+    <all-targets Include="iriclib-adf-build"/>
+    <all-targets Include="iriclib-build"/>
+    <all-targets Include="libpng-build"/>
+    <all-targets Include="netcdf-build"/>
+    <all-targets Include="openssl-build"/>
+    <all-targets Include="poco-build"/>
+    <all-targets Include="proj-build"/>
+    <all-targets Include="qwt-build"/>
+    <all-targets Include="shapelib-build"/>
+    <all-targets Include="udunits-build"/>
+    <all-targets Include="vtk-build"/>
+    <all-targets Include="yaml-cpp-build"/>
+  </ItemGroup>
+
+  <Target Name="all" DependsOnTargets="@(all-targets)">
     <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all release except vtk-build-release(36:21)-->
-  <Target Name="appveyor-release" DependsOnTargets="shapelib-build-release;qwt-build;gdal-build-release;proj-build;netcdf-build-release;iriclib-build-release;iriclib-adf-build-release;cgnslib-build-release;cgnslib-adf-build-release;hdf5-build-release;geos-build-release;yaml-cpp-build-release-appveyor;expat-build-release;udunits-build-release;openssl-build-release;libpng-build-release">
+  <ItemGroup>
+    <appveyor-release-targets Include="cgnslib-adf-build-release"/>
+    <appveyor-release-targets Include="cgnslib-build-release"/>
+    <appveyor-release-targets Include="expat-build-release"/>
+    <appveyor-release-targets Include="gdal-build-release"/>
+    <appveyor-release-targets Include="geos-build-release"/>
+    <appveyor-release-targets Include="hdf5-build-release"/>
+    <appveyor-release-targets Include="iriclib-adf-build-release"/>
+    <appveyor-release-targets Include="iriclib-build-release"/>
+    <appveyor-release-targets Include="libpng-build-release"/>
+    <appveyor-release-targets Include="netcdf-build-release"/>
+    <appveyor-release-targets Include="openssl-build-release"/>
+    <appveyor-release-targets Include="poco-build-release"/>
+    <appveyor-release-targets Include="proj-build"/>
+    <appveyor-release-targets Include="qwt-build"/>
+    <appveyor-release-targets Include="shapelib-build-release"/>
+    <appveyor-release-targets Include="udunits-build-release"/>
+    <appveyor-release-targets Include="yaml-cpp-build-release-appveyor"/>
+  </ItemGroup>
+
+  <Target Name="appveyor-release" DependsOnTargets="@(appveyor-release-targets)">
     <Exec Command="create-files.cmd" />
   </Target>
 
   <!-- all debug except vtk-build-debug(36:21)-->
-  <Target Name="appveyor-debug" DependsOnTargets="shapelib-build-debug;qwt-build;gdal-build-debug;proj-build;netcdf-build-debug;iriclib-build-debug;iriclib-adf-build-debug;cgnslib-build-debug;cgnslib-adf-build-debug;hdf5-build-debug;geos-build-debug;yaml-cpp-build-debug-appveyor;expat-build-debug;udunits-build-debug;openssl-build-debug;libpng-build-debug">
+  <ItemGroup>
+    <appveyor-debug-targets Include="cgnslib-adf-build-debug"/>
+    <appveyor-debug-targets Include="cgnslib-build-debug"/>
+    <appveyor-debug-targets Include="expat-build-debug"/>
+    <appveyor-debug-targets Include="gdal-build-debug"/>
+    <appveyor-debug-targets Include="geos-build-debug"/>
+    <appveyor-debug-targets Include="hdf5-build-debug"/>
+    <appveyor-debug-targets Include="iriclib-adf-build-debug"/>
+    <appveyor-debug-targets Include="iriclib-build-debug"/>
+    <appveyor-debug-targets Include="libpng-build-debug"/>
+    <appveyor-debug-targets Include="netcdf-build-debug"/>
+    <appveyor-debug-targets Include="openssl-build-debug"/>
+    <appveyor-debug-targets Include="poco-build-debug"/>
+    <appveyor-debug-targets Include="shapelib-build-debug"/>
+    <appveyor-debug-targets Include="udunits-build-debug"/>
+    <appveyor-debug-targets Include="yaml-cpp-build-debug-appveyor"/>
+  </ItemGroup>
+
+  <Target Name="appveyor-debug" DependsOnTargets="@(appveyor-debug-targets)">
     <Exec Command="create-files.cmd" />
   </Target>
 
@@ -38,7 +99,28 @@
     <Exec Command="create-adf-files.cmd" />
   </Target>
 
-  <Target Name="download" DependsOnTargets="shapelib-download;qwt-download;gdal-download;vtk-download;proj-download;netcdf-download;iriclib-download;cgnslib-download;hdf5-download;geos-download;yaml-cpp-download;boost-download;expat-download;udunits-download;openssl-download;libpng-download">
+  <!-- all downloads -->
+  <ItemGroup>
+    <download-targets Include="boost-download"/>
+    <download-targets Include="cgnslib-download"/>
+    <download-targets Include="expat-download"/>
+    <download-targets Include="gdal-download"/>
+    <download-targets Include="geos-download"/>
+    <download-targets Include="hdf5-download"/>
+    <download-targets Include="iriclib-download"/>
+    <download-targets Include="libpng-download"/>
+    <download-targets Include="netcdf-download"/>
+    <download-targets Include="openssl-download"/>
+    <download-targets Include="poco-download"/>
+    <download-targets Include="proj-download"/>
+    <download-targets Include="qwt-download"/>
+    <download-targets Include="shapelib-download"/>
+    <download-targets Include="udunits-download"/>
+    <download-targets Include="vtk-download"/>
+    <download-targets Include="yaml-cpp-download"/>
+  </ItemGroup>
+
+  <Target Name="download" DependsOnTargets="@(download-targets)">
   </Target>
 
   <!-- shapelib -->
@@ -105,6 +187,8 @@
   <!-- gdal -->
   <Import Project="gdal.targets" />
 
+  <!-- poco -->
+  <Import Project="poco.targets" />
 
   <!-- vtk -->
 
@@ -322,6 +406,8 @@
   </Target>
 
   <!-- yaml-cpp -->
+  <!-- appveyor already has boost installed -->
+  <!-- therefore yaml-cpp-build-*-appveyor doesn't depend on boost -->
 
   <Target Name="yaml-cpp-build-appveyor" DependsOnTargets="yaml-cpp-build-debug-appveyor;yaml-cpp-build-release-appveyor" />
 

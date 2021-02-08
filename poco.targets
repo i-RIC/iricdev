@@ -1,0 +1,48 @@
+<Project DefaultTargets="poco-build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="programs.prop" Condition="'$(CURL)'==''" />
+
+  <Import Project="directories.prop" Condition="'$(TOP_DIR)'==''" />
+
+  <PropertyGroup>
+    <poco_opts>-DCTEST_SOURCE_DIRECTORY:PATH=lib/src/poco-$(POCO_VER)</poco_opts>
+  </PropertyGroup>
+
+  <Target Name="poco-build" DependsOnTargets="poco-build-debug;poco-build-release" />
+
+  <!-- Both debug and release versions are installed to the same directory -->
+
+  <Target Name="poco-build-debug" Inputs="poco.targets;poco.cmake" Outputs="$(INSTALL_DIR)\poco-$(POCO_VER)\lib\PocoFoundationd.lib" DependsOnTargets="poco-src">
+    <RemoveDir Directories="$(BUILD_DIR)\poco-$(POCO_VER)\debug" />
+    <PropertyGroup>
+      <poco_opts_debug>$(poco_opts)</poco_opts_debug>
+      <poco_opts_debug>$(poco_opts_debug) -DCTEST_BINARY_DIRECTORY:PATH=lib/build/poco-$(POCO_VER)/debug</poco_opts_debug>
+      <poco_opts_debug>$(poco_opts_debug) -DCONF_DIR:STRING=debug</poco_opts_debug>
+      <poco_opts_debug>$(poco_opts_debug) -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR)</poco_opts_debug>
+    </PropertyGroup>
+    <Exec Command="ctest -S poco.cmake $(poco_opts_debug) -C Debug -VV -O $(LOG_DIR)\$(SGEN)-poco-debug.log" />
+  </Target>
+
+  <Target Name="poco-build-release" Inputs="poco.targets;poco.cmake" Outputs="$(INSTALL_DIR)\poco-$(POCO_VER)\lib\PocoFoundation.lib" DependsOnTargets="poco-src">
+    <RemoveDir Directories="$(BUILD_DIR)\poco-$(POCO_VER)\release" />
+    <PropertyGroup>
+      <poco_opts_release>$(poco_opts)</poco_opts_release>
+      <poco_opts_release>$(poco_opts_release) -DCTEST_BINARY_DIRECTORY:PATH=lib/build/poco-$(POCO_VER)/release</poco_opts_release>
+      <poco_opts_release>$(poco_opts_release) -DCONF_DIR:STRING=release</poco_opts_release>
+      <poco_opts_release>$(poco_opts_release) -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR)</poco_opts_release>
+    </PropertyGroup>
+    <Exec Command="ctest -S poco.cmake $(poco_opts_release) -C Release -VV -O $(LOG_DIR)\$(SGEN)-poco-release.log" />
+  </Target>
+
+  <Target Name="poco-src" DependsOnTargets="poco-download" Condition="!Exists('$(SRC_DIR)\poco-$(POCO_VER)')">
+    <Exec Command="7z x $(DOWNLOADS_DIR)\poco-$(POCO_VER)-release.zip -o$(SRC_DIR)" />
+    <Exec Command="ren $(SRC_DIR)\poco-poco-$(POCO_VER)-release poco-$(POCO_VER)" />
+  </Target>
+
+  <Target Name="poco-download" Condition="!Exists('$(DOWNLOADS_DIR)\poco-$(POCO_VER)-release.zip')">
+    <MakeDir Directories="$(DOWNLOADS_DIR)" />
+    <Message Text="Downloading poco-$(POCO_VER).zip" />
+    <Exec Command="$(CURL) https://github.com/pocoproject/poco/archive/poco-$(POCO_VER)-release.zip" WorkingDirectory="$(DOWNLOADS_DIR)" />
+  </Target>
+
+</Project>

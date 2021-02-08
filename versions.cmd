@@ -10,6 +10,7 @@ set IRICLIB_ADF_VER=0.2
 set SHAPELIB_VER=1.3.0
 set QWT_VER=6.1.3
 set GDAL_VER=1.11.2
+set POCO_VER=1.9.4
 set PROJ_VER=4.8.0
 set NETCDF_VER=4.3.3
 set GEOS_VER=3.4.3
@@ -26,7 +27,6 @@ set LIBPNG_VER=1.6.37
 set BOOST_UVER=%BOOST_VER:.=_%
 set EXPAT_UVER=R_%EXPAT_VER:.=_%
 set OPENSSL_UVER=%OPENSSL_VER:.=_%
-set LIBPNG_NVER=%LIBPNG_VER:.=%
 if NOT defined BUILD_TOOLS  set BUILD_TOOLS="OFF"
 
 :: nmake cannot create environment variables

@@ -129,6 +129,10 @@ if "%CGNS_ADF%"=="YES" (
 @echo.# shapelib
 @echo.INCLUDEPATH += "%topdir%lib/install/shapelib-%SHAPELIB_VER%/release"
 @echo.
+@echo.# poco
+@echo.LIBS += -L"%topdir%lib/install/poco-%POCO_VER%/lib"
+@echo.INCLUDEPATH += "%topdir%lib/install/poco-%POCO_VER%/include"
+@echo.
 @echo.# proj.4
 @echo.INCLUDEPATH += "%topdir%lib/install/proj-%PROJ_VER%/release/include"
 @echo.
