@@ -135,7 +135,7 @@ if ($ENV{BUILD_TOOLS} MATCHES "[Oo][Nn]")
     file(TO_NATIVE_PATH "${CTEST_SCRIPT_DIRECTORY}/lib/install/hdf5-${HDF5_VER}/${CONF_DIR}/bin" HDF5PATH)
     file(APPEND
       ${CTEST_SCRIPT_DIRECTORY}/lib/install/cgnslib-${VER}/${CONF_DIR}/bin/cgconfig.bat
-      "set PATH=%PATH%;${HDF5PATH}\n"
+      "set PATH=${HDF5PATH};%PATH%\n"
     )
   endif()
 endif()
