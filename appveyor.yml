@@ -25,6 +25,12 @@ configuration:
 # Note mkdir is from Git (C:\Program Files\Git\usr\bin\mkdir.exe)
 # It might give unexpected results (use md instead)
 before_build:
+  - echo "*** Install newer cmake ***"
+  - echo %PATH%
+  - ps: Get-Command cmake
+  - ps: .\install_cmake.ps1
+  - echo %PATH%
+  - ps: Get-Command cmake
   - call C:\Qt\5.5\msvc2013_64\bin\qtenv2.bat
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64
   - cd "%APPVEYOR_BUILD_FOLDER%"

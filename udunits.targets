@@ -1,0 +1,39 @@
+<Project DefaultTargets="udunits-build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="programs.prop" Condition="'$(CURL)'==''" />
+
+  <Import Project="directories.prop" Condition="'$(TOP_DIR)'==''" />
+
+  <Target Name="udunits-build" DependsOnTargets="udunits-build-debug;udunits-build-release" />
+
+  <Target Name="udunits-build-debug" Inputs="udunits.targets;udunits.cmake" Outputs="$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\debug\lib\udunits2.lib" DependsOnTargets="udunits-src;expat-build-debug">
+    <PropertyGroup>
+      <config>debug</config>
+      <udunits_inst>$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\$(config)</udunits_inst>
+    </PropertyGroup>
+    <RemoveDir Directories="$(udunits_inst)" />
+    <Exec Command="ctest -S udunits.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(LOG_DIR)\$(SGEN)-udunits-debug.log" />
+  </Target>
+
+  <Target Name="udunits-build-release" Inputs="udunits.targets;udunits.cmake" Outputs="$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\release\lib\udunits2.lib" DependsOnTargets="udunits-src;expat-build-release">
+    <PropertyGroup>
+      <config>release</config>
+      <udunits_inst>$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\$(config)</udunits_inst>
+    </PropertyGroup>
+    <RemoveDir Directories="$(udunits_inst)" />
+    <Exec Command="ctest -S udunits.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(LOG_DIR)\$(SGEN)-udunits-release.log" />
+  </Target>
+
+  <Target Name="udunits-src" DependsOnTargets="udunits-download" Condition="!Exists('$(SRC_DIR)\udunits-$(UDUNITS_VER)')">
+    <Exec Command="7z x $(DOWNLOADS_DIR)\udunits-$(UDUNITS_VER).zip -o$(SRC_DIR)" />
+    <!-- 2.2.28 -->
+    <Copy SourceFiles="$(SRC_DIR)\udunits-2.2.28\lib\unitcore.c" DestinationFiles="$(SRC_DIR)\udunits-2.2.28\lib\unitcore.c.orig" Condition="'$(UDUNITS_VER)' == '2.2.28'" />
+    <Copy SourceFiles="patches\udunits-2.2.28\lib\unitcore.c" DestinationFiles="$(SRC_DIR)\udunits-2.2.28\lib\unitcore.c" Condition="'$(UDUNITS_VER)' == '2.2.28'" />    
+  </Target>
+
+  <Target Name="udunits-download" Condition="!Exists('$(DOWNLOADS_DIR)\udunits-$(UDUNITS_VER).zip')">
+    <MakeDir Directories="$(DOWNLOADS_DIR)" />
+    <Message Text="Downloading udunits-$(UDUNITS_VER).zip" />
+    <Exec Command="$(CURL) https://artifacts.unidata.ucar.edu/repository/downloads-udunits/udunits-$(UDUNITS_VER).zip" WorkingDirectory="$(DOWNLOADS_DIR)" />
+  </Target>
+</Project>

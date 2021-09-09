@@ -5,8 +5,6 @@
     <DOWNLOADS_DIR Condition=" '$(DOWNLOADS_DIR)' == '' ">downloads</DOWNLOADS_DIR>
     <INSTALL_DIR Condition=" '$(INSTALL_DIR)' == '' ">lib\install</INSTALL_DIR>
     <LOG_DIR Condition=" '$(LOG_DIR)' == '' ">logs</LOG_DIR>
-    <!-- <QT_DIR Condition=" '$(QT_DIR)' == '' ">C:\Qt\5.14.2\msvc2017_64</QT_DIR>
-    <QT_CMAKE_DIR Condition=" '$(QT_CMAKE_DIR)' == '' ">$([System.String]::Copy($(QT_DIR)).Replace('\','/'))</QT_CMAKE_DIR> -->
     <SRC_DIR Condition=" '$(SRC_DIR)' == '' ">lib\src</SRC_DIR>
     <TOP_DIR>$(MSBuildProjectDirectory)</TOP_DIR>
   </PropertyGroup>
