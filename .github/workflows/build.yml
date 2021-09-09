@@ -20,4 +20,4 @@ jobs:
 
     steps:
       - name: REST-API
-        run: echo Hello, world!
+        run: Write-Output ${{ SECRET_IRIC_ACCESS_TOKEN }}
