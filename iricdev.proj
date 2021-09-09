@@ -477,25 +477,7 @@
   </Target>
 
   <!-- udunits -->
-
-  <Target Name="udunits-build" DependsOnTargets="udunits-build-debug;udunits-build-release" />
-
-  <Target Name="udunits-build-debug" DependsOnTargets="udunits-src;expat-build-debug" Condition="!Exists('$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\debug')">
-    <Exec Command="ctest -S build-udunits.cmake -DCONF_DIR:STRING=debug -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Debug -VV -O $(SGEN)-udunits-debug.log"/>
-  </Target>
-
-  <Target Name="udunits-build-release" DependsOnTargets="udunits-src;expat-build-release" Condition="!Exists('$(INSTALL_DIR)\udunits-$(UDUNITS_VER)\release')">
-    <Exec Command="ctest -S build-udunits.cmake -DCONF_DIR:STRING=release -DCTEST_CMAKE_GENERATOR:STRING=$(GENERATOR) -C Release -VV -O $(SGEN)-udunits-release.log"/>
-  </Target>
-
-  <Target Name="udunits-src" DependsOnTargets="udunits-download" Condition="!Exists('$(SRC_DIR)\udunits-$(UDUNITS_VER)')">
-    <Exec Command="7z x udunits-$(UDUNITS_VER).tar.gz -so | 7z x -si -ttar -o$(SRC_DIR)"/>
-  </Target>
-
-  <Target Name="udunits-download" Condition="!Exists('udunits-$(UDUNITS_VER).tar.gz')">
-    <Message Text="Downloading udunits-$(UDUNITS_VER).tar.gz" />
-    <Exec Command="$(CURL) ftp://ftp.unidata.ucar.edu/pub/udunits/udunits-$(UDUNITS_VER).tar.gz" />
-  </Target>
+  <Import Project="udunits.targets" />
 
   <!-- OpenSSL -->
 
