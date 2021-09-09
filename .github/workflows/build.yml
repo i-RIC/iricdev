@@ -20,4 +20,4 @@ jobs:
 
     steps:
       - name: REST-API
-        run: Write-Output ${{ SECRET_IRIC_ACCESS_TOKEN }}
+        run: Write-Output "token=${{secrets.SECRET_IRIC_ACCESS_TOKEN}}"
