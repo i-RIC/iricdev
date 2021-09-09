@@ -15,6 +15,10 @@ init:
   - set BUILD_TOOLS=OFF
   - FOR /F "tokens=3 delims= " %%i in ('echo %APPVEYOR_BUILD_WORKER_IMAGE%') do set YEAR=%%i
   - echo %YEAR%
+  - echo "*** Install newer cmake ***"
+  - curl -O -L https://raw.githubusercontent.com/appveyor/build-images/master/scripts/Windows/install_cmake.ps1
+  - ps: install_cmake.ps1
+  - ps: Get-Command cmake
 
 clone_folder: C:\iricdev
 
