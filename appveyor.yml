@@ -1,5 +1,9 @@
 version: '{branch}-{build}'
 
+skip_commits:
+  files:
+    - .github/workflows/*
+
 image: Visual Studio 2013
 
 # called before clone
