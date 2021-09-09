@@ -24,7 +24,7 @@ jobs:
         run: |
           # common access tokens hash table
           $tokens = @{}
-          $tokens['i-RIC'] = ${{ secrets.SECRET_IRIC_ACCESS_TOKEN }}
+          $tokens['i-RIC'] = "${{ secrets.SECRET_IRIC_ACCESS_TOKEN }}"
           
           # headers hash table
           $headers = @{}
