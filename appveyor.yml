@@ -18,9 +18,7 @@ init:
   - echo "*** Install newer cmake ***"
   - echo %PATH%
   - ps: Get-Command cmake
-  - curl -O -L https://raw.githubusercontent.com/appveyor/build-images/master/scripts/Windows/install_cmake.ps1
   - ps: .\install_cmake.ps1
-  - ps: Remove-Item .\install_cmake.ps1
   - echo %PATH%
   - ps: Get-Command cmake
 
