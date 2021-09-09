@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '33 3 6,20 * *'
+    # will run see https://crontab-generator.org/
+    # 2021-09-20 03:33:00 UTC
+    # 2021-10-06 03:33:00 UTC
+    # 2021-10-20 03:33:00 UTC
+    # 2021-11-06 03:33:00 UTC
+    # 2021-11-20 03:33:00 UTC
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: REST-API
+        run: echo Hello, world!
