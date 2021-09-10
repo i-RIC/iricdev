@@ -3,6 +3,7 @@ version: '{branch}-{build}'
 skip_commits:
   files:
     - .github/workflows/*
+    - README.md
 
 image: Visual Studio 2013
 
