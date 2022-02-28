@@ -1,0 +1,43 @@
+name: Build
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '33 3 6,20 * *'
+    # see https://crontab-generator.org/
+    # will run 
+    # 2021-09-20 03:33:00 UTC
+    # 2021-10-06 03:33:00 UTC
+    # 2021-10-20 03:33:00 UTC
+    # 2021-11-06 03:33:00 UTC
+    # 2021-11-20 03:33:00 UTC
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: REST-API
+        run: |
+          # headers hash table
+          $headers = @{}
+          $headers['Authorization'] = "Bearer ${{secrets.SECRET_IRIC_ACCESS_TOKEN}}"
+          $headers['Content-type']  = "application/json"
+          
+          # POST /api/builds
+          # see https://www.appveyor.com/docs/api/projects-builds/#start-build-of-branch-most-recent-commit
+          # build hash table
+          $build = @{}
+          $build['accountName'] = "i-RIC"
+          $build['projectSlug'] = "iricdev"
+          $build['branch']      = "master"
+          
+          # convert build hash table to json
+          $build_json = $build | ConvertTo-Json
+
+          # fire
+          $response = Invoke-WebRequest -Uri 'https://ci.appveyor.com/api/builds' -Headers $headers -Method POST -Body $build_json
+          $response.StatusDescription
