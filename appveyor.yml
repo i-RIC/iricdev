@@ -53,9 +53,11 @@ build_script:
 after_build:
   - if not exist logs (md logs)
   - if exist *.log (copy *.log logs\.)
+  - cd lib\install
+  - 7z a ..\..\install-$(Configuration).zip .
 
 artifacts:
-  - path: lib\install
+  - path: install-$(Configuration).zip
   - path: logs
   - path: paths.pri
   - path: dirExt.prop
