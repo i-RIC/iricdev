@@ -1,5 +1,7 @@
 version: '{branch}-{build}'
 
+skip_tags: true
+
 skip_commits:
   files:
     - .github/workflows/*
