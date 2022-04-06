@@ -10,7 +10,7 @@ skip_commits:
 environment:
   CL: /MP
   iric_access_token:
-    secure: kGB7+cEG4P/hpRudE+trZHlt2y8CMBhEznGPb3nvH3HiGFRxXOiu/mBKKftEMhU/Kirhlvo+9yHD9Hj1nnXrJQ4Jq5SmQh0s6K+Qg2RqZ7CVufCbvvx6+VoIobvlWS9y
+    secure: lBwvZB6VY32cT2cSrTTjA6ZTYuzduDGVkJNlzl/fHSrNN03xDjRS5Vs2Iijg5g03
   kskinoue0612_access_token:
     secure: todo
   scharlton2_access_token:
@@ -79,7 +79,13 @@ cache:
 
 before_deploy:
   - ps: $env:release_title="iricdev $((Get-Date).ToUniversalTime().ToString('o'))"
-  - ps: $env:token=$env:scharlton2_access_token
+  - ps: |
+      switch ($env:APPVEYOR_ACCOUNT_NAME)
+      {
+        "i-RIC"        { $env:token = $env:iric_access_token }
+        "kskinoue0612" { $env:token = $env:kskinoue0612_access_token }
+        "scharlton2"   { $env:token = $env:scharlton2_access_token }
+      }
 
 deploy:
   - provider: GitHub
