@@ -80,12 +80,11 @@ cache:
 before_deploy:
   - ps: $env:release_title="iricdev $((Get-Date).ToUniversalTime().ToString('o'))"
   - ps: |
-      if ($env:APPVEYOR_REPO_NAME -eq "i-RIC/iricdev") {
-        $env:token=$env:iric_access_token
-      } else if ($env:APPVEYOR_REPO_NAME -eq "kskinoue0612/iricdev") {
-        $env:token=$env:kskinoue0612_access_token
-      } else if ($env:APPVEYOR_REPO_NAME -eq "scharlton2/iricdev") {
-        $env:token=$env:scharlton2_access_token
+      switch ($env:APPVEYOR_ACCOUNT_NAME)
+      {
+        "i-RIC"        { $env:token = $env:iric_access_token }
+        "kskinoue0612" { $env:token = $env:kskinoue0612_access_token }
+        "scharlton2"   { $env:token = $env:scharlton2_access_token }
       }
 
 deploy:
