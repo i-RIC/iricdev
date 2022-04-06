@@ -54,7 +54,7 @@ after_build:
   - if not exist logs (md logs)
   - if exist *.log (copy *.log logs\.)
   - cd lib\install
-  - 7z a ..\..\install-$(Configuration).zip .
+  - 7z a ..\..\install-%Configuration%.zip .
 
 artifacts:
   - path: install-$(Configuration).zip
