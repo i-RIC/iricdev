@@ -12,6 +12,7 @@ hdf5-*.tar.gz
 hdf5-*.zip
 iriclib-*.zip
 lib
+lib*
 libpng-*.tar.xz
 netcdf-*.tar.gz
 netcdf-*.zip
