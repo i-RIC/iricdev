@@ -1,9 +1,20 @@
 version: '{branch}-{build}'
 
+skip_tags: true
+
 skip_commits:
   files:
     - .github/workflows/*
     - README.md
+
+environment:
+  CL: /MP
+  iric_access_token:
+    secure: kGB7+cEG4P/hpRudE+trZHlt2y8CMBhEznGPb3nvH3HiGFRxXOiu/mBKKftEMhU/Kirhlvo+9yHD9Hj1nnXrJQ4Jq5SmQh0s6K+Qg2RqZ7CVufCbvvx6+VoIobvlWS9y
+  kskinoue0612_access_token:
+    secure: todo
+  scharlton2_access_token:
+    secure: xawcr/f1HW+2ad233K03DxKOOgTL6iP7uxITt/PdJdrd5hrGbYrUM1EmG5pItnle
 
 image: Visual Studio 2013
 
@@ -53,9 +64,11 @@ build_script:
 after_build:
   - if not exist logs (md logs)
   - if exist *.log (copy *.log logs\.)
+  - cd lib\install
+  - 7z a ..\..\install-%Configuration%.zip .
 
 artifacts:
-  - path: lib\install
+  - path: install-$(Configuration).zip
   - path: logs
   - path: paths.pri
   - path: dirExt.prop
@@ -63,3 +76,20 @@ artifacts:
 cache:
   - lib\install
   - logs
+
+before_deploy:
+  - ps: $env:release_title="iricdev $((Get-Date).ToUniversalTime().ToString('o'))"
+  - ps: $env:token=$env:scharlton2_access_token
+
+deploy:
+  - provider: GitHub
+    tag: LATEST
+    release: $(release_title)
+    auth_token: $(token)
+    artifact: install-$(Configuration).zip
+    draft: false
+    prerelease: false
+    force_update: true
+    on:
+      branch: master            # release from master branch only
+      APPVEYOR_REPO_TAG: false  # deploy on tag push only

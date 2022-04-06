@@ -25,15 +25,16 @@
   </Target>
 
   <Target Name="udunits-src" DependsOnTargets="udunits-download" Condition="!Exists('$(SRC_DIR)\udunits-$(UDUNITS_VER)')">
+    <Exec Command="powershell.exe -NoProfile -c Get-FileHash udunits-$(UDUNITS_VER).zip" WorkingDirectory="$(DOWNLOADS_DIR)" />
     <Exec Command="7z x $(DOWNLOADS_DIR)\udunits-$(UDUNITS_VER).zip -o$(SRC_DIR)" />
     <!-- 2.2.28 -->
     <Copy SourceFiles="$(SRC_DIR)\udunits-2.2.28\lib\unitcore.c" DestinationFiles="$(SRC_DIR)\udunits-2.2.28\lib\unitcore.c.orig" Condition="'$(UDUNITS_VER)' == '2.2.28'" />
-    <Copy SourceFiles="patches\udunits-2.2.28\lib\unitcore.c" DestinationFiles="$(SRC_DIR)\udunits-2.2.28\lib\unitcore.c" Condition="'$(UDUNITS_VER)' == '2.2.28'" />    
+    <Copy SourceFiles="patches\udunits-2.2.28\lib\unitcore.c" DestinationFiles="$(SRC_DIR)\udunits-2.2.28\lib\unitcore.c" Condition="'$(UDUNITS_VER)' == '2.2.28'" />
   </Target>
 
   <Target Name="udunits-download" Condition="!Exists('$(DOWNLOADS_DIR)\udunits-$(UDUNITS_VER).zip')">
     <MakeDir Directories="$(DOWNLOADS_DIR)" />
     <Message Text="Downloading udunits-$(UDUNITS_VER).zip" />
-    <Exec Command="$(CURL) https://artifacts.unidata.ucar.edu/repository/downloads-udunits/udunits-$(UDUNITS_VER).zip" WorkingDirectory="$(DOWNLOADS_DIR)" />
+    <Exec Command="$(CURL) https://artifacts.unidata.ucar.edu/repository/downloads-udunits/$(UDUNITS_VER)/udunits-$(UDUNITS_VER).zip" WorkingDirectory="$(DOWNLOADS_DIR)" />
   </Target>
 </Project>
